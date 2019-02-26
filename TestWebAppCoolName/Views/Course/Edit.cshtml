@@ -1,0 +1,82 @@
+﻿
+@using System.Web.UI.WebControls
+@model TestWebAppCoolName.Controllers.CourseViewModel
+@{
+    ViewBag.Title = "title";
+
+}
+
+
+
+<main class="main">
+    <section class="courses">
+        <h1 class="main-heading courses__heading">Editovat kurz</h1>
+        @using (Html.BeginForm("Edit", "Course", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                @Html.LabelFor(m => m.Course.Name)
+                @Html.TextBoxFor(m => m.Course.Name)
+                @Html.ValidationMessageFor(m => m.Course.Name)
+            </p>
+
+            <p>
+                @Html.LabelFor(m => m.Course.Description)
+                @Html.TextAreaFor(m => m.Course.Description)
+                @Html.ValidationMessageFor(m => m.Course.Description)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Lector_Id)
+                @Html.DropDownListFor(m => m.Course.Lector_Id, new SelectList(Model.Persons, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.Course.Lector_Id)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Modificator)
+                @Html.TextBoxFor(m => m.Course.Modificator)
+                @Html.ValidationMessageFor(m => m.Course.Modificator)
+            </p>
+
+            <p>
+                @Html.LabelFor(m => m.Course.Svg)
+                @Html.TextAreaFor(m => m.Course.Svg)
+                @Html.ValidationMessageFor(m => m.Course.Svg)
+            </p>
+            <p>
+                @Html.HiddenFor(m => m.Course.Id)
+                <button type="submit">Vytvořit</button>
+                <div id="pageloader" style="display: none;">
+                    <img src="/media/30.svg" alt="processing..."/>
+                </div>
+            </p>
+            <span>@ViewBag.Message</span>
+            if (ViewData["Saved"] != null)
+            {
+                @Html.Label(ViewData["Saved"].ToString())
+            }
+        }
+
+    </section>
+</main>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myform").on("submit", function () {
+                console.log("submit pressed")
+                $("#pageloader").toggle();
+            });//submit
+        });
+    </script>
+
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+
+<body class="body body-course body--web-basics">
+    <header class="header header--course header--up-top" id="site-header">
+        <nav class="nav">
+            <a class="site-branding" href="index.html">
+                <div class="site-logo">
+                    <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <linearGradient id="gradient-logo" x2="0" y2="2"><stop offset="0%" stop-color="var(--clr-primary)" /><stop offset="100%" stop-color="var(--clr-secondary)" /></linearGradient>
+                        <path d="M50.2916265,15.1816557 C53.2237995,10.1192138 58.641442,7 64.5044262,7 C70.3674104,7 75.7850529,10.1192138 78.7172259,15.1816557 C92.1959609,38.4596546 112.335754,73.2435736 125.804956,96.505277 C128.731681,101.558213 128.731681,107.783061 125.804956,112.83464 C122.879592,117.887576 117.474207,121 111.622118,121 C84.6564765,121 44.3237759,121 17.3649439,121 C11.5183026,121 6.11564095,117.890292 3.19300122,112.841429 C0.268999593,107.792567 0.268999593,101.573151 3.19300122,96.5242883 C16.662203,73.2612269 36.8101676,38.4664443 50.2916265,15.1816557 Z"></path>
+                    </svg>
+                </div><h1 class="h6 site-name link--gradient">Cool Name</h1>
+            </a><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="blog.html">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#contact">Kontakt</a></li></ul>
+        </nav>
+    </header>
+
+    <main class="main">
+
+        <div class="intro intro--course">
+            <div class="course-image"><svg viewBox="0 0 128 128" role="img"><linearGradient id="gradient-web-basics" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient><path d="M9.032 2l10.005 112.093 44.896 12.401 45.02-12.387 10.015-112.107h-109.936zm89.126 26.539l-.627 7.172-.276 3.289h-52.665000000000006l1.257 14h50.156000000000006l-.336 3.471-3.233 36.119-.238 2.27-28.196 7.749v.002l-.034.018-28.177-7.423-1.913-21.206h13.815000000000001l.979 10.919 15.287 4.081h.043v-.546l15.355-3.875 1.604-17.579h-47.698l-3.383-38.117-.329-3.883h68.939l-.33 3.539z"></path></svg></div>
+            <div class="course-texts">
+                <h1 class="course-title">HTML, CSS… WTF?</h1>
+                <p class="h4 course-desc">Poznejte kouzlo nejznámějšího značkovacího jazyku, který jde ruku v ruce s kaskádovými styly.</p>
+            </div>
+            <div class="banner banner--course">
+                <div class="banner__top"></div>
+                <div class="banner__bottom"></div>
+                <div class="banner__content-wrapper">
+                    <div class="banner__content">
+                        <h2 class="h4 course__toc-title">Naučíte se</h2><ul class="course__toc"><li>Vytvořit HTML stránku</li><li>Vložit na ni obsah</li><li>Upravit rozložení obsahu</li><li>Přiložit styly pomocí CSS</li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <article class="course">
+            <h2 class="course__heading course__heading--why">Proč se zúčastnit?</h2>
+            <p class="course__paragraph--why">Ať už jste webově nepolíbený vývojář, začínajícím designer nebo jednoduše jen nadšenec do kompjůtrů, právě jste našli svůj vstupní bod do světa HTML/CSS. Zanoříme se do úplných základů HTML dokumentu, na jakém principu je postavem a jak modifikovat rozložení jeho prvků. Často potřebujeme naskočit na novou technologii prakticky ihned, což má pozitivní dopad na její rychlou adopci, avšak hrozí opomenutí pochopení samotných základů. Pojďme se na dvě stěžejní webové technologie podívat od píky. </p>
+            <h2 class="course__heading course__heading--toc">Osnova</h2><ul class="course__paragraph--toc"><li>Struktura HTML dokumentu</li><li>Elementy a jejich sémantika</li><li>Atributy elementů</li><li>Struktura CSS dokumentu</li><li>Selektory</li><li>Kaskáda a specificita selektorů</li><li>CSS vlastnosti a jejich hodnoty</li></ul>
+            <h2 class="course__heading course__heading--details">Kdy a kde</h2><ul class="course__paragraph--details"><li class="course__teacher">Lektor: Daniel Hruška</li><li class="course__span">Rozsah: 8 hodin</li><li class="course__price">Cena: 4990 Kž bez DPH</li></ul>
+            <form class="reg-form" action="">
+                <h2 class="h4 reg-form__title">Registrace</h2>
+                <div class="reg-form__content"><input type="text" name="fname" placeholder="Jméno"><input type="text" name="lname" placeholder="Příjmení"><input type="email" name="email" placeholder="E-mail"><button class="reg-form__button" type="submit">Počítejte se mnou!</button></div>
+            </form>
+        </article>
+    </main>
+    <footer class="footer">
+        <hr><nav class="nav" role="navigation"><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="blog.html">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#contact">Kontakt</a></li></ul></nav>
+        <p><small>&copy; <span id="copyright-year">2019</span> Cool Name</small></p>
+    </footer>
+</body>

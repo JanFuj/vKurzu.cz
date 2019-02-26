@@ -1,0 +1,62 @@
+﻿
+@model TestWebAppCoolName.Controllers.BlogViewModel
+
+@{
+    ViewBag.Title = "title";
+
+}
+
+<main class="main">
+    <section class="courses">
+        <h1 class="main-heading courses__heading">Editovat blog</h1>
+        @using (Html.BeginForm("Edit", "Blog", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                @Html.LabelFor(m => m.Blog.Name)
+                @Html.TextBoxFor(m => m.Blog.Name)
+                @Html.ValidationMessageFor(m => m.Blog.Name)
+            </p>
+
+            <p>
+                @Html.LabelFor(m => m.Blog.Description)
+                @Html.TextAreaFor(m => m.Blog.Description)
+                @Html.ValidationMessageFor(m => m.Blog.Description)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Blog.Author_Id)
+                @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.Blog.Author_Id)
+            </p>
+
+            <p>
+                @Html.HiddenFor(m => m.Blog.Id)
+                <button type="submit">Vytvořit</button>
+                <div id="pageloader" style="display: none;">
+                    <img src="/media/30.svg" alt="processing..." />
+                </div>
+            </p>
+            <span>@ViewBag.Message</span>
+            if (ViewData["Saved"] != null)
+            {
+                @Html.Label(ViewData["Saved"].ToString())
+            }
+        }
+
+    </section>
+</main>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myform").on("submit", function () {
+                console.log("submit pressed")
+                $("#pageloader").toggle();
+            });//submit
+        });
+    </script>
+
+}
+

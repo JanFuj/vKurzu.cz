@@ -1,0 +1,148 @@
+﻿@model TestWebAppCoolName.Controllers.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<body class="body body--index">
+
+    <header class="header header--index" id="site-header">
+        <nav class="nav" role="navigation">
+            <a class="site-branding" href="index">
+                <div class="site-logo">
+                    <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <linearGradient id="gradient-logo" x2="0" y2="2"><stop offset="0%" stop-color="var(--clr-primary)" /><stop offset="100%" stop-color="var(--clr-secondary)" /></linearGradient>
+                        <path d="M50.2916265,15.1816557 C53.2237995,10.1192138 58.641442,7 64.5044262,7 C70.3674104,7 75.7850529,10.1192138 78.7172259,15.1816557 C92.1959609,38.4596546 112.335754,73.2435736 125.804956,96.505277 C128.731681,101.558213 128.731681,107.783061 125.804956,112.83464 C122.879592,117.887576 117.474207,121 111.622118,121 C84.6564765,121 44.3237759,121 17.3649439,121 C11.5183026,121 6.11564095,117.890292 3.19300122,112.841429 C0.268999593,107.792567 0.268999593,101.573151 3.19300122,96.5242883 C16.662203,73.2612269 36.8101676,38.4664443 50.2916265,15.1816557 Z"></path>
+                    </svg>
+                </div><h1 class="h6 site-name link--gradient">Cool Name</h1>
+            </a><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="Blog/Index">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#contact">Kontakt</a></li></ul>
+        </nav>
+    </header>
+
+    <main class="main">
+
+        <article class="intro intro--index">
+            <h1 class="main-heading intro__heading">Jsme <mark>vývojáři</mark>, <mark>designéři</mark></h1>
+            <p class="h4 intro__text">Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.</p>
+        </article>
+        <article class="courses" id="courses">
+            <hr class="hr--invisible">
+            <h1 class="main-heading courses__heading">Kurzy</h1>
+            <p class="courses__text">Server, back-end, front-end, web design, UI design, mobile development. Nabízíme opravdu pestrou škálu kurzů, kterou bychom nadále rádi rozšiřovali.</p>
+            <div class="courses-cards">
+
+                @{
+                    foreach (var course in Model.Courses)
+                    {
+                        <div class="course-card course-card--@course.Modificator">
+                            <a class="course-card__link" href="@Url.Action("Detail", "Course", new {id = course.Id})"></a>
+                            <div class="course-card__content">
+                                <div class="course-card__image">
+                                    <svg viewBox="0 0 128 128">
+                                        <linearGradient id="gradient-@course.Modificator" x1="0%" y1="0%" x2="66%" y2="100%"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>
+
+                                        @Html.Raw(course.Svg)
+
+                                    </svg>
+
+                                </div>
+                                <div class="course-card__info">
+                                    <h2 class="h4 course-card__title"><a class="course-card__title-link" href="course.html">@course.Name</a></h2>
+                                    <p class="course-card__desc">@course.Description</p>
+                                    <p class="course-card__teacher"><small>@course.Lector.Name</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </article>
+        <article class="blog">
+            <hr>
+            <div class="blog__heading h1">
+                <h1 class="main-heading">Blog</h1>
+            </div>
+            <div class="article-previews">
+                @{
+                    foreach (var blog in Model.Blogs)
+                    {
+                        <article class="article-preview">
+                            <div class="article-preview__author">@blog.Author.Name</div>
+                            <h2 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Detail", "Blog", new {id = blog.Id})">@blog.Name</a></h2>
+                            <p class="article-preview__text">@blog.Description</p>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Detail", "Blog", new {id = blog.Id})">Číst článek</a></div>
+                        </article>
+                    }
+                }
+
+
+            </div>
+            <div class="blog__link"><a class="link--gradient-inversed" href="#">Všechny články →</a></div>
+        </article>
+
+        <article class="contact" id="contact">
+            <hr>
+            <h1 class="main-heading">Kontakt</h1>
+            <p>Vešteré dotazy ohledně kurzů, blogu, čehokoliv, vesmíru s klidným svědomím vepište níže, od toho kontaktní formuláře existují.</p>
+            <form class="contact-form" action=""><input type="email" name="email" placeholder="E-mail" required><textarea name="" rows="10" placeholder="Co máte na srdci?" required></textarea><button class="contact-form__button" type="submit">Odeslat</button></form>
+            <div class="teachers">
+                <h2 class="h4">Lektoři</h2>
+                <p class="teachers__desc">Sterilní fotografie v bílé košili s úsměvem Mony Lisy nám nic neříkají. Možná není naše podoba v konečném důsledku ani důležitá – každopádně – tohle jsme my:</p>
+                <div class="teachers__list">
+                    <div class="person">
+                        <div class="person__avatar person__avatar--dan">
+                            <div class="person__img">
+                                <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+                                    <title>alien filled</title>
+                                    <desc>Created with Sketch.</desc>
+                                    <defs>
+                                        <linearGradient x1="0%" y1="0%" x2="66%" y2="100%" id="gradient-dan">
+                                            <stop stop-color="var(--clr-yellow)" offset="0%"></stop>
+                                            <stop stop-color="var(--clr-green)" offset="100%"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    <g id="alien-filled" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <path d="M93.3854237,37.8037423 C101.497701,45.0041905 105.965784,55.1258711 105.965784,66.3041793 C105.965784,77.7736246 101.288083,93.0402241 94.0501165,105.19879 C85.325911,119.851204 74.4767055,127.921479 63.5,127.921479 C52.5232945,127.921479 41.6735487,119.851204 32.9500636,105.19879 C25.7119174,93.0402241 21.0343962,77.7736246 21.0343962,66.3041793 C21.0343962,55.1258711 25.5024788,45.0043697 33.614036,37.8037423 C37.0932733,34.7152493 41.1374364,32.2488291 45.5684216,30.4622073 C44.9811653,27.2261737 43.2680191,23.1764258 40.7398093,19.1535686 C39.2198941,16.7357311 37.6814301,14.7633838 36.2944174,13.2720224 C35.4784534,13.6117423 34.5837924,13.7997983 33.6453708,13.7997983 C29.8452225,13.7997983 26.7535275,10.7220616 26.7535275,6.93907003 C26.7535275,3.15607843 29.8452225,0.0783417367 33.6453708,0.0783417367 C37.4455191,0.0783417367 40.537214,3.15607843 40.537214,6.93907003 C40.537214,7.23576471 40.5166843,7.52761905 40.4792267,7.81445378 C43.3595021,10.7122017 45.645678,14.1583417 46.5221504,15.5527171 C47.9653496,17.8495462 50.9160381,23.0000224 52.1027966,28.38893 C55.7484322,27.5262745 59.573072,27.0797087 63.5,27.0797087 C67.4271081,27.0797087 71.2515678,27.5260952 74.8972034,28.38893 C76.0836017,23.0000224 79.0344703,17.8495462 80.4776695,15.5527171 C81.354322,14.1581625 83.6404979,10.7122017 86.5207733,7.81445378 C86.4833157,7.52761905 86.462786,7.23576471 86.462786,6.93907003 C86.462786,3.15607843 89.5544809,0.0783417367 93.3542691,0.0783417367 C97.1545975,0.0783417367 100.246472,3.15607843 100.246472,6.93907003 C100.246472,10.7220616 97.1547775,13.7997983 93.3542691,13.7997983 C92.4163877,13.7997983 91.5215466,13.6119216 90.7057627,13.2720224 C89.3183898,14.763563 87.7797458,16.7357311 86.2600106,19.1535686 C83.7316208,23.1764258 82.0191949,27.2267115 81.4313983,30.4622073 C85.8627436,32.2488291 89.9061864,34.71507 93.3854237,37.8037423 Z M92.9236864,61.4548796 C92.6753496,60.0470588 91.5683686,58.9450756 90.1536229,58.6982185 C90.0698835,58.6835182 88.0720233,58.3396751 85.3621081,58.3396751 C81.1234534,58.3396751 75.2339619,59.1723922 71.2517479,63.1360896 C64.7123305,69.6454454 66.7056886,81.4533557 66.7935699,81.9526275 C67.0415466,83.3606275 68.1490678,84.4624314 69.5627331,84.7092885 C69.6468326,84.7239888 71.6452331,85.0676527 74.3553284,85.0676527 C74.3558686,85.0676527 74.3558686,85.0676527 74.3564089,85.0676527 C78.5950636,85.0676527 84.4832945,84.2351148 88.4656886,80.2712381 C95.0042055,73.7622409 93.0112076,61.9543305 92.9236864,61.4548796 Z M83.6419386,75.4710588 C81.1886441,77.9132773 76.7715254,78.2786331 74.3562288,78.2786331 C74.3556886,78.2786331 74.3556886,78.2786331 74.3551483,78.2786331 C73.9713877,78.2786331 73.6076165,78.2694902 73.2681568,78.2549692 C73.1417373,75.0745098 73.5593538,70.4403361 76.0742373,67.9362689 C78.528072,65.4940504 82.9462712,65.1297703 85.3617479,65.1297703 C85.744428,65.1297703 86.1092797,65.1376583 86.4485593,65.1523585 C86.5747987,68.3333557 86.156822,72.9671709 83.6419386,75.4710588 Z M55.7484322,63.1362689 C51.7663983,59.1723922 45.877447,58.3398543 41.638072,58.3398543 C38.9274364,58.3398543 36.9301165,58.6835182 36.8460169,58.6983978 C35.4319915,58.9450756 34.3248305,60.0472381 34.0764936,61.4550588 C33.9889725,61.9545098 31.9959746,73.7624202 38.5346716,80.272493 C42.5172458,84.2354734 48.406197,85.0680112 52.6450318,85.0680112 C55.3551271,85.0680112 57.3535275,84.7245266 57.4376271,84.7098263 C58.8512924,84.4627899 59.9588136,83.3613445 60.2067903,81.952986 C60.2946716,81.4533557 62.2882097,69.6454454 55.7484322,63.1362689 Z M53.7327436,78.2553277 C53.3923835,78.2698487 53.0284322,78.2789916 52.6446716,78.2789916 C50.2297352,78.2789916 45.8113559,77.9136359 43.3575212,75.4714174 C40.8422775,72.9662745 40.4252013,68.329591 40.5510805,65.1527171 C40.8903602,65.1380168 41.2548517,65.1301289 41.638072,65.1301289 C44.0531886,65.1301289 48.471928,65.494409 50.9252225,67.9366275 C53.4415466,70.441591 53.8586229,75.0784538 53.7327436,78.2553277 Z M74.8392161,106.279798 C76.7230826,106.279798 78.249661,104.759933 78.249661,102.884751 C78.249661,101.010465 76.7230826,99.4904202 74.8392161,99.4904202 L52.1579025,99.4904202 C50.2742161,99.4904202 48.7474576,101.010465 48.7474576,102.884751 C48.7474576,104.759933 50.2742161,106.279798 52.1579025,106.279798 L74.8392161,106.279798 Z" id="Combined-Shape" fill="url(#gradient-dan)" fill-rule="nonzero"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="person__bio">
+                            <h3 class="h6">Daniel Hruška</h3>
+                            <p> <small>UX Designer</small></p>
+                        </div>
+                    </div>
+                    <div class="person">
+                        <div class="person__avatar person__avatar--honza">
+                            <div class="person__img">
+                                <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+                                    <title>robot filled</title>
+                                    <desc>Created with Sketch.</desc>
+                                    <defs>
+                                        <linearGradient x1="0%" y1="0%" x2="66%" y2="100%" id="gradient-honza">
+                                            <stop stop-color="var(--clr-cyan)" offset="0%"></stop>
+                                            <stop stop-color="var(--clr-ultramarine)" offset="100%"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    <g id="robot-filled" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <path d="M113.460706,64.7650619 C121.689815,66.3562095 127.92381,73.6165492 127.923989,82.3064286 C127.923989,91.0072492 121.67619,98.2724317 113.434891,99.8538937 C112.884706,110.99121 103.655798,119.883771 92.3898263,119.883771 L35.6103529,119.883771 C24.3440224,119.883771 15.114577,110.99121 14.5647507,99.8538937 C6.32363025,98.2724317 0.0761904762,91.0072492 0.0761904762,82.3064286 C0.0761904762,73.6169079 6.31036415,66.3562095 14.5389356,64.7650619 L14.5389356,63.2928333 C14.5389356,51.6680032 23.9915742,42.2104413 35.6103529,42.2104413 L60.6051317,42.2104413 L60.6051317,33.2025476 C54.9345882,31.6982127 50.7421401,26.5208397 50.7421401,20.3809937 C50.7421401,13.0663063 56.6900168,7.11640794 64.0003585,7.11640794 C71.3108796,7.11640794 77.2578599,13.0663063 77.2578599,20.3809937 C77.2578599,26.5208397 73.0657703,31.6980333 67.3946891,33.2025476 L67.3946891,42.2104413 L92.3896471,42.2104413 C104.007888,42.2104413 113.460706,51.6678238 113.460706,63.2928333 L113.460706,64.7650619 Z M14.5389356,92.8448444 L14.5389356,71.7685508 C10.0924594,73.2061619 6.86664426,77.3855476 6.86664426,82.3062492 C6.86664426,87.228027 10.0924594,91.4075921 14.5389356,92.8448444 Z M113.460706,92.8448444 C117.907003,91.4077714 121.133356,87.2278476 121.133356,82.3064286 C121.133356,77.385727 117.907003,73.2063413 113.460706,71.7687302 L113.460706,92.8448444 Z M57.5322353,20.3809937 C57.5322353,23.9487444 60.4333894,26.852127 64,26.852127 C67.5662521,26.852127 70.4677647,23.9489238 70.4677647,20.3809937 C70.4677647,16.8130635 67.5662521,13.9098603 64,13.9098603 C60.4333894,13.9098603 57.5322353,16.8128841 57.5322353,20.3809937 Z M88.7608291,63.6095921 C83.2381849,63.6095921 78.7458151,68.105019 78.7458151,73.6298222 C78.7458151,79.1553429 83.2385434,83.6502317 88.7608291,83.6502317 C94.2831148,83.6502317 98.7762017,79.1549841 98.7762017,73.6298222 C98.7762017,68.1051984 94.2831148,63.6095921 88.7608291,63.6095921 Z M88.7608291,76.8566 C86.9824538,76.8566 85.5357311,75.4100206 85.5357311,73.630181 C85.5357311,71.8508794 86.9824538,70.4028651 88.7608291,70.4028651 C90.5393838,70.4028651 91.9862857,71.8508794 91.9862857,73.630181 C91.9862857,75.4096619 90.5393838,76.8566 88.7608291,76.8566 Z M39.2391709,63.6095921 C33.7163473,63.6095921 29.2239776,68.105019 29.2239776,73.6298222 C29.2239776,79.1553429 33.7165266,83.6502317 39.2391709,83.6502317 C44.7612773,83.6502317 49.2543641,79.1549841 49.2543641,73.6298222 C49.2543641,68.1051984 44.7612773,63.6095921 39.2391709,63.6095921 Z M39.2391709,76.8566 C37.4607955,76.8566 36.0138936,75.4100206 36.0138936,73.630181 C36.0138936,71.8508794 37.4607955,70.4028651 39.2391709,70.4028651 C41.0173669,70.4028651 42.4644482,71.8508794 42.4644482,73.630181 C42.4644482,75.4096619 41.0173669,76.8566 39.2391709,76.8566 Z M73.2511373,94.2110683 L54.7486835,94.2110683 C52.8735014,94.2110683 51.3534566,95.7319048 51.3534566,97.6071667 C51.3534566,99.4835048 52.8735014,101.003983 54.7486835,101.003983 L73.2514958,101.003983 C75.1261401,101.003983 76.6463641,99.483146 76.6463641,97.6071667 C76.6461849,95.731546 75.1261401,94.2110683 73.2511373,94.2110683 Z" id="Combined-Shape" fill="url(#gradient-honza)" fill-rule="nonzero"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="person__bio">
+                            <h3 class="h6">Jan Fujdiar</h3>
+                            <p><small>Programátor </small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+
+    </main>
+    <footer class="footer"><hr><nav class="nav" role="navigation"><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="blog.html">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index#contact">Kontakt</a></li></ul></nav><p><small>&copy; <span id="copyright-year">2019</span> Cool Name</small></p></footer>
+
+</body>
