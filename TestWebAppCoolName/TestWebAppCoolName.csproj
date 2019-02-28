@@ -262,6 +262,14 @@
     <Compile Include="Migrations\201902061131043_PopulateCourses.Designer.cs">
       <DependentUpon>201902061131043_PopulateCourses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902281331336_UrlTitleAddBlogTable.cs" />
+    <Compile Include="Migrations\201902281331336_UrlTitleAddBlogTable.Designer.cs">
+      <DependentUpon>201902281331336_UrlTitleAddBlogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902281340193_UrlTitleAddCourseTable.cs" />
+    <Compile Include="Migrations\201902281340193_UrlTitleAddCourseTable.Designer.cs">
+      <DependentUpon>201902281340193_UrlTitleAddCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -430,6 +438,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902061131043_PopulateCourses.resx">
       <DependentUpon>201902061131043_PopulateCourses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902281331336_UrlTitleAddBlogTable.resx">
+      <DependentUpon>201902281331336_UrlTitleAddBlogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902281340193_UrlTitleAddCourseTable.resx">
+      <DependentUpon>201902281340193_UrlTitleAddCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -34,7 +34,9 @@ namespace TestWebAppCoolName.Models
         public int Lector_Id { get; set; }
 
         public Person Lector { get; set; }
-
+        [Display(Name = "Url titulek")]
+        [Required(ErrorMessage = "Zadejte url titulek")]
+        public string UrlTitle { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }
     }

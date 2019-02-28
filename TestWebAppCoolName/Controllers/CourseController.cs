@@ -24,11 +24,19 @@ namespace TestWebAppCoolName.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Course
-   
+
         public ActionResult Index(string title)
         {
-
-            return View();
+            if (!string.IsNullOrEmpty(title))
+            {
+                var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title);
+                if (course != null)
+                {
+                    return View("Detail", course);
+                }
+                return HttpNotFound();
+            }
+            return HttpNotFound();
         }
         [AllowAnonymous]
         public ActionResult Detail(int id)
@@ -39,7 +47,8 @@ namespace TestWebAppCoolName.Controllers
         #region Admin
 
         // GET: Course/CourseAdmin
-        public ActionResult CourseAdmin() {
+        public ActionResult CourseAdmin()
+        {
             var courses = _context.Courses.Include(b => b.Lector).ToList();
             return View(courses);
         }
@@ -47,7 +56,8 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult New()
         {
             var persons = _context.Persons.ToList();
-            var viewModel = new CourseViewModel() {
+            var viewModel = new CourseViewModel()
+            {
                 Persons = persons
             };
             return View(viewModel);
@@ -62,7 +72,8 @@ namespace TestWebAppCoolName.Controllers
                 Persons = persons,
             };
 
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 viewModel.Course = course;
                 return View(viewModel);
             }
@@ -70,7 +81,7 @@ namespace TestWebAppCoolName.Controllers
             course.Changed = DateTime.Now;
             _context.Courses.Add(course);
             _context.SaveChanges();
-       
+
             return RedirectToAction("CourseAdmin");
         }
 
@@ -109,6 +120,7 @@ namespace TestWebAppCoolName.Controllers
                     cour.Lector_Id = course.Lector_Id;
                     cour.Modificator = course.Modificator;
                     cour.Svg = course.Svg;
+                    cour.UrlTitle = course.UrlTitle;
                     cour.Changed = DateTime.Now;
                     _context.SaveChanges();
                     return RedirectToAction("CourseAdmin");
@@ -153,6 +165,6 @@ namespace TestWebAppCoolName.Controllers
         }
         #endregion
 
-     
+
     }
 }

@@ -30,6 +30,11 @@
                 @Html.ValidationMessageFor(m => m.Course.Lector_Id)
             </p>
             <p>
+                @Html.LabelFor(m => m.Course.UrlTitle)
+                @Html.TextBoxFor(m => m.Course.UrlTitle)
+                @Html.ValidationMessageFor(m => m.Course.UrlTitle)
+            </p>
+            <p>
                 @Html.LabelFor(m => m.Course.Modificator)
                 @Html.TextBoxFor(m=>m.Course.Modificator)
                 @Html.ValidationMessageFor(m => m.Course.Modificator)

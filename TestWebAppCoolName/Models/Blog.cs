@@ -24,7 +24,9 @@ namespace TestWebAppCoolName.Models
         [ForeignKey("Author")]
         public int Author_Id { get; set; }
         public Person Author { get; set; }
-
+        [Display(Name = "Url titulek")]
+        [Required(ErrorMessage = "Zadejte url titulek")]
+        public string UrlTitle { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }
     }
