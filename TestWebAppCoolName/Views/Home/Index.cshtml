@@ -31,10 +31,10 @@
             <div class="courses-cards">
 
                 @{
-                    foreach (var course in Model.Courses)
+                    foreach (var course in Model.Courses)   
                     {
                         <div class="course-card course-card--@course.Modificator">
-                            <a class="course-card__link" href="@Url.Action("Detail", "Course", new {id = course.Id})"></a>
+                            <a class="course-card__link" href="@Url.Action("Index", "Course", new {title = course.UrlTitle})"></a>
                             <div class="course-card__content">
                                 <div class="course-card__image">
                                     <svg viewBox="0 0 128 128">
@@ -68,16 +68,16 @@
                     {
                         <article class="article-preview">
                             <div class="article-preview__author">@blog.Author.Name</div>
-                            <h2 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Detail", "Blog", new {id = blog.Id})">@blog.Name</a></h2>
+                            <h2 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Index", "Blog", new {title = blog.UrlTitle})">@blog.Name</a></h2>
                             <p class="article-preview__text">@blog.Description</p>
-                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Detail", "Blog", new {id = blog.Id})">Číst článek</a></div>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index", "Blog", new {title = blog.UrlTitle})">Číst článek</a></div>
                         </article>
                     }
                 }
 
 
             </div>
-            <div class="blog__link"><a class="link--gradient-inversed" href="#">Všechny články →</a></div>
+            <div class="blog__link"><a class="link--gradient-inversed" href="@Url.Action("Index","Blog")">Všechny články →</a></div>
         </article>
 
         <article class="contact" id="contact">

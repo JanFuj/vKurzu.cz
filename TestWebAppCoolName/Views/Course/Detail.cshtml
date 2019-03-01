@@ -1,7 +1,7 @@
-﻿@model TestWebAppCoolName.Models.Course
+﻿@model TestWebAppCoolName.Controllers.CourseViewModel
 
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.Course.Name;
 }
 
 
@@ -22,10 +22,10 @@
 <main class="main">
 
     <div class="intro intro--course">
-        <div class="course-image"><svg viewBox="0 0 128 128" role="img"><linearGradient id="gradient-web-basics" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>@Html.Raw(Model.Svg)</svg></div>
+        <div class="course-image"><svg viewBox="0 0 128 128" role="img"><linearGradient id="gradient-web-basics" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>@Html.Raw(Model.Course.Svg)</svg></div>
         <div class="course-texts">
-            <h1 class="course-title">@Model.Name</h1>
-            <p class="h4 course-desc">@Model.Description</p>
+            <h1 class="course-title">@Model.Course.Name</h1>
+            <p class="h4 course-desc">@Model.Course.Description</p>
         </div>
         <div class="banner banner--course">
             <div class="banner__top"></div>
@@ -42,10 +42,24 @@
         <p class="course__paragraph--why">Ať už jste webově nepolíbený vývojář, začínajícím designer nebo jednoduše jen nadšenec do kompjůtrů, právě jste našli svůj vstupní bod do světa HTML/CSS. Zanoříme se do úplných základů HTML dokumentu, na jakém principu je postavem a jak modifikovat rozložení jeho prvků. Často potřebujeme naskočit na novou technologii prakticky ihned, což má pozitivní dopad na její rychlou adopci, avšak hrozí opomenutí pochopení samotných základů. Pojďme se na dvě stěžejní webové technologie podívat od píky. </p>
         <h2 class="course__heading course__heading--toc">Osnova</h2><ul class="course__paragraph--toc"><li>Struktura HTML dokumentu</li><li>Elementy a jejich sémantika</li><li>Atributy elementů</li><li>Struktura CSS dokumentu</li><li>Selektory</li><li>Kaskáda a specificita selektorů</li><li>CSS vlastnosti a jejich hodnoty</li></ul>
         <h2 class="course__heading course__heading--details">Kdy a kde</h2><ul class="course__paragraph--details"><li class="course__teacher">Lektor: Daniel Hruška</li><li class="course__span">Rozsah: 8 hodin</li><li class="course__price">Cena: 4990 Kž bez DPH</li></ul>
-        <form class="reg-form" action="">
+
+        <form class="reg-form" action="@Url.Action("SendEmail","Course")" method="post">
             <h2 class="h4 reg-form__title">Registrace</h2>
-            <div class="reg-form__content"><input id="name" type="text" name="fname" placeholder="Jméno"><input type="text" name="lname" placeholder="Příjmení"><input type="email" name="email" placeholder="E-mail"><button  class="reg-form__button" type="submit">Počítejte se mnou!</button></div>
+            <div class="reg-form__content">
+          
+                @Html.TextBoxFor(m=>m.FormModel.Name, new{placeholder = "Jméno"})
+                @Html.ValidationMessageFor(m => m.FormModel.Name)
+                @Html.TextBoxFor(m=>m.FormModel.Surname, new{placeholder = "Příjmení" })
+                @Html.ValidationMessageFor(m => m.FormModel.Surname)
+                @Html.TextBoxFor(m=>m.FormModel.Email, new{placeholder = "E-mail" })
+                @Html.ValidationMessageFor(m => m.FormModel.Email)
+                @Html.HiddenFor(m=>m.Course.UrlTitle)
+                @Html.AntiForgeryToken()
+                <button class="reg-form__button" type="submit">Počítejte se mnou!</button>
+            </div>
         </form>
+
+
     </article>
 </main>
 <footer class="footer">
@@ -53,5 +67,10 @@
     <p><small>&copy; <span id="copyright-year">2019</span> Cool Name</small></p>
 </footer>
 </body>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+}
 
 

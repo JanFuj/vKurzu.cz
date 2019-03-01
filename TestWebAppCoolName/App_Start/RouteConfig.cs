@@ -20,6 +20,24 @@ namespace TestWebAppCoolName
               
             );
             routes.MapRoute(
+                name: "BlogANew",
+                url: "blog/new",
+                defaults: new { controller = "Blog", action = "New" }
+
+            );
+            routes.MapRoute(
+                name: "BlogAdmin",
+                url: "blogAdmin",  
+                defaults: new { controller = "Blog", action = "BlogAdmin" }
+
+            );
+            routes.MapRoute(
+                name: "Blog",
+                url: "blog/{title}",
+                defaults: new { controller = "Blog", action = "Index" }
+
+            );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

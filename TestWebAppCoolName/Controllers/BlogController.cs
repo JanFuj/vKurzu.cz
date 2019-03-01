@@ -25,8 +25,14 @@ namespace TestWebAppCoolName.Controllers
         }
         [AllowAnonymous]
         // GET: Blog
-        public ActionResult Index()
+        public ActionResult Index(string title)
         {
+            if (!string.IsNullOrEmpty(title)) {
+                //detail blogu
+                var blog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == title);
+                return View("Article",blog);
+            }
+            //seznam blogu
             return View();
         }
         [AllowAnonymous]
@@ -75,6 +81,16 @@ namespace TestWebAppCoolName.Controllers
                 viewModel.Blog = blog;
                 return View(viewModel);
             }
+
+            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
+            if (exist != null)
+            {
+                ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
+                viewModel.Blog = blog;
+                return View(viewModel);
+            }
+
+
             blog.Created = DateTime.Now;
             blog.Changed = DateTime.Now;
             _context.Blogs.Add(blog);
@@ -110,31 +126,48 @@ namespace TestWebAppCoolName.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Blog blog)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var blo = _context.Blogs.FirstOrDefault(b => b.Id == blog.Id);
-                if (blo != null)
+                var persons = _context.Persons.ToList();
+                var viewModel = new BlogViewModel()
                 {
-                    blo.Name = blog.Name;
-                    blo.Description = blog.Description;
-                    blo.Author_Id = blog.Author_Id;
-                    blo.Changed = DateTime.Now;
-                    _context.SaveChanges();
-                    return RedirectToAction("BlogAdmin");
-                }
-                else
-                {
-                    return HttpNotFound();
-                }
-            }
-            var persons = _context.Persons.ToList();
-            var viewModel = new BlogViewModel()
-            {
-                Persons = persons,
-                Blog = blog
+                    Persons = persons,
+                    Blog = blog
 
-            };
-            return View(viewModel);
+                };
+                return View(viewModel);
+            }
+
+            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
+            if (exist != null)
+            {
+                ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
+                var persons = _context.Persons.ToList();
+                var viewModel = new BlogViewModel()
+                {
+                    Persons = persons,
+                    Blog = blog
+
+                };
+                return View(viewModel);
+            }
+
+
+            var blo = _context.Blogs.FirstOrDefault(b => b.Id == blog.Id);
+            if (blo != null)
+            {
+                blo.Name = blog.Name;
+                blo.Description = blog.Description;
+                blo.Author_Id = blog.Author_Id;
+                blo.UrlTitle = blog.UrlTitle;
+                blo.Changed = DateTime.Now;
+                _context.SaveChanges();
+                return RedirectToAction("BlogAdmin");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
 

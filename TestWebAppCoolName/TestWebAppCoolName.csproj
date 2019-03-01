@@ -274,6 +274,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseContactForm.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />

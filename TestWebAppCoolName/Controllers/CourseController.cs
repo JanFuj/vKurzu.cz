@@ -4,7 +4,9 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using TestWebAppCoolName.Models;
 
@@ -14,6 +16,7 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Person> Persons { get; set; }
         public Course Course { get; set; }
+        public CourseContactForm FormModel { get; set; } = new CourseContactForm();
     }
 
     public class CourseController : Controller
@@ -32,7 +35,9 @@ namespace TestWebAppCoolName.Controllers
                 var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title);
                 if (course != null)
                 {
-                    return View("Detail", course);
+                    var viewModel = new CourseViewModel();
+                    viewModel.Course = course;
+                    return View("Detail", viewModel);
                 }
                 return HttpNotFound();
             }
@@ -77,6 +82,17 @@ namespace TestWebAppCoolName.Controllers
                 viewModel.Course = course;
                 return View(viewModel);
             }
+
+            var exist = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
+
+            if (exist != null)
+            {
+                ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
+                viewModel.Course = course;
+                return View(viewModel);
+            }
+
+
             course.Created = DateTime.Now;
             course.Changed = DateTime.Now;
             _context.Courses.Add(course);
@@ -110,33 +126,52 @@ namespace TestWebAppCoolName.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Course course)
         {
-            if (ModelState.IsValid)
+
+
+            if (!ModelState.IsValid)
             {
-                var cour = _context.Courses.FirstOrDefault(c => c.Id == course.Id);
-                if (cour != null)
+
+                var persons = _context.Persons.ToList();
+                var viewModel = new CourseViewModel()
                 {
-                    cour.Name = course.Name;
-                    cour.Description = course.Description;
-                    cour.Lector_Id = course.Lector_Id;
-                    cour.Modificator = course.Modificator;
-                    cour.Svg = course.Svg;
-                    cour.UrlTitle = course.UrlTitle;
-                    cour.Changed = DateTime.Now;
-                    _context.SaveChanges();
-                    return RedirectToAction("CourseAdmin");
-                }
-                else
-                {
-                    return HttpNotFound();
-                }
+                    Persons = persons,
+                    Course = course
+                };
+
+                return View(viewModel);
             }
-            var persons = _context.Persons.ToList();
-            var viewModel = new CourseViewModel()
+
+            var exist = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
+
+            if (exist != null)
             {
-                Persons = persons,
-                Course = course
-            };
-            return View(viewModel);
+                ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
+                var persons = _context.Persons.ToList();
+                var viewModel = new CourseViewModel()
+                {
+                    Persons = persons,
+                    Course = course
+                };
+                return View(viewModel);
+            }
+
+            var cour = _context.Courses.FirstOrDefault(c => c.Id == course.Id);
+            if (cour != null)
+            {
+                cour.Name = course.Name;
+                cour.Description = course.Description;
+                cour.Lector_Id = course.Lector_Id;
+                cour.Modificator = course.Modificator;
+                cour.Svg = course.Svg;
+                cour.UrlTitle = course.UrlTitle;
+                cour.Changed = DateTime.Now;
+                _context.SaveChanges();
+                return RedirectToAction("CourseAdmin");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         // GET: Course/Delete/5
@@ -163,8 +198,39 @@ namespace TestWebAppCoolName.Controllers
             _context.SaveChanges();
             return RedirectToAction("CourseAdmin");
         }
-        #endregion
 
+
+
+        #endregion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendEmail(CourseViewModel viewModel)
+        {
+            var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == viewModel.Course.UrlTitle);
+            viewModel.Course = course;
+            if (string.IsNullOrEmpty(viewModel.FormModel.Email))
+            {
+                return View("Detail", viewModel);
+            }
+            try
+            {
+                var client = new SmtpClient("smtp.gmail.com", 587) //465
+                {
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111"),
+
+                };
+                // odeslání emailu (od koho, komu, předmět, zpráva)
+                client.Send("dolecek@dolecek.cz", "janfujdiar@seznam.cz", course.Name, $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email} ");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return View("Detail", viewModel);
+        }
 
     }
 }
