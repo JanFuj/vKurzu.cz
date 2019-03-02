@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName.Controllers
@@ -17,6 +19,7 @@ namespace TestWebAppCoolName.Controllers
         public List<Person> Persons { get; set; }
         public Course Course { get; set; }
         public CourseContactForm FormModel { get; set; } = new CourseContactForm();
+        public string Section { get; set; }
     }
 
     public class CourseController : Controller
@@ -28,7 +31,7 @@ namespace TestWebAppCoolName.Controllers
         }
         // GET: Course
 
-        public ActionResult Index(string title)
+        public ActionResult Index(string title, string section)
         {
             if (!string.IsNullOrEmpty(title))
             {
@@ -37,6 +40,7 @@ namespace TestWebAppCoolName.Controllers
                 {
                     var viewModel = new CourseViewModel();
                     viewModel.Course = course;
+                    viewModel.Section = section;
                     return View("Detail", viewModel);
                 }
                 return HttpNotFound();
@@ -204,32 +208,20 @@ namespace TestWebAppCoolName.Controllers
         #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendEmail(CourseViewModel viewModel)
+        public async Task<ActionResult> SendEmail(CourseViewModel viewModel)
         {
             var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == viewModel.Course.UrlTitle);
             viewModel.Course = course;
-            if (string.IsNullOrEmpty(viewModel.FormModel.Email))
-            {
-                return View("Detail", viewModel);
-            }
-            try
-            {
-                var client = new SmtpClient("smtp.gmail.com", 587) //465
-                {
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111"),
 
-                };
-                // odeslání emailu (od koho, komu, předmět, zpráva)
-                client.Send("dolecek@dolecek.cz", "janfujdiar@seznam.cz", course.Name, $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email} ");
-            }
-            catch (Exception e)
+            var emailSender = new EmailSender();
+            var sent = await emailSender.SendEmail(viewModel.FormModel.Email, course.Name, $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email}");
+            if (!sent)
             {
-                Console.WriteLine(e);
-                throw;
+                Console.WriteLine("sending email error");
             }
-
-            return View("Detail", viewModel);
+            // zabrani opetovnemu odeslani formulare a presune na /kurz/{urlTitle},
+            // jinak by zustal na /Course/SendEmail a po refreshi by znovu odeslal mail
+            return RedirectToAction("Index", new {title = course.UrlTitle, section = "Form"});
         }
 
     }

@@ -17,7 +17,7 @@ namespace TestWebAppCoolName
                 name: "Course",
                 url: "kurz/{title}",
                 defaults: new { controller = "Course", action = "Index" }
-              
+
             );
             routes.MapRoute(
                 name: "BlogANew",
@@ -27,7 +27,7 @@ namespace TestWebAppCoolName
             );
             routes.MapRoute(
                 name: "BlogAdmin",
-                url: "blogAdmin",  
+                url: "blogAdmin",
                 defaults: new { controller = "Blog", action = "BlogAdmin" }
 
             );
@@ -35,7 +35,17 @@ namespace TestWebAppCoolName
                 name: "Blog",
                 url: "blog/{title}",
                 defaults: new { controller = "Blog", action = "Index" }
-
+            );
+            routes.MapRoute(
+                name: "BlogIndex",
+                url: "blog/",
+                defaults: new { controller = "Blog", action = "Index" }
+            );
+    
+            routes.MapRoute(
+                name: "Home",
+                url: "{action}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Default",

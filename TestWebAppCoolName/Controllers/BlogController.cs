@@ -28,6 +28,12 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult Index(string title)
         {
             if (!string.IsNullOrEmpty(title)) {
+                if (title == "index")
+                {
+                    RouteData.Values.Remove("title");
+                    return RedirectToAction("Index");
+                }
+
                 //detail blogu
                 var blog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == title);
                 return View("Article",blog);
@@ -35,6 +41,7 @@ namespace TestWebAppCoolName.Controllers
             //seznam blogu
             return View();
         }
+
         [AllowAnonymous]
         // GET: Blog/Article/5
         public ActionResult Article(int? id)
