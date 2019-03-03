@@ -145,9 +145,9 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            var exist = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
-
-            if (exist != null)
+            var existingCourse = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
+            bool exist = existingCourse?.Id != course.Id;
+            if (exist)
             {
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
                 var persons = _context.Persons.ToList();

@@ -35,7 +35,7 @@ namespace TestWebAppCoolName.Controllers
                 }
 
                 //detail blogu
-                var blog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == title);
+                var blog = _context.Blogs.Include(b=>b.Author).FirstOrDefault(b => b.UrlTitle == title);
                 return View("Article",blog);
             }
             //seznam blogu
@@ -144,9 +144,10 @@ namespace TestWebAppCoolName.Controllers
                 };
                 return View(viewModel);
             }
-
-            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
-            if (exist != null)
+            //muze editovat pouze pokud stejny url title neexistuje u jineho blogu
+            var existingBlog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
+            bool exist = existingBlog?.Id != blog.Id;
+            if (exist)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
                 var persons = _context.Persons.ToList();
@@ -158,7 +159,6 @@ namespace TestWebAppCoolName.Controllers
                 };
                 return View(viewModel);
             }
-
 
             var blo = _context.Blogs.FirstOrDefault(b => b.Id == blog.Id);
             if (blo != null)

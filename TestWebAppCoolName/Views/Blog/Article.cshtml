@@ -1,23 +1,24 @@
-﻿@model TestWebAppCoolName.Models.Blog
+﻿@using TestWebAppCoolName.Helpers
+@model TestWebAppCoolName.Models.Blog
 
 <body class="body body-article">
     <header class="header header--article" id="site-header">
         <nav class="nav">
-            <a class="site-branding" href="index.html">
+            <a class="site-branding" href="@Url.Action("Index","Home")">
                 <div class="site-logo">
                     <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <linearGradient id="gradient-logo" x2="0" y2="2"><stop offset="0%" stop-color="var(--clr-primary)" /><stop offset="100%" stop-color="var(--clr-secondary)" /></linearGradient>
                         <path d="M50.2916265,15.1816557 C53.2237995,10.1192138 58.641442,7 64.5044262,7 C70.3674104,7 75.7850529,10.1192138 78.7172259,15.1816557 C92.1959609,38.4596546 112.335754,73.2435736 125.804956,96.505277 C128.731681,101.558213 128.731681,107.783061 125.804956,112.83464 C122.879592,117.887576 117.474207,121 111.622118,121 C84.6564765,121 44.3237759,121 17.3649439,121 C11.5183026,121 6.11564095,117.890292 3.19300122,112.841429 C0.268999593,107.792567 0.268999593,101.573151 3.19300122,96.5242883 C16.662203,73.2612269 36.8101676,38.4664443 50.2916265,15.1816557 Z"></path>
                     </svg>
                 </div><h1 class="h6 site-name link--gradient">Cool Name</h1>
-            </a><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="blog.html">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#contact">Kontakt</a></li></ul>
+            </a><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog",new{title = "index"})">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li></ul>
         </nav>
     </header>
     <main class="main--article">
         <article class="article">
             <header class="article__header">
                 <div class="article__details-wrapper">
-                    <h1 class="article__title">Konzistentí paleta barev pomocí CSS Custom Properties</h1>
+                    <h1 class="article__title">@Model.Name</h1>
                     <div class="article__tags">
                         <span class="tag">CSS</span>
                         <span class="tag">Custom Properties</span>
@@ -31,8 +32,30 @@
             <div class="article__content">
                 <p>Variables are ways to hold pieces of information that can be used throughout your code. They are an integral part of any programming language and are now something that we can also use within our CSS. Whether it is for something as simple as defining our color / font sizes to help craft custom color themes, we can use CSS Variables to not only help manage our code better, but also to give us some more control over things.</p>
                 <p>CSS Variables can be defined at either the global scope, if you wish for them to be available anywhere throughout your CSS, or they can be defined at the local scope, if you only wish for them to be available in a specific block of code. Regardless of where you choose to define them, CSS Variables will cascade down through their children (like other CSS properties).</p>
-                <aside class="related-course"><h5 class="h6 related-course__heading">Související kurz</h5><div class="course-card course-card--css-advanced course-card--related"><a class="course-card__link" href="course.html"></a><div class="course-card__content"><div class="course-card__image"><svg viewBox="0 0 128 128"><linearGradient id="gradient-css-advanced" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient><path d="M8.76 1l10.055 112.883 45.118 12.58 45.244-12.626 10.063-112.837h-110.48zm89.591 25.862l-3.347 37.605.01.203-.014.467v-.004l-2.378 26.294-.262 2.336-28.36 7.844v.001l-.022.019-28.311-7.888-1.917-21.739h13.883l.985 11.054 15.386 4.17-.004.008v-.002l15.443-4.229 1.632-18.001h-32.282999999999994l-.277-3.043-.631-7.129-.331-3.828h34.748999999999995l1.264-14h-52.926l-.277-3.041-.63-7.131-.332-3.828h69.281l-.331 3.862z"></path></svg></div><div class="course-card__info"><h6 class="course-card__title"><a class="course-card__title-link" href="course.html">Pokročilé stylování webu</a></h6><p class="course-card__desc">Animace, přechody, Media Queries, Custom Properties a další moderní libůstky.</p></div></div></div></aside><p>What makes CSS Variables really appealing to use is because you don’t have to completely re-write your style properties when you want to change something, you simply have to change the value of the variable. This allows us to not really have to worry about the specificity of our selectors. It also allows us to target specific areas of certain properties instead of having to completely re-write them when we want to change them (i.e if you want to change the angle of a linear gradient on hover, instead of re-writing out the whole linear gradient style, you can just use a variable in place of the angle and just update the variable as necessary). Also, we can use CSS Variables in conjunction with the calc function to do some pretty interesting and powerful things.</p>
-                <p>Example of declaring a global CSS Variable, at the root level, and assigning it to the body’s background-color property.Differences between CSS Variables / SASS / LESS VariablesNow, I know you may be thinking to yourself, hey don’t we already have SASS / LESS Variables, don’t those do the same thing? Yes, SASS / LESS Variables are a thing but they do not function in the same way. Let’s take a look at some of the differences between them:</p><h2 id="differentsyntaxfordeclarationandretrievingvalues">Different syntax</h2>
+                <aside class="related-course">
+                    <h5 class="h6 related-course__heading">Související kurz</h5>
+                    <div class="course-card course-card--css-advanced course-card--related">
+                        <a class="course-card__link" href="course.html"></a>
+                        <div class="course-card__content">
+                            <div class="course-card__image">
+                                <svg viewBox="0 0 128 128">
+                                    <linearGradient id="gradient-css-advanced" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--course-card-bg-1)" />
+                                        <stop offset="100%" stop-color="var(--course-card-bg-2)" />
+                                    </linearGradient>
+                                    <path d="M8.76 1l10.055 112.883 45.118 12.58 45.244-12.626 10.063-112.837h-110.48zm89.591 25.862l-3.347 37.605.01.203-.014.467v-.004l-2.378 26.294-.262 2.336-28.36 7.844v.001l-.022.019-28.311-7.888-1.917-21.739h13.883l.985 11.054 15.386 4.17-.004.008v-.002l15.443-4.229 1.632-18.001h-32.282999999999994l-.277-3.043-.631-7.129-.331-3.828h34.748999999999995l1.264-14h-52.926l-.277-3.041-.63-7.131-.332-3.828h69.281l-.331 3.862z"></path>
+                                </svg>
+                            </div>
+                            <div class="course-card__info">
+                                <h6 class="course-card__title"><a class="course-card__title-link" href="course.html">Pokročilé stylování webu</a></h6>
+                                <p class="course-card__desc">Animace, přechody, Media Queries, Custom Properties a další moderní libůstky.</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <p>What makes CSS Variables really appealing to use is because you don’t have to completely re-write your style properties when you want to change something, you simply have to change the value of the variable. This allows us to not really have to worry about the specificity of our selectors. It also allows us to target specific areas of certain properties instead of having to completely re-write them when we want to change them (i.e if you want to change the angle of a linear gradient on hover, instead of re-writing out the whole linear gradient style, you can just use a variable in place of the angle and just update the variable as necessary). Also, we can use CSS Variables in conjunction with the calc function to do some pretty interesting and powerful things.</p>
+                <p>Example of declaring a global CSS Variable, at the root level, and assigning it to the body’s background-color property.Differences between CSS Variables / SASS / LESS VariablesNow, I know you may be thinking to yourself, hey don’t we already have SASS / LESS Variables, don’t those do the same thing? Yes, SASS / LESS Variables are a thing but they do not function in the same way. Let’s take a look at some of the differences between them:</p>
+                <h2 id="differentsyntaxfordeclarationandretrievingvalues">Different syntax</h2>
                 <p>Whereas SASS and LESS use $ and , respectively, to define their vaiables, CSS Variables use a double dash (--) to define their variables (i.e --bgcolor, --fontSize). Also, when you wish to reference the variable in a property value, you would use the following var(--variableName) (i.e background-color: var(--bgcolor);).</p>
                 <h2 id="sasslessvariablesstaticcompiledbeforeruntime">SASS / LESS Variables — static</h2>
                 <p>SASS Variables are a great way to organize your CSS but unfortunately there is no way for us to get to them once our site is running, they are static. Our SCSS code is run through a pre-processor (i.e Prepros etc) to generate our CSS code. It is at this time that the SASS Variables are processed and swapped out for their values. After that, the SASS Variables serve no more purpose, they can no longer be accessed.</p>
@@ -48,8 +71,34 @@
             </div>
         </article>
         <aside class="related-articles">
-            <hr><h2 class="related-articles__heading">Čtěte dále</h2><div class="related-articles__grid"><article class="article-preview"><div class="article-preview__author">Caleigh Jerde</div><h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="article.html">Blazeon Scrambles to Police Content Amid Rapid Growth</a></h3><p class="article-preview__text">These zooplankton are not particularly giant themselves (they resemble tadpoles and are about the size of a pinkie finger), but every day, they construct one or more spacious houses” that can exceed three feet in length.</p><div class="article-preview__bottom-link"><a class="link--gradient link--border" href="article.html">Číst článek</a></div></article><article class="article-preview"><div class="article-preview__author">Nia Gutkowski</div><h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="article.html">Email Attack Hits Lorr: What to Do if You Clicked</a></h3><p class="article-preview__text">The few clicking sounds were generated by dust the size of cigarette smoke particles about a micron, or one-25,000th of an inch, in diameter. To be clear: Cassini did not actually hear any sounds.</p><div class="article-preview__bottom-link"><a class="link--gradient link--border" href="article.html">Číst článek</a></div></article><article class="article-preview"><div class="article-preview__author">Jade Mohr</div><h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="article.html">Going to the Dark Side in Windows 10</a></h3><p class="article-preview__text">Although DNA sticks to minerals and decayed plants in soil, scientists did not know whether it would ever be possible to fish out gene fragments that were tens of thousands of years old and buried deep among other genetic debris.</p><div class="article-preview__bottom-link"><a class="link--gradient link--border" href="article.html">Číst článek</a></div></article></div>
+            <hr>
+            <h2 class="related-articles__heading">Čtěte dále</h2>
+            <div class="related-articles__grid">
+                @{
+                    var articles = new DataService().GetRelatedArticles(Model);
+                    foreach (var article in articles)
+                    {
+                        <article class="article-preview">
+                            <div class="article-preview__author">@article.Author.FullName</div>
+                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">@article.Name</a></h3>
+                            <p class="article-preview__text">@article.Description</p>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">Číst článek</a></div>
+                        </article>
+                    }
+                }
+
+            </div>
         </aside>
     </main>
-    <footer class="footer"><hr><nav class="nav" role="navigation"><ul class="nav__list"><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="blog.html">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="index.html#contact">Kontakt</a></li></ul></nav><p><small>&copy; <span id="copyright-year">2019</span> Cool Name</small></p></footer>
+    <footer class="footer">
+        <hr>
+        <nav class="nav" role="navigation">
+            <ul class="nav__list">
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li>
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog",new{title = "index"})">Blog</a></li>
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+        <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> Cool Name</small></p>
+    </footer>
 </body>
