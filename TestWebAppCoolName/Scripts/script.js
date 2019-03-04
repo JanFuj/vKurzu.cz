@@ -24,7 +24,7 @@ $(document).ready(function () {
         if (Math.abs(lastScrollTop - st) <= delta)
             return;
 
-        if (st > headerHeight && lastScrollTop > headerHeight*2) {
+        if (st > headerHeight && lastScrollTop > headerHeight * 2) {
             $(header).removeClass('header--up-top');
         } else {
             $(header).addClass('header--up-top');
@@ -44,4 +44,9 @@ $(document).ready(function () {
 
         lastScrollTop = st;
     }
+
+
+    //
+
+
 });

@@ -20,5 +20,9 @@ namespace TestWebAppCoolName.Helpers
             //TODO some logic to pick up 3 related articles
             return _context.Blogs.Include(b=>b.Author).Where(b=>b.UrlTitle != blog.UrlTitle).Take(3).ToList();
         }
+        public List<Tag> GetTags()
+        {
+            return _context.Tags.ToList();
+        }
     }
 }

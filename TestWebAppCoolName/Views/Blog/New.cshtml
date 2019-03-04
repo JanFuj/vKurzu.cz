@@ -1,10 +1,44 @@
-﻿@model TestWebAppCoolName.Controllers.BlogViewModel
+﻿@using TestWebAppCoolName.Helpers
+@model TestWebAppCoolName.Controllers.BlogViewModel
 
 @{
     ViewBag.Title = "title";
 
 }
+<style>
+    .subject-info-box-1,
+    .subject-info-box-2 {
+        float: left;
+        width: 45%;
+        select
 
+    {
+        height: 200px;
+        padding: 0;
+        option
+
+    {
+        padding: 4px 10px 4px 10px;
+    }
+
+    option:hover {
+        background: #EEEEEE;
+    }
+
+    }
+    }
+
+    .subject-info-arrows {
+        float: left;
+        width: 10%;
+        input
+
+    {
+        width: 70%;
+        margin-bottom: 5px;
+    }
+    }
+</style>
 <main class="main">
     <section class="courses">
         <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
@@ -19,7 +53,7 @@
 
             <p>
                 @Html.LabelFor(m => m.Blog.Description)
-                @Html.TextAreaFor(m => m.Blog.Description,new{id = "textArea"})
+                @Html.TextAreaFor(m => m.Blog.Description, new { id = "textArea" })
                 @Html.ValidationMessageFor(m => m.Blog.Description)
             </p>
             <p>
@@ -31,6 +65,31 @@
                 @Html.LabelFor(m => m.Blog.UrlTitle)
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
+            </p>
+
+            <div class="subject-info-box-1">
+                <select multiple="multiple" id='lstBox1' class="form-control">
+
+                    @foreach (var tag in new DataService().GetTags())
+                    {
+                        <option value="@tag.Name">@tag.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="subject-info-arrows text-center">
+                <input type='button' id='btnRight' value='>' class="btn btn-default" /><br />
+                <input type='button' id='btnLeft' value='<' class="btn btn-default" /><br />
+            </div>
+
+      
+
+            <div class="subject-info-box-2">
+                <select multiple="multiple" id='lstBox2' class="form-control"></select>
+            </div>
+            <p>
+                <label id="tags">tagy</label>
+
             </p>
             <p>
                 <button type="submit">Vytvořit</button>
@@ -63,6 +122,42 @@
                 $("#pageloader").toggle();
             });//submit
         });
+
+
+        (function () {
+
+            $("#btnRight").click(function (e) {
+                var selectedOpts = $('#lstBox1 option:selected');
+                if (selectedOpts.length == 0) {
+                    e.preventDefault();
+                }
+
+                $('#lstBox2').append($(selectedOpts).clone());
+                $(selectedOpts).remove();
+                e.preventDefault();
+                $('#tags').empty();
+                $("#lstBox2 > option").each(function () {
+                    $('#tags').append("#" + $(this).val()+ " ");
+                    console.log($(this).val())
+                });
+            });
+
+            $('#btnLeft').click(function (e) {
+                var selectedOpts = $('#lstBox2 option:selected');
+                if (selectedOpts.length == 0) {
+                    e.preventDefault();
+                }
+
+                $('#lstBox1').append($(selectedOpts).clone());
+                $(selectedOpts).remove();
+                e.preventDefault();
+            });
+
+
+        }(jQuery));
+
+
+
     </script>
 
 }
