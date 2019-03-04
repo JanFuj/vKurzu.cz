@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,6 +15,8 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Person> Persons { get; set; }
         public Blog Blog { get; set; }
+
+        public string Tagy { get; set; } 
     }
 
     public class BlogController : Controller
@@ -68,6 +72,7 @@ namespace TestWebAppCoolName.Controllers
             var viewModel = new BlogViewModel()
             {
                 Persons = persons
+                
             };
             return View(viewModel);
         }
@@ -75,7 +80,7 @@ namespace TestWebAppCoolName.Controllers
         // POST: Blog/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(Blog blog)
+        public ActionResult New(BlogViewModel vm)
         {
 
             var persons = _context.Persons.ToList();
@@ -85,22 +90,22 @@ namespace TestWebAppCoolName.Controllers
             };
             if (!ModelState.IsValid)
             {
-                viewModel.Blog = blog;
+                viewModel.Blog = vm.Blog;
                 return View(viewModel);
             }
 
-            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
+            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle ==vm.Blog.UrlTitle);
             if (exist != null)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
-                viewModel.Blog = blog;
+                viewModel.Blog = vm.Blog;
                 return View(viewModel);
             }
 
 
-            blog.Created = DateTime.Now;
-            blog.Changed = DateTime.Now;
-            _context.Blogs.Add(blog);
+            vm.Blog.Created = DateTime.Now;
+            vm.Blog.Changed = DateTime.Now;
+            _context.Blogs.Add(vm.Blog);
             _context.SaveChanges();
             ViewData["Saved"] = "Blog byl vyrvořen";
             ModelState.Clear();

@@ -69,11 +69,7 @@
 
             <div class="subject-info-box-1">
                 <select multiple="multiple" id='lstBox1' class="form-control">
-
-                    @foreach (var tag in new DataService().GetTags())
-                    {
-                        <option value="@tag.Name">@tag.Name</option>
-                    }
+                 
                 </select>
             </div>
 
@@ -85,10 +81,17 @@
       
 
             <div class="subject-info-box-2">
-                <select multiple="multiple" id='lstBox2' class="form-control"></select>
+                <select multiple="multiple" id='lstBox2' class="form-control">
+                    @foreach (var tag in new DataService().GetTags())
+                    {
+                        <option value="@tag.Name">@tag.Name</option>
+                    }
+                </select>
             </div>
             <p>
-                <label id="tags">tagy</label>
+                <label>tagy</label>
+
+                @Html.TextBoxFor(m => m.Tagy , "..." ,new { id = "tags",name= "Tagy", @readonly = "readonly"})
 
             </p>
             <p>
@@ -134,10 +137,13 @@
 
                 $('#lstBox2').append($(selectedOpts).clone());
                 $(selectedOpts).remove();
+                $('#tags').val("")
                 e.preventDefault();
-                $('#tags').empty();
-                $("#lstBox2 > option").each(function () {
-                    $('#tags').append("#" + $(this).val()+ " ");
+                let tags = "";
+                $("#lstBox1 > option").each(function () {
+                    tags  = tags + ("#" + $(this).val() + " ")
+                    $('#tags').val(tags)
+                    $('#tags').change()
                     console.log($(this).val())
                 });
             });
@@ -151,6 +157,14 @@
                 $('#lstBox1').append($(selectedOpts).clone());
                 $(selectedOpts).remove();
                 e.preventDefault();
+                $('#tags').val("")
+                let tags = "";
+                $("#lstBox1 > option").each(function () {
+                    tags = tags + ("#" + $(this).val() + " ")
+                    $('#tags').val(tags)
+                    $('#tags').change()
+                    console.log($(this).val())
+                });
             });
 
 
