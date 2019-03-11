@@ -69,29 +69,43 @@
 
             <div class="subject-info-box-1">
                 <select multiple="multiple" id='lstBox1' class="form-control">
-                 
+                    @if (Model.Blog?.Tags != null)
+                    {
+                        foreach (var tag in Model.Blog.Tags)
+                        {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
+                    }
                 </select>
             </div>
 
             <div class="subject-info-arrows text-center">
-                <input type='button' id='btnRight' value='>' class="btn btn-default" /><br />
-                <input type='button' id='btnLeft' value='<' class="btn btn-default" /><br />
+                <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
             </div>
 
-      
+
 
             <div class="subject-info-box-2">
                 <select multiple="multiple" id='lstBox2' class="form-control">
                     @foreach (var tag in new DataService().GetTags())
                     {
-                        <option value="@tag.Name">@tag.Name</option>
+                        bool exist = false;
+                        if (Model.Blog?.Tags != null)
+                        {
+                            exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                        }
+                        if (!exist)
+                        {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
                     }
                 </select>
             </div>
             <p>
                 <label>tagy</label>
 
-                @Html.TextBoxFor(m => m.Tagy , "..." ,new { id = "tags",name= "Tagy", @readonly = "readonly"})
+                @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
 
             </p>
             <p>
@@ -141,7 +155,7 @@
                 e.preventDefault();
                 let tags = "";
                 $("#lstBox1 > option").each(function () {
-                    tags  = tags + ("#" + $(this).val() + " ")
+                    tags = tags + ("#" + $(this).val() + " ")
                     $('#tags').val(tags)
                     $('#tags').change()
                     console.log($(this).val())

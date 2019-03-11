@@ -16,7 +16,7 @@ namespace TestWebAppCoolName.Controllers
         public List<Person> Persons { get; set; }
         public Blog Blog { get; set; }
 
-        public string Tagy { get; set; } 
+        public string Tagy { get; set; }
     }
 
     public class BlogController : Controller
@@ -31,7 +31,8 @@ namespace TestWebAppCoolName.Controllers
         // GET: Blog
         public ActionResult Index(string title)
         {
-            if (!string.IsNullOrEmpty(title)) {
+            if (!string.IsNullOrEmpty(title))
+            {
                 if (title == "index")
                 {
                     RouteData.Values.Remove("title");
@@ -39,8 +40,8 @@ namespace TestWebAppCoolName.Controllers
                 }
 
                 //detail blogu
-                var blog = _context.Blogs.Include(b=>b.Author).FirstOrDefault(b => b.UrlTitle == title);
-                return View("Article",blog);
+                var blog = _context.Blogs.Include(b => b.Author).FirstOrDefault(b => b.UrlTitle == title);
+                return View("Article", blog);
             }
             //seznam blogu
             return View();
@@ -71,7 +72,8 @@ namespace TestWebAppCoolName.Controllers
             var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
-                Persons = persons
+                Persons = persons,
+                Blog = new Blog(),
                 
             };
             return View(viewModel);
@@ -83,6 +85,7 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult New(BlogViewModel vm)
         {
 
+            var tags = ParseTags(vm.Tagy);
             var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
@@ -91,26 +94,52 @@ namespace TestWebAppCoolName.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.Blog = vm.Blog;
+                viewModel.Blog.Tags = tags;
                 return View(viewModel);
             }
 
-            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle ==vm.Blog.UrlTitle);
+            var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == vm.Blog.UrlTitle);
             if (exist != null)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
                 viewModel.Blog = vm.Blog;
+                viewModel.Blog.Tags = tags;
                 return View(viewModel);
             }
 
 
             vm.Blog.Created = DateTime.Now;
             vm.Blog.Changed = DateTime.Now;
+            vm.Blog.Tags = tags;
             _context.Blogs.Add(vm.Blog);
             _context.SaveChanges();
             ViewData["Saved"] = "Blog byl vyrvořen";
             ModelState.Clear();
             return RedirectToAction("BlogAdmin");
 
+        }
+
+        private List<Tag> ParseTags(string tagy)
+        {
+
+            var listTags = new List<Tag>();
+            if (string.IsNullOrEmpty(tagy)) {
+                return listTags;
+            }
+            var tags = tagy.Split('#');
+            foreach (var tag in tags)
+            {
+                if (!string.IsNullOrEmpty(tag))
+                {
+                    var existingTag = _context.Tags.FirstOrDefault(t => t.Name == tag.Trim());
+                    if (existingTag != null)
+                    {
+                        listTags.Add(existingTag);
+                    }
+                }
+            }
+
+            return listTags;
         }
 
         // GET: Blog/Edit/5
