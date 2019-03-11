@@ -281,6 +281,10 @@
     <Compile Include="Migrations\201903041451302_BlogIdinTagTable.Designer.cs">
       <DependentUpon>201903041451302_BlogIdinTagTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903110621358_BlogInTag.cs" />
+    <Compile Include="Migrations\201903110621358_BlogInTag.Designer.cs">
+      <DependentUpon>201903110621358_BlogInTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -469,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903041451302_BlogIdinTagTable.resx">
       <DependentUpon>201903041451302_BlogIdinTagTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903110621358_BlogInTag.resx">
+      <DependentUpon>201903110621358_BlogInTag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
