@@ -39,6 +39,7 @@ namespace TestWebAppCoolName.Controllers
                     return RedirectToAction("Index");
                 }
 
+
                 //detail blogu
                 var blog = _context.Blogs.Include(b => b.Author).FirstOrDefault(b => b.UrlTitle == title);
                 return View("Article", blog);
@@ -59,8 +60,9 @@ namespace TestWebAppCoolName.Controllers
 
         #region Admin
         // GET: Blog/BlogAdmin
-        public ActionResult BlogAdmin()
+        public ActionResult Admin()
         {
+
             return View(_context.Blogs.Include(b => b.Author).ToList());
         }
 
@@ -74,7 +76,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 Persons = persons,
                 Blog = new Blog(),
-                
+
             };
             return View(viewModel);
         }
@@ -115,7 +117,7 @@ namespace TestWebAppCoolName.Controllers
             _context.SaveChanges();
             ViewData["Saved"] = "Blog byl vyrvořen";
             ModelState.Clear();
-            return RedirectToAction("BlogAdmin");
+            return RedirectToAction("Admin");
 
         }
 
@@ -123,7 +125,8 @@ namespace TestWebAppCoolName.Controllers
         {
 
             var listTags = new List<Tag>();
-            if (string.IsNullOrEmpty(tagy)) {
+            if (string.IsNullOrEmpty(tagy))
+            {
                 return listTags;
             }
             var tags = tagy.Split('#');
@@ -149,7 +152,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Blog blog = _context.Blogs.Find(id);
+            Blog blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -165,22 +168,23 @@ namespace TestWebAppCoolName.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Blog blog)
+        public ActionResult Edit(BlogViewModel vm)
         {
+            var tags = ParseTags(vm.Tagy);
             if (!ModelState.IsValid)
             {
                 var persons = _context.Persons.ToList();
                 var viewModel = new BlogViewModel()
                 {
                     Persons = persons,
-                    Blog = blog
+                    Blog = vm.Blog
 
                 };
                 return View(viewModel);
             }
             //muze editovat pouze pokud stejny url title neexistuje u jineho blogu
-            var existingBlog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == blog.UrlTitle);
-            bool exist = existingBlog?.Id != blog.Id;
+            var existingBlog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == vm.Blog.UrlTitle);
+            bool exist = existingBlog?.Id != vm.Blog.Id;
             if (exist)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
@@ -188,22 +192,29 @@ namespace TestWebAppCoolName.Controllers
                 var viewModel = new BlogViewModel()
                 {
                     Persons = persons,
-                    Blog = blog
+                    Blog = vm.Blog
 
                 };
                 return View(viewModel);
             }
 
-            var blo = _context.Blogs.FirstOrDefault(b => b.Id == blog.Id);
+            var blo = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == vm.Blog.Id);
             if (blo != null)
             {
-                blo.Name = blog.Name;
-                blo.Description = blog.Description;
-                blo.Author_Id = blog.Author_Id;
-                blo.UrlTitle = blog.UrlTitle;
+
+
+                blo.Tags = null;
+                _context.SaveChanges();
+
+
+                blo.Name = vm.Blog.Name;
+                blo.Description = vm.Blog.Description;
+                blo.Author_Id = vm.Blog.Author_Id;
+                blo.UrlTitle = vm.Blog.UrlTitle;
+                blo.Tags = tags;
                 blo.Changed = DateTime.Now;
                 _context.SaveChanges();
-                return RedirectToAction("BlogAdmin");
+                return RedirectToAction("Admin");
             }
             else
             {
@@ -237,7 +248,7 @@ namespace TestWebAppCoolName.Controllers
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
             _context.Blogs.Remove(blog);
             _context.SaveChanges();
-            return RedirectToAction("BlogAdmin");
+            return RedirectToAction("Admin");
         }
     }
 }

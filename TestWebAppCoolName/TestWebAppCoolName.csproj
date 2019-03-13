@@ -303,6 +303,7 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\main.css" />
     <Content Include="Content\main.min.css" />
+    <Content Include="Content\tags.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="media\30.svg" />
@@ -335,6 +336,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\TagScripts.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -381,7 +383,7 @@
     <Content Include="Views\People\Details.cshtml" />
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
-    <Content Include="Views\Blog\BlogAdmin.cshtml" />
+    <Content Include="Views\Blog\Admin.cshtml" />
     <Content Include="Views\Blog\Edit.cshtml" />
     <Content Include="Views\Blog\Delete.cshtml" />
     <Content Include="Views\Course\CourseAdmin.cshtml" />

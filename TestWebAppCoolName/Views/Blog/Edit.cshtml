@@ -1,4 +1,5 @@
 ﻿
+@using TestWebAppCoolName.Helpers
 @model TestWebAppCoolName.Controllers.BlogViewModel
 
 @{
@@ -33,6 +34,50 @@
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
             </p>
+
+            <div class="subject-info-box-1">
+                <select multiple="multiple" id='lstBox1' class="form-control">
+                    @if (Model.Blog?.Tags != null)
+                    {
+                        foreach (var tag in Model.Blog.Tags)
+                        {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="subject-info-arrows text-center">
+                <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
+            </div>
+
+
+
+            <div class="subject-info-box-2">
+                <select multiple="multiple" id='lstBox2' class="form-control">
+                    @foreach (var tag in new DataService().GetTags())
+                    {
+                        bool exist = false;
+                        if (Model.Blog?.Tags != null)
+                        {
+                            exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                        }
+                        if (!exist)
+                        {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <p>
+                <label>tagy</label>
+
+                @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+            </p>
+
+
             <p>
                 @Html.HiddenFor(m => m.Blog.Id)
                 <button type="submit">Vytvořit</button>
@@ -55,6 +100,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+          
+
             $("#myform").on("submit", function () {
                 console.log("submit pressed")
                 $("#pageloader").toggle();

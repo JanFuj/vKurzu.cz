@@ -26,7 +26,7 @@ namespace TestWebAppCoolName
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                   
+                      "~/Content/tags.css",
                       "~/Content/main.min.css"
                     ));
         }

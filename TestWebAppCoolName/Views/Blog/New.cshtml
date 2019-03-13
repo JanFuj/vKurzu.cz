@@ -5,7 +5,7 @@
     ViewBag.Title = "title";
 
 }
-<style>
+@*<style>
     .subject-info-box-1,
     .subject-info-box-2 {
         float: left;
@@ -38,7 +38,7 @@
         margin-bottom: 5px;
     }
     }
-</style>
+</style>*@
 <main class="main">
     <section class="courses">
         <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
@@ -141,48 +141,48 @@
         });
 
 
-        (function () {
+        //(function () {
 
-            $("#btnRight").click(function (e) {
-                var selectedOpts = $('#lstBox1 option:selected');
-                if (selectedOpts.length == 0) {
-                    e.preventDefault();
-                }
+        //    $("#btnRight").click(function (e) {
+        //        var selectedOpts = $('#lstBox1 option:selected');
+        //        if (selectedOpts.length == 0) {
+        //            e.preventDefault();
+        //        }
 
-                $('#lstBox2').append($(selectedOpts).clone());
-                $(selectedOpts).remove();
-                $('#tags').val("")
-                e.preventDefault();
-                let tags = "";
-                $("#lstBox1 > option").each(function () {
-                    tags = tags + ("#" + $(this).val() + " ")
-                    $('#tags').val(tags)
-                    $('#tags').change()
-                    console.log($(this).val())
-                });
-            });
+        //        $('#lstBox2').append($(selectedOpts).clone());
+        //        $(selectedOpts).remove();
+        //        $('#tags').val("")
+        //        e.preventDefault();
+        //        let tags = "";
+        //        $("#lstBox1 > option").each(function () {
+        //            tags = tags + ("#" + $(this).val() + " ")
+        //            $('#tags').val(tags)
+        //            $('#tags').change()
+        //            console.log($(this).val())
+        //        });
+        //    });
 
-            $('#btnLeft').click(function (e) {
-                var selectedOpts = $('#lstBox2 option:selected');
-                if (selectedOpts.length == 0) {
-                    e.preventDefault();
-                }
+        //    $('#btnLeft').click(function (e) {
+        //        var selectedOpts = $('#lstBox2 option:selected');
+        //        if (selectedOpts.length == 0) {
+        //            e.preventDefault();
+        //        }
 
-                $('#lstBox1').append($(selectedOpts).clone());
-                $(selectedOpts).remove();
-                e.preventDefault();
-                $('#tags').val("")
-                let tags = "";
-                $("#lstBox1 > option").each(function () {
-                    tags = tags + ("#" + $(this).val() + " ")
-                    $('#tags').val(tags)
-                    $('#tags').change()
-                    console.log($(this).val())
-                });
-            });
+        //        $('#lstBox1').append($(selectedOpts).clone());
+        //        $(selectedOpts).remove();
+        //        e.preventDefault();
+        //        $('#tags').val("")
+        //        let tags = "";
+        //        $("#lstBox1 > option").each(function () {
+        //            tags = tags + ("#" + $(this).val() + " ")
+        //            $('#tags').val(tags)
+        //            $('#tags').change()
+        //            console.log($(this).val())
+        //        });
+        //    });
 
 
-        }(jQuery));
+        //}(jQuery));
 
 
 
