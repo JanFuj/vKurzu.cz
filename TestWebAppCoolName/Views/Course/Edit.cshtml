@@ -1,5 +1,6 @@
 ﻿
 @using System.Web.UI.WebControls
+@using TestWebAppCoolName.Helpers
 @model TestWebAppCoolName.Controllers.CourseViewModel
 @{
     ViewBag.Title = "title";
@@ -46,6 +47,54 @@
                 @Html.TextAreaFor(m => m.Course.Svg)
                 @Html.ValidationMessageFor(m => m.Course.Svg)
             </p>
+
+
+            <div>
+
+                <div class="subject-info-box-1">
+                    <select multiple="multiple" id='lstBox1' class="form-control">
+                        @if (Model.Course?.Tags != null)
+                        {
+                            foreach (var tag in Model.Course.Tags)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="subject-info-arrows text-center">
+                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
+                </div>
+
+
+
+                <div class="subject-info-box-2">
+                    <select multiple="multiple" id='lstBox2' class="form-control">
+                        @foreach (var tag in new DataService().GetTags())
+                        {
+                            bool exist = false;
+                            if (Model.Course?.Tags != null)
+                            {
+                                exist = (Model.Course.Tags).Any(t => t.Id == tag.Id);
+                            }
+                            if (!exist)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <p>
+                    <label>tagy</label>
+
+                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+                </p>
+
+            </div>
+
             <p>
                 @Html.HiddenFor(m => m.Course.Id)
                 <button type="submit">Vytvořit</button>

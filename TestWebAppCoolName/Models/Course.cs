@@ -37,6 +37,7 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }
+        public List<Tag> Tags { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }
     }

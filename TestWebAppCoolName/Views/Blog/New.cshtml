@@ -6,39 +6,39 @@
 
 }
 @*<style>
-    .subject-info-box-1,
-    .subject-info-box-2 {
-        float: left;
-        width: 45%;
-        select
+        .subject-info-box-1,
+        .subject-info-box-2 {
+            float: left;
+            width: 45%;
+            select
 
-    {
-        height: 200px;
-        padding: 0;
-        option
+        {
+            height: 200px;
+            padding: 0;
+            option
 
-    {
-        padding: 4px 10px 4px 10px;
-    }
+        {
+            padding: 4px 10px 4px 10px;
+        }
 
-    option:hover {
-        background: #EEEEEE;
-    }
+        option:hover {
+            background: #EEEEEE;
+        }
 
-    }
-    }
+        }
+        }
 
-    .subject-info-arrows {
-        float: left;
-        width: 10%;
-        input
+        .subject-info-arrows {
+            float: left;
+            width: 10%;
+            input
 
-    {
-        width: 70%;
-        margin-bottom: 5px;
-    }
-    }
-</style>*@
+        {
+            width: 70%;
+            margin-bottom: 5px;
+        }
+        }
+    </style>*@
 <main class="main">
     <section class="courses">
         <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
@@ -67,47 +67,50 @@
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
             </p>
 
-            <div class="subject-info-box-1">
-                <select multiple="multiple" id='lstBox1' class="form-control">
-                    @if (Model.Blog?.Tags != null)
-                    {
-                        foreach (var tag in Model.Blog.Tags)
+            <div>
+                <div class="subject-info-box-1">
+                    <select multiple="multiple" id='lstBox1' class="form-control">
+                        @if (Model.Blog?.Tags != null)
                         {
-                            <option value="@tag.Name">@tag.Name</option>
+                            foreach (var tag in Model.Blog.Tags)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
                         }
-                    }
-                </select>
+                    </select>
+                </div>
+
+                <div class="subject-info-arrows text-center">
+                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
+                </div>
+
+
+
+                <div class="subject-info-box-2">
+                    <select multiple="multiple" id='lstBox2' class="form-control">
+                        @foreach (var tag in new DataService().GetTags())
+                        {
+                            bool exist = false;
+                            if (Model.Blog?.Tags != null)
+                            {
+                                exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                            }
+                            if (!exist)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <p>
+                    <label>tagy</label>
+
+                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+                </p>
             </div>
 
-            <div class="subject-info-arrows text-center">
-                <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
-                <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
-            </div>
-
-
-
-            <div class="subject-info-box-2">
-                <select multiple="multiple" id='lstBox2' class="form-control">
-                    @foreach (var tag in new DataService().GetTags())
-                    {
-                        bool exist = false;
-                        if (Model.Blog?.Tags != null)
-                        {
-                            exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
-                        }
-                        if (!exist)
-                        {
-                            <option value="@tag.Name">@tag.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-            <p>
-                <label>tagy</label>
-
-                @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
-
-            </p>
             <p>
                 <button type="submit">Vytvořit</button>
                 <div id="pageloader" style="display: none;">
@@ -141,48 +144,48 @@
         });
 
 
-        //(function () {
+            //(function () {
 
-        //    $("#btnRight").click(function (e) {
-        //        var selectedOpts = $('#lstBox1 option:selected');
-        //        if (selectedOpts.length == 0) {
-        //            e.preventDefault();
-        //        }
+            //    $("#btnRight").click(function (e) {
+            //        var selectedOpts = $('#lstBox1 option:selected');
+            //        if (selectedOpts.length == 0) {
+            //            e.preventDefault();
+            //        }
 
-        //        $('#lstBox2').append($(selectedOpts).clone());
-        //        $(selectedOpts).remove();
-        //        $('#tags').val("")
-        //        e.preventDefault();
-        //        let tags = "";
-        //        $("#lstBox1 > option").each(function () {
-        //            tags = tags + ("#" + $(this).val() + " ")
-        //            $('#tags').val(tags)
-        //            $('#tags').change()
-        //            console.log($(this).val())
-        //        });
-        //    });
+            //        $('#lstBox2').append($(selectedOpts).clone());
+            //        $(selectedOpts).remove();
+            //        $('#tags').val("")
+            //        e.preventDefault();
+            //        let tags = "";
+            //        $("#lstBox1 > option").each(function () {
+            //            tags = tags + ("#" + $(this).val() + " ")
+            //            $('#tags').val(tags)
+            //            $('#tags').change()
+            //            console.log($(this).val())
+            //        });
+            //    });
 
-        //    $('#btnLeft').click(function (e) {
-        //        var selectedOpts = $('#lstBox2 option:selected');
-        //        if (selectedOpts.length == 0) {
-        //            e.preventDefault();
-        //        }
+            //    $('#btnLeft').click(function (e) {
+            //        var selectedOpts = $('#lstBox2 option:selected');
+            //        if (selectedOpts.length == 0) {
+            //            e.preventDefault();
+            //        }
 
-        //        $('#lstBox1').append($(selectedOpts).clone());
-        //        $(selectedOpts).remove();
-        //        e.preventDefault();
-        //        $('#tags').val("")
-        //        let tags = "";
-        //        $("#lstBox1 > option").each(function () {
-        //            tags = tags + ("#" + $(this).val() + " ")
-        //            $('#tags').val(tags)
-        //            $('#tags').change()
-        //            console.log($(this).val())
-        //        });
-        //    });
+            //        $('#lstBox1').append($(selectedOpts).clone());
+            //        $(selectedOpts).remove();
+            //        e.preventDefault();
+            //        $('#tags').val("")
+            //        let tags = "";
+            //        $("#lstBox1 > option").each(function () {
+            //            tags = tags + ("#" + $(this).val() + " ")
+            //            $('#tags').val(tags)
+            //            $('#tags').change()
+            //            console.log($(this).val())
+            //        });
+            //    });
 
 
-        //}(jQuery));
+            //}(jQuery));
 
 
 

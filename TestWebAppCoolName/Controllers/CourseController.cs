@@ -20,6 +20,8 @@ namespace TestWebAppCoolName.Controllers
         public Course Course { get; set; }
         public CourseContactForm FormModel { get; set; } = new CourseContactForm();
         public string Section { get; set; }
+
+        public string Tagy { get; set; }
     }
 
     public class CourseController : Controller
@@ -55,8 +57,8 @@ namespace TestWebAppCoolName.Controllers
 
         #region Admin
 
-        // GET: Course/CourseAdmin
-        public ActionResult CourseAdmin()
+        // GET: Course/Admin
+        public ActionResult Admin()
         {
             var courses = _context.Courses.Include(b => b.Lector).ToList();
             return View(courses);
@@ -71,10 +73,12 @@ namespace TestWebAppCoolName.Controllers
             };
             return View(viewModel);
         }
+        //POST /course/new
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(Course course)
+        public ActionResult New(CourseViewModel vm)
         {
+            var tags = TagParser.ParseTags(vm.Tagy,_context);
             var persons = _context.Persons.ToList();
             var viewModel = new CourseViewModel()
             {
@@ -83,26 +87,29 @@ namespace TestWebAppCoolName.Controllers
 
             if (!ModelState.IsValid)
             {
-                viewModel.Course = course;
+                viewModel.Course = vm.Course;
+                viewModel.Course.Tags = tags;
                 return View(viewModel);
             }
 
-            var exist = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
+            var exist = _context.Courses.FirstOrDefault(c => c.UrlTitle == vm.Course.UrlTitle);
 
             if (exist != null)
             {
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
-                viewModel.Course = course;
+                viewModel.Course = vm.Course;
+                viewModel.Course.Tags = tags;
                 return View(viewModel);
             }
 
 
-            course.Created = DateTime.Now;
-            course.Changed = DateTime.Now;
-            _context.Courses.Add(course);
+            vm.Course.Created = DateTime.Now;
+            vm.Course.Changed = DateTime.Now;
+            vm.Course.Tags = tags;
+            _context.Courses.Add(vm.Course);
             _context.SaveChanges();
 
-            return RedirectToAction("CourseAdmin");
+            return RedirectToAction("Admin");
         }
 
         // GET: Course/Edit/5
@@ -112,7 +119,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var course = _context.Courses.Find(id);
+            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (course == null)
             {
                 return HttpNotFound();
@@ -125,13 +132,13 @@ namespace TestWebAppCoolName.Controllers
             };
             return View(viewModel);
         }
-
+        //POST Course/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Course course)
+        public ActionResult Edit(CourseViewModel vm)
         {
 
-
+            var tags = TagParser.ParseTags(vm.Tagy,_context);
             if (!ModelState.IsValid)
             {
 
@@ -139,14 +146,14 @@ namespace TestWebAppCoolName.Controllers
                 var viewModel = new CourseViewModel()
                 {
                     Persons = persons,
-                    Course = course
+                    Course = vm.Course
                 };
 
                 return View(viewModel);
             }
 
-            var existingCourse = _context.Courses.FirstOrDefault(c => c.UrlTitle == course.UrlTitle);
-            bool exist = existingCourse?.Id != course.Id;
+            var existingCourse = _context.Courses.FirstOrDefault(c => c.UrlTitle == vm.Course.UrlTitle);
+            bool exist = existingCourse?.Id != vm.Course.Id;
             if (exist)
             {
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
@@ -154,23 +161,24 @@ namespace TestWebAppCoolName.Controllers
                 var viewModel = new CourseViewModel()
                 {
                     Persons = persons,
-                    Course = course
+                    Course = vm.Course
                 };
                 return View(viewModel);
             }
 
-            var cour = _context.Courses.FirstOrDefault(c => c.Id == course.Id);
+            var cour = _context.Courses.Include(c=>c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
             if (cour != null)
             {
-                cour.Name = course.Name;
-                cour.Description = course.Description;
-                cour.Lector_Id = course.Lector_Id;
-                cour.Modificator = course.Modificator;
-                cour.Svg = course.Svg;
-                cour.UrlTitle = course.UrlTitle;
+                cour.Name = vm.Course.Name;
+                cour.Description = vm.Course.Description;
+                cour.Lector_Id = vm.Course.Lector_Id;
+                cour.Modificator = vm.Course.Modificator;
+                cour.Svg = vm.Course.Svg;
+                cour.UrlTitle = vm.Course.UrlTitle;
+                cour.Tags = tags;
                 cour.Changed = DateTime.Now;
                 _context.SaveChanges();
-                return RedirectToAction("CourseAdmin");
+                return RedirectToAction("Admin");
             }
             else
             {
@@ -200,7 +208,7 @@ namespace TestWebAppCoolName.Controllers
             var course = _context.Courses.FirstOrDefault(c => c.Id == id);
             _context.Courses.Remove(course ?? throw new InvalidOperationException());
             _context.SaveChanges();
-            return RedirectToAction("CourseAdmin");
+            return RedirectToAction("Admin");
         }
 
 

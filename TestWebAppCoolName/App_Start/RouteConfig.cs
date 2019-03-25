@@ -12,7 +12,13 @@ namespace TestWebAppCoolName
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-     
+
+            routes.MapRoute(
+                name: "CourseAdmin",
+                url: "kurz/admin",
+                defaults: new { controller = "Course", action = "Admin" }
+
+            );  
             routes.MapRoute(
                 name: "Course",
                 url: "kurz/{title}",

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName.Controllers
@@ -52,10 +53,7 @@ namespace TestWebAppCoolName.Controllers
         // GET: Blog/Article/5
         public ActionResult Article(int? id)
         {
-
-
             return View("Article");
-
         }
 
         #region Admin
@@ -84,10 +82,9 @@ namespace TestWebAppCoolName.Controllers
         // POST: Blog/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(BlogViewModel vm)
-        {
+        public ActionResult New(BlogViewModel vm) {
 
-            var tags = ParseTags(vm.Tagy);
+            var tags =TagParser.ParseTags(vm.Tagy,_context); // ParseTags(vm.Tagy);
             var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
@@ -166,11 +163,12 @@ namespace TestWebAppCoolName.Controllers
             };
             return View(viewModel);
         }
+        // POST: Blog/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BlogViewModel vm)
         {
-            var tags = ParseTags(vm.Tagy);
+            var tags = TagParser.ParseTags(vm.Tagy, _context); //ParseTags(vm.Tagy);
             if (!ModelState.IsValid)
             {
                 var persons = _context.Persons.ToList();

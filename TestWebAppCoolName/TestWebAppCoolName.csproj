@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Helpers\DataService.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
+    <Compile Include="Helpers\TagParser.cs" />
     <Compile Include="Init\AppInitializer.cs" />
     <Compile Include="Migrations\201901311458157_initialModel.cs" />
     <Compile Include="Migrations\201901311458157_initialModel.Designer.cs">
@@ -284,6 +285,10 @@
     <Compile Include="Migrations\201903110621358_BlogInTag.cs" />
     <Compile Include="Migrations\201903110621358_BlogInTag.Designer.cs">
       <DependentUpon>201903110621358_BlogInTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903180657228_TagsAddedToCourse.cs" />
+    <Compile Include="Migrations\201903180657228_TagsAddedToCourse.Designer.cs">
+      <DependentUpon>201903180657228_TagsAddedToCourse.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -386,7 +391,7 @@
     <Content Include="Views\Blog\Admin.cshtml" />
     <Content Include="Views\Blog\Edit.cshtml" />
     <Content Include="Views\Blog\Delete.cshtml" />
-    <Content Include="Views\Course\CourseAdmin.cshtml" />
+    <Content Include="Views\Course\Admin.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Delete.cshtml" />
     <Content Include="Views\Account\Admin.cshtml" />
@@ -478,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903110621358_BlogInTag.resx">
       <DependentUpon>201903110621358_BlogInTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903180657228_TagsAddedToCourse.resx">
+      <DependentUpon>201903180657228_TagsAddedToCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
