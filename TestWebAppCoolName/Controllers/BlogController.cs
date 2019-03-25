@@ -16,7 +16,7 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Person> Persons { get; set; }
         public Blog Blog { get; set; }
-
+        public Course RelatedCourse { get; set; }   
         public string Tagy { get; set; }
     }
 
@@ -40,10 +40,11 @@ namespace TestWebAppCoolName.Controllers
                     return RedirectToAction("Index");
                 }
 
-
+                var vm = new BlogViewModel();
                 //detail blogu
-                var blog = _context.Blogs.Include(b => b.Author).FirstOrDefault(b => b.UrlTitle == title);
-                return View("Article", blog);
+                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b=>b.Tags).FirstOrDefault(b => b.UrlTitle == title);
+                vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
+                return View("Article", vm);
             }
             //seznam blogu
             return View();
