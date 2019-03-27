@@ -16,6 +16,10 @@ namespace TestWebAppCoolName
 
             bundles.Add(new ScriptBundle("~/bundles/myScript").Include(
                 "~/Scripts/script.js"));
+            bundles.Add(new ScriptBundle("~/bundles/QuillScript").Include(
+                "~/Scripts/quill.js",
+                "~/Scripts/quill.min.js"
+                ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -27,7 +31,9 @@ namespace TestWebAppCoolName
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/tags.css",
-                      "~/Content/main.min.css"
+                      "~/Content/main.min.css",
+                      "~/Content/quill.bubble.css",
+                      "~/Content/quill.snow.css"
                     ));
         }
     }

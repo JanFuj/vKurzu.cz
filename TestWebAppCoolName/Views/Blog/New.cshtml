@@ -5,44 +5,11 @@
     ViewBag.Title = "title";
 
 }
-@*<style>
-        .subject-info-box-1,
-        .subject-info-box-2 {
-            float: left;
-            width: 45%;
-            select
 
-        {
-            height: 200px;
-            padding: 0;
-            option
-
-        {
-            padding: 4px 10px 4px 10px;
-        }
-
-        option:hover {
-            background: #EEEEEE;
-        }
-
-        }
-        }
-
-        .subject-info-arrows {
-            float: left;
-            width: 10%;
-            input
-
-        {
-            width: 70%;
-            margin-bottom: 5px;
-        }
-        }
-    </style>*@
 <main class="main">
     <section class="courses">
         <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
-        @using (Html.BeginForm("New", "Blog", FormMethod.Post))
+        @using (Html.BeginForm("New", "Blog", FormMethod.Post, new{id = "form"}))
         {
             @Html.AntiForgeryToken()
             <p>
@@ -52,8 +19,10 @@
             </p>
 
             <p>
+                <div id="toolbar"></div>    
+                <div id="editor"></div>    
                 @Html.LabelFor(m => m.Blog.Description)
-                @Html.TextAreaFor(m => m.Blog.Description, new { id = "textArea" })
+                @Html.HiddenFor(m => m.Blog.Description)
                 @Html.ValidationMessageFor(m => m.Blog.Description)
             </p>
             <p>
@@ -129,66 +98,36 @@
 
 
 @section scripts {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <!-- Theme included stylesheets -->
+   
 
-    <script type="text/javascript">
-
-        var simplemde = new SimpleMDE({ element: document.getElementById("textArea") });
-
-        $(document).ready(function () {
-            $("#myform").on("submit", function () {
-                console.log("submit pressed")
-                $("#pageloader").toggle();
-            });//submit
-        });
-
-
-            //(function () {
-
-            //    $("#btnRight").click(function (e) {
-            //        var selectedOpts = $('#lstBox1 option:selected');
-            //        if (selectedOpts.length == 0) {
-            //            e.preventDefault();
-            //        }
-
-            //        $('#lstBox2').append($(selectedOpts).clone());
-            //        $(selectedOpts).remove();
-            //        $('#tags').val("")
-            //        e.preventDefault();
-            //        let tags = "";
-            //        $("#lstBox1 > option").each(function () {
-            //            tags = tags + ("#" + $(this).val() + " ")
-            //            $('#tags').val(tags)
-            //            $('#tags').change()
-            //            console.log($(this).val())
-            //        });
-            //    });
-
-            //    $('#btnLeft').click(function (e) {
-            //        var selectedOpts = $('#lstBox2 option:selected');
-            //        if (selectedOpts.length == 0) {
-            //            e.preventDefault();
-            //        }
-
-            //        $('#lstBox1').append($(selectedOpts).clone());
-            //        $(selectedOpts).remove();
-            //        e.preventDefault();
-            //        $('#tags').val("")
-            //        let tags = "";
-            //        $("#lstBox1 > option").each(function () {
-            //            tags = tags + ("#" + $(this).val() + " ")
-            //            $('#tags').val(tags)
-            //            $('#tags').change()
-            //            console.log($(this).val())
-            //        });
-            //    });
-
-
-            //}(jQuery));
 
 
 
+    <script type="text/javascript">
+        let toolbarOptions = [
+            ['bold', 'italic', 'underilne', 'strike'],
+            ['image'],
+            ];
+        let quill = new Quill('#editor',
+            {
+                modules: {
+                    toolbar:toolbarOptions
+                },
+                theme:'snow'
+            });
+
+
+
+        var form = document.querySelector('form');
+        form.onsubmit = function () {
+            console.log("submitted")
+            // Populate hidden form on submit
+            var description = document.querySelector('input[id=Blog_Description]');
+            description.value = JSON.stringify(quill.getContents());
+            console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+
+        };
     </script>
 
 }
