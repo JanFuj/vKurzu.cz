@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿
+
+$(document).ready(function () {
     updateTagsTextBox();
 
     (function () {

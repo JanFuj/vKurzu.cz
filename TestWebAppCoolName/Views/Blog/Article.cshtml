@@ -35,8 +35,9 @@
             </header>
             <div class="article__content">
                 <p>
-                    @Model.Blog.Description
-                </p>  
+                    <div id="editor"></div>
+
+                </p>
                 @{
                     if (@Model.RelatedCourse != null)
                     {
@@ -53,7 +54,7 @@
                                                 <stop offset="100%" stop-color="var(--course-card-bg-2)" />
                                             </linearGradient>
                                             @Html.Raw(Model.RelatedCourse.Svg)
-                                            
+
                                         </svg>
                                     </div>
                                     <div class="course-card__info">
@@ -61,11 +62,12 @@
                                         @{
                                             var length = 100;
 
-                                            if (Model.RelatedCourse.Description.Length < 100 ) {
+                                            if (Model.RelatedCourse.Description.Length < 100)
+                                            {
                                                 length = Model.RelatedCourse.Description.Length;
                                             }
-                                        <p class="course-card__desc">@Model.RelatedCourse.Description.Substring(0, length)</p>
-                                       }
+                                            <p class="course-card__desc">@Model.RelatedCourse.Description.Substring(0, length)</p>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +76,7 @@
                     }
                 }
 
-            
+
             </div>
         </article>
         <aside class="related-articles">
@@ -109,3 +111,30 @@
         <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> Cool Name</small></p>
     </footer>
 </body>
+
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+
+
+
+        let quill = new Quill('#editor',
+            {
+               
+            });
+
+        $(document).ready(function () {
+            console.log()
+
+            quill.setContents(@Html.Raw(Model.Blog.Description))
+            quill.enable(false);
+        });
+
+    
+
+    </script>
+
+}

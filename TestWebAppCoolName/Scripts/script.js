@@ -1,4 +1,21 @@
+//quill
+var toolbarOptions = [
+    ['bold', 'italic', 'underilne', 'strike'],
+    ['blockquote', 'code-block'],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'sript': 'sub' }, { 'sript': 'super' }],
+    [{ 'indent': '-1' }, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    ['link', 'image', 'video', 'formula'],
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'font': [] }],
+    [{ 'align': [] }]
+];
+
 $(document).ready(function () {
+    
     // Hide Header on on scroll down
     var didScroll;
     var lastScrollTop = 0;
