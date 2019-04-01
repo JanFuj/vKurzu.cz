@@ -16,7 +16,7 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Person> Persons { get; set; }
         public Blog Blog { get; set; }
-        public Course RelatedCourse { get; set; }   
+        public Course RelatedCourse { get; set; }
         public string Tagy { get; set; }
     }
 
@@ -42,7 +42,7 @@ namespace TestWebAppCoolName.Controllers
 
                 var vm = new BlogViewModel();
                 //detail blogu
-                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b=>b.Tags).FirstOrDefault(b => b.UrlTitle == title);
+                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
                 vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
                 return View("Article", vm);
             }
@@ -83,9 +83,10 @@ namespace TestWebAppCoolName.Controllers
         // POST: Blog/New
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult New(BlogViewModel vm) {
+        public ActionResult New(BlogViewModel vm)
+        {
 
-            var tags =TagParser.ParseTags(vm.Tagy,_context); // ParseTags(vm.Tagy);
+            var tags = TagParser.ParseTags(vm.Tagy, _context); // ParseTags(vm.Tagy);
             var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
@@ -183,8 +184,12 @@ namespace TestWebAppCoolName.Controllers
             }
             //muze editovat pouze pokud stejny url title neexistuje u jineho blogu
             var existingBlog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == vm.Blog.UrlTitle);
-            bool exist = existingBlog?.Id != vm.Blog.Id;
-            if (exist)
+            bool sameUrlInAnotherBlog = false;
+            if (existingBlog != null)
+            {
+                sameUrlInAnotherBlog = existingBlog.Id != vm.Blog.Id;
+            }
+            if (sameUrlInAnotherBlog)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
                 var persons = _context.Persons.ToList();
@@ -208,6 +213,7 @@ namespace TestWebAppCoolName.Controllers
 
                 blo.Name = vm.Blog.Name;
                 blo.Description = vm.Blog.Description;
+                blo.Body = vm.Blog.Body;
                 blo.Author_Id = vm.Blog.Author_Id;
                 blo.UrlTitle = vm.Blog.UrlTitle;
                 blo.Tags = tags;

@@ -18,8 +18,11 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Popis")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Zadejte tělo kurzu")]
+        [Display(Name = "Tělo kurzu")]
+        public string Body { get; set; }
 
-        [Display(Name = "Svg Path")]
+        [Display(Name = "Svg (<Path>...</Path>)")]
         [Required(ErrorMessage = "Zadejte svg (pouze <Path>...</Path>)")]
         [AllowHtml]
         public string Svg { get; set; }

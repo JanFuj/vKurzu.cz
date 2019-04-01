@@ -118,9 +118,6 @@
 
     <script type="text/javascript">
 
-
-
-
         let quill = new Quill('#editor',
             {
                
@@ -129,7 +126,7 @@
         $(document).ready(function () {
             console.log()
 
-            quill.setContents(@Html.Raw(Model.Blog.Description))
+            quill.setContents(@Html.Raw(Model.Blog.Body))
             quill.enable(false);
         });
 

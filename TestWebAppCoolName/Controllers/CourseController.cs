@@ -78,7 +78,7 @@ namespace TestWebAppCoolName.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult New(CourseViewModel vm)
         {
-            var tags = TagParser.ParseTags(vm.Tagy,_context);
+            var tags = TagParser.ParseTags(vm.Tagy, _context);
             var persons = _context.Persons.ToList();
             var viewModel = new CourseViewModel()
             {
@@ -138,7 +138,7 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult Edit(CourseViewModel vm)
         {
 
-            var tags = TagParser.ParseTags(vm.Tagy,_context);
+            var tags = TagParser.ParseTags(vm.Tagy, _context);
             if (!ModelState.IsValid)
             {
 
@@ -153,8 +153,12 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var existingCourse = _context.Courses.FirstOrDefault(c => c.UrlTitle == vm.Course.UrlTitle);
-            bool exist = existingCourse?.Id != vm.Course.Id;
-            if (exist)
+            bool sameUrlInAnotherCourse = false;
+            if (existingCourse != null)
+            {
+                sameUrlInAnotherCourse = existingCourse?.Id != vm.Course.Id;
+            }
+            if (sameUrlInAnotherCourse)
             {
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
                 var persons = _context.Persons.ToList();
@@ -166,7 +170,7 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            var cour = _context.Courses.Include(c=>c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
+            var cour = _context.Courses.Include(c => c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
             if (cour != null)
             {
                 cour.Name = vm.Course.Name;
@@ -229,7 +233,7 @@ namespace TestWebAppCoolName.Controllers
             }
             // zabrani opetovnemu odeslani formulare a presune na /kurz/{urlTitle},
             // jinak by zustal na /Course/SendEmail a po refreshi by znovu odeslal mail
-            return RedirectToAction("Index", new {title = course.UrlTitle, section = "Form"});
+            return RedirectToAction("Index", new { title = course.UrlTitle, section = "Form" });
         }
 
     }

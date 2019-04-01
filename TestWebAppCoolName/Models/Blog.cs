@@ -18,6 +18,9 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte popis blogu")]
         [Display(Name = "Popis")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Zadejte tělo blogu")]
+        [Display(Name = "Tělo blogu")]
+        public string Body { get; set; }
 
         [Display(Name = "Autor")]
         [Required(ErrorMessage = "Zadejte autora")]

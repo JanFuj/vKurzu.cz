@@ -5,7 +5,7 @@
 }
 
 
-    
+<main class="main">
 <p>
     @Html.ActionLink("Create New", "New")
 </p>
@@ -31,11 +31,12 @@
                 @Html.DisplayFor(modelItem => item.Author.FullName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Detail", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link--gradient" }) |
+                @Html.ActionLink("Detail", "Index","Blog", new { title = item.UrlTitle }, new { @class = "link--gradient" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
             </td>
         </tr>
     }
 
 </table>
+</main>  
