@@ -298,6 +298,10 @@
     <Compile Include="Migrations\201904010805135_BodyInCourseTable.Designer.cs">
       <DependentUpon>201904010805135_BodyInCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904020909573_WillLearnInCourseTable.cs" />
+    <Compile Include="Migrations\201904020909573_WillLearnInCourseTable.Designer.cs">
+      <DependentUpon>201904020909573_WillLearnInCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -504,6 +508,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904010805135_BodyInCourseTable.resx">
       <DependentUpon>201904010805135_BodyInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904020909573_WillLearnInCourseTable.resx">
+      <DependentUpon>201904020909573_WillLearnInCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

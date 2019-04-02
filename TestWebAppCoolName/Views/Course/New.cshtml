@@ -26,6 +26,20 @@
                 @Html.ValidationMessageFor(m => m.Course.Description)
             </p>
             <p>
+                @Html.LabelFor(m => m.Course.WillLearn)
+                @Html.HiddenFor(m => m.Course.WillLearn)
+                @Html.ValidationMessageFor(m => m.Course.WillLearn)
+                <div id="toolbarWillLearn"></div>
+                <div id="editorWillLearn"></div>
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Body)
+                @Html.HiddenFor(m => m.Course.Body)
+                @Html.ValidationMessageFor(m => m.Course.Body)
+                <div id="toolbarBody"></div>
+                <div id="editorBody"></div>
+            </p>
+            <p>
                 @Html.LabelFor(m => m.Course.Lector_Id)
                 @Html.DropDownListFor(m => m.Course.Lector_Id, new SelectList(Model.Persons, "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Course.Lector_Id)
@@ -114,12 +128,39 @@
 @section scripts {
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#myform").on("submit", function () {
-                console.log("submit pressed")
-                $("#pageloader").toggle();
-            });//submit
-        });
+        let quill = new Quill('#editorBody',
+            {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                theme: 'snow'
+            });
+        let quillWillLearn = new Quill('#editorWillLearn',
+            {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                theme: 'snow'
+            });
+
+
+
+        var form = document.querySelector('form');
+        form.onsubmit = function () {
+            console.log("submitted")
+            // Populate hidden form on submit
+            var willLearn = document.querySelector('input[id=Course_WillLearn]');
+            willLearn.value = JSON.stringify(quillWillLearn.getContents());
+            var body = document.querySelector('input[id=Course_Body]');
+            body.value = JSON.stringify(quill.getContents());
+
+            console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+
+        };
+
+
+
+
     </script>
 
 }

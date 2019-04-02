@@ -24,6 +24,7 @@ namespace TestWebAppCoolName.Controllers
         public string Tagy { get; set; }
     }
 
+   // [Authorize]
     public class CourseController : Controller
     {
         private ApplicationDbContext _context;
@@ -32,7 +33,7 @@ namespace TestWebAppCoolName.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Course
-
+      //  [AllowAnonymous]
         public ActionResult Index(string title, string section)
         {
             if (!string.IsNullOrEmpty(title))
@@ -49,6 +50,7 @@ namespace TestWebAppCoolName.Controllers
             }
             return HttpNotFound();
         }
+
         [AllowAnonymous]
         public ActionResult Detail(int id)
         {
@@ -58,6 +60,7 @@ namespace TestWebAppCoolName.Controllers
         #region Admin
 
         // GET: Course/Admin
+       
         public ActionResult Admin()
         {
             var courses = _context.Courses.Include(b => b.Lector).ToList();
@@ -175,6 +178,8 @@ namespace TestWebAppCoolName.Controllers
             {
                 cour.Name = vm.Course.Name;
                 cour.Description = vm.Course.Description;
+                cour.WillLearn = vm.Course.WillLearn;
+                cour.Body = vm.Course.Body;
                 cour.Lector_Id = vm.Course.Lector_Id;
                 cour.Modificator = vm.Course.Modificator;
                 cour.Svg = vm.Course.Svg;

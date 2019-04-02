@@ -17,9 +17,11 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte popis kurzu")]
         [Display(Name = "Popis")]
         public string Description { get; set; }
-
+        [Required(ErrorMessage = "Zadejte co se v kurzu naučí")]
+        [Display(Name = "Naučíte se - pouze odentrovat body")]
+        public string WillLearn { get; set; }
         [Required(ErrorMessage = "Zadejte tělo kurzu")]
-        [Display(Name = "Tělo kurzu")]
+        [Display(Name = "Tělo kurzu - Mělo by obsahovat nadpisy - Proč se zůčastnit, Osnova, Kdy a kde")]
         public string Body { get; set; }
 
         [Display(Name = "Svg (<Path>...</Path>)")]

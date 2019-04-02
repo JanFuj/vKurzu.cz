@@ -37,16 +37,18 @@
                 <div class="banner__bottom"></div>
                 <div class="banner__content-wrapper">
                     <div class="banner__content">
-                        <h2 class="h4 course__toc-title">Naučíte se</h2><ul class="course__toc"><li>Vytvořit HTML stránku</li><li>Vložit na ni obsah</li><li>Upravit rozložení obsahu</li><li>Přiložit styly pomocí CSS</li></ul>
+                        <p>
+                            <div id="editorWillLearn"></div>
+                        </p>
+
                     </div>
                 </div>
             </div>
         </div>
         <article class="course">
-            <h2 class="course__heading course__heading--why">Proč se zúčastnit?</h2>
-            <p class="course__paragraph--why">Ať už jste webově nepolíbený vývojář, začínajícím designer nebo jednoduše jen nadšenec do kompjůtrů, právě jste našli svůj vstupní bod do světa HTML/CSS. Zanoříme se do úplných základů HTML dokumentu, na jakém principu je postavem a jak modifikovat rozložení jeho prvků. Často potřebujeme naskočit na novou technologii prakticky ihned, což má pozitivní dopad na její rychlou adopci, avšak hrozí opomenutí pochopení samotných základů. Pojďme se na dvě stěžejní webové technologie podívat od píky. </p>
-            <h2 class="course__heading course__heading--toc">Osnova</h2><ul class="course__paragraph--toc"><li>Struktura HTML dokumentu</li><li>Elementy a jejich sémantika</li><li>Atributy elementů</li><li>Struktura CSS dokumentu</li><li>Selektory</li><li>Kaskáda a specificita selektorů</li><li>CSS vlastnosti a jejich hodnoty</li></ul>
-            <h2 class="course__heading course__heading--details">Kdy a kde</h2><ul class="course__paragraph--details"><li class="course__teacher">Lektor: Daniel Hruška</li><li class="course__span">Rozsah: 8 hodin</li><li class="course__price">Cena: 4990 Kž bez DPH</li></ul>
+            <p>
+                <div id="editorBody"></div>
+            </p>
 
 
             <form id="Form" class="reg-form" action="@Url.Action("SendEmail","Course")" method="post">
@@ -93,6 +95,27 @@
     $(document).ready(function () {
             var anchor = document.getElementById('@Model.Section');
                 anchor.scrollIntoView(true);
+        });
+
+
+
+    let quill = new Quill('#editorWillLearn',
+        {
+
+            });
+    let quillBody = new Quill('#editorBody',
+        {
+
+        });
+
+    $(document).ready(function () {
+        console.log()
+
+        quill.setContents(@Html.Raw(Model.Course.WillLearn))
+        quill.enable(false);
+
+        quillBody.setContents(@Html.Raw(Model.Course.Body))
+        quillBody.enable(false);
     });
     </script>
 }
