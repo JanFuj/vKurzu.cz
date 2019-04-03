@@ -10,6 +10,9 @@
     @Html.ActionLink("Kurzy", "Course", null, new { @class = "link--gradient" })
     @Html.ActionLink("Blog", "Blog", null, new { @class = "link--gradient" })
     @Html.ActionLink("Tagy", "Tag", null, new { @class = "link--gradient" })
-    @Html.ActionLink("Lidi", "Person", null, new { @class = "link--gradient" })
+    @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
+    {
+        @Html.ActionLink("Lidi", "Person", null, new { @class = "link--gradient" })
+    }
 </main>
 

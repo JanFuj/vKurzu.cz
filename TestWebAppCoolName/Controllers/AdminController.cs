@@ -28,7 +28,27 @@ namespace TestWebAppCoolName.Controllers
         }
 
         #region Kurz
+        public ActionResult ApproveCourse(int id,bool approve)
+        {
+            try
+            {
 
+                var course = _context.Courses.FirstOrDefault(c => c.Id == id);
+                if (course == null)
+                {
+                    return HttpNotFound();
+                }
+
+                course.Approved = approve;
+                _context.SaveChanges();
+                return RedirectToAction("Course");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
         [Route("admin/kurz")]
         public ActionResult Course()
         {
@@ -584,5 +604,7 @@ namespace TestWebAppCoolName.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

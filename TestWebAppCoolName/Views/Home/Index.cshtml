@@ -36,7 +36,7 @@
             <div class="courses-cards">
 
                 @{
-                    foreach (var course in Model.Courses)
+                    foreach (var course in Model.Courses.Where(c=>c.Approved))
                     {
                         <div class="course-card course-card--@course.Modificator">
                             <a class="course-card__link" href="@Url.Action("Index", "Course", new {title = course.UrlTitle})"></a>

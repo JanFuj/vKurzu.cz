@@ -6,7 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Init;
+using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName
 {
@@ -18,6 +20,8 @@ namespace TestWebAppCoolName
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ApplicationDbContext context = new ApplicationDbContext();
+            IdentityHelper.SeedIdentities(context);
             //Database.SetInitializer(new AppInitializer());
         }
     }

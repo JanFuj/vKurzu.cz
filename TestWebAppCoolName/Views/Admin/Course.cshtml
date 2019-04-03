@@ -37,13 +37,25 @@
                     @Html.DisplayFor(modelItem => item.Lector.FullName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditCourse","Admin", new { id = item.Id }, new { @class = "link--gradient" }) |
+                    @Html.ActionLink("Edit", "EditCourse", "Admin", new { id = item.Id }, new { @class = "link--gradient" }) |
 
                     @Html.ActionLink("Detail", "Index", "Course", new { title = item.UrlTitle }, new { @class = "link--gradient" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link--gradient" })|
+                    @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
+                    {
+                        if (item.Approved)
+                        {
+                            @Html.ActionLink("Un-Apporve", "ApproveCourse", "Admin", new { id = item.Id, approve = false }, new { @class = "link--gradient" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Approve", "ApproveCourse", "Admin", new { id = item.Id, approve = true }, new { @class = "link--gradient" })
+                        }
+                    }
                 </td>
             </tr>
         }
+       
 
     </table>
 </main>

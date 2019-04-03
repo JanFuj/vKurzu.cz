@@ -69,24 +69,24 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult Login(string returnUrl)
         {
             //TODO resolve app inicialzer
-            if (!_context.Roles.Any(r => r.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(_context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
+            //if (!_context.Roles.Any(r => r.Name == "Admin"))
+            //{
+            //    var store = new RoleStore<IdentityRole>(_context);
+            //    var manager = new RoleManager<IdentityRole>(store);
+            //    var role = new IdentityRole { Name = "Admin" };
 
-                manager.Create(role);
-            }
+            //    manager.Create(role);
+            //}
 
-            if (!_context.Users.Any(u => u.UserName == "Admin@seznam.cz"))
-            {
-                var store = new UserStore<ApplicationUser>(_context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { Email = "Admin@seznam.cz", EmailConfirmed = true, UserName = "Admin@seznam.cz" };
+            //if (!_context.Users.Any(u => u.UserName == "Admin@seznam.cz"))
+            //{
+            //    var store = new UserStore<ApplicationUser>(_context);
+            //    var manager = new UserManager<ApplicationUser>(store);
+            //    var user = new ApplicationUser { Email = "Admin@seznam.cz", EmailConfirmed = true, UserName = "Admin@seznam.cz" };
 
-                manager.Create(user, "Aaaa1111@");
-                manager.AddToRole(user.Id, "Admin");
-            }
+            //    manager.Create(user, "Aaaa1111@");
+            //    manager.AddToRole(user.Id, "Admin");
+            //}
 
             ViewBag.ReturnUrl = returnUrl;
             return View();

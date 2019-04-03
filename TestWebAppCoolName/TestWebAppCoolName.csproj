@@ -187,6 +187,7 @@
     </Compile>
     <Compile Include="Helpers\DataService.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
+    <Compile Include="Helpers\IdentityHelper.cs" />
     <Compile Include="Helpers\TagParser.cs" />
     <Compile Include="Init\AppInitializer.cs" />
     <Compile Include="Migrations\201901311458157_initialModel.cs" />
@@ -309,6 +310,10 @@
     <Compile Include="Migrations\201904030733302_NameAndSurnameRequiredParsonTable.Designer.cs">
       <DependentUpon>201904030733302_NameAndSurnameRequiredParsonTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904030849453_ApprovedInCourseTable.cs" />
+    <Compile Include="Migrations\201904030849453_ApprovedInCourseTable.Designer.cs">
+      <DependentUpon>201904030849453_ApprovedInCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -318,6 +323,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -523,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904030733302_NameAndSurnameRequiredParsonTable.resx">
       <DependentUpon>201904030733302_NameAndSurnameRequiredParsonTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904030849453_ApprovedInCourseTable.resx">
+      <DependentUpon>201904030849453_ApprovedInCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
