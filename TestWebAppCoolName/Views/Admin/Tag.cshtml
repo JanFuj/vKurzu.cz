@@ -8,7 +8,7 @@
 
 
     <p>
-        @Html.ActionLink("Create New", "NewTag")
+        @Html.ActionLink("Create New", "NewTag",null, new { @class = "link--gradient" })
     </p>
     <table class="table">
         <tr>
@@ -24,8 +24,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditTag", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteTag", new { id = item.Id })
+                    @Html.ActionLink("Edit", "EditTag", new { id = item.Id }, new { @class = "link--gradient" }) |
+                    @Html.ActionLink("Delete", "DeleteTag", new { id = item.Id }, new { @class = "link--gradient" })
                 </td>
             </tr>
         }

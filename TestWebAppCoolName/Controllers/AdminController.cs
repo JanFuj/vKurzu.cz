@@ -221,6 +221,27 @@ namespace TestWebAppCoolName.Controllers
         #endregion
 
         #region Blog
+        public ActionResult ApproveBlog(int id, bool approve)
+        {
+            try
+            {
+
+                var blog = _context.Blogs.FirstOrDefault(c => c.Id == id);
+                if (blog == null)
+                {
+                    return HttpNotFound();
+                }
+
+                blog.Approved = approve;
+                _context.SaveChanges();
+                return RedirectToAction("Blog");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
         [Route("admin/blog")]
         public ActionResult Blog()

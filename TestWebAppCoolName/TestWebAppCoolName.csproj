@@ -314,6 +314,10 @@
     <Compile Include="Migrations\201904030849453_ApprovedInCourseTable.Designer.cs">
       <DependentUpon>201904030849453_ApprovedInCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904031015461_ApproveBlog.cs" />
+    <Compile Include="Migrations\201904031015461_ApproveBlog.Designer.cs">
+      <DependentUpon>201904031015461_ApproveBlog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -532,6 +536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904030849453_ApprovedInCourseTable.resx">
       <DependentUpon>201904030849453_ApprovedInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904031015461_ApproveBlog.resx">
+      <DependentUpon>201904031015461_ApproveBlog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,7 +7,7 @@
 
 <main class="main">
     <p>
-        @Html.ActionLink("Create New", "NewBlog")
+        @Html.ActionLink("Create New", "NewBlog",null, new { @class = "link--gradient" })
     </p>
     <table class="table">
         <tr>
@@ -34,7 +34,18 @@
                 <td>
                     @Html.ActionLink("Edit", "EditBlog", "Admin", new { id = item.Id }, new { @class = "link--gradient" }) |
                     @Html.ActionLink("Detail", "Index", "Blog", new { title = item.UrlTitle }, new { @class = "link--gradient" }) |
-                    @Html.ActionLink("Delete", "DeleteBlog","Admin", new { id = item.Id }, new { @class = "link--gradient" })
+                    @Html.ActionLink("Delete", "DeleteBlog", "Admin", new { id = item.Id }, new { @class = "link--gradient" })|
+                    @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
+                    {
+                        if (item.Approved)
+                        {
+                            @Html.ActionLink("Un-Apporve", "ApproveBlog", "Admin", new { id = item.Id, approve = false }, new { @class = "link--gradient" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Approve", "ApproveBlog", "Admin", new { id = item.Id, approve = true }, new { @class = "link--gradient" })
+                        }
+                    }
                 </td>
             </tr>
         }
