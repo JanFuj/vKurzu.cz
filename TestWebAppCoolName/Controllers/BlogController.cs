@@ -47,7 +47,7 @@ namespace TestWebAppCoolName.Controllers
                 return View("Article", vm);
             }
             //seznam blogu
-            var blogs = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).ToList();
+            var blogs = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b=>b.Approved).ToList();
             return View(blogs);
         }
 
