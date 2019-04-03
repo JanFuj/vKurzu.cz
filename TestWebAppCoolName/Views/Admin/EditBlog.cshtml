@@ -2,14 +2,13 @@
 @model TestWebAppCoolName.Controllers.BlogViewModel
 
 @{
-    ViewBag.Title = "title";
-
+    ViewBag.Title = "Edit Blog";
 }
 
 <main class="main">
     <section class="courses">
-        <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
-        @using (Html.BeginForm("New", "Blog", FormMethod.Post, new { id = "form" }))
+        <h1 class="main-heading courses__heading">Editovat blog</h1>
+        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <p>
@@ -19,16 +18,17 @@
             </p>
 
             <p>
+
                 @Html.LabelFor(m => m.Blog.Description)
                 @Html.TextBoxFor(m => m.Blog.Description)
                 @Html.ValidationMessageFor(m => m.Blog.Description)
             </p>
             <p>
-                <div id="toolbar"></div>
-                <div id="editor"></div>
                 @Html.LabelFor(m => m.Blog.Body)
                 @Html.HiddenFor(m => m.Blog.Body)
                 @Html.ValidationMessageFor(m => m.Blog.Body)
+                <div id="toolbar"></div>
+                <div id="editor"></div>
             </p>
             <p>
                 @Html.LabelFor(m => m.Blog.Author_Id)
@@ -40,8 +40,8 @@
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
             </p>
-
             <div>
+
                 <div class="subject-info-box-1">
                     <select multiple="multiple" id='lstBox1' class="form-control">
                         @if (Model.Blog?.Tags != null)
@@ -83,9 +83,11 @@
                     @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
 
                 </p>
+
             </div>
 
             <p>
+                @Html.HiddenFor(m => m.Blog.Id)
                 <button type="submit">Vytvořit</button>
                 <div id="pageloader" style="display: none;">
                     <img src="/media/30.svg" alt="processing..." />
@@ -103,33 +105,37 @@
 
 
 @section scripts {
-    <!-- Theme included stylesheets -->
-   
-
-
-
 
     <script type="text/javascript">
-      
+
+
+
+
         let quill = new Quill('#editor',
             {
                 modules: {
-                    toolbar:toolbarOptions
+                    toolbar: toolbarOptions
                 },
-                theme:'snow'
+                theme: 'snow'
             });
 
+        $(document).ready(function () {
+            console.log()
 
+            quill.setContents(@Html.Raw(Model.Blog.Body))
+
+        });
 
         var form = document.querySelector('form');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit
-            var description = document.querySelector('input[id=Blog_Body]');
-            description.value = JSON.stringify(quill.getContents());
+            var body = document.querySelector('input[id=Blog_Body]');
+            body.value = JSON.stringify(quill.getContents());
             console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-
         };
+
     </script>
 
 }
+
