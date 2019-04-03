@@ -24,7 +24,7 @@ namespace TestWebAppCoolName.Controllers
         public string Tagy { get; set; }
     }
 
-   // [Authorize]
+ 
     public class CourseController : Controller
     {
         private ApplicationDbContext _context;
@@ -33,7 +33,7 @@ namespace TestWebAppCoolName.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Course
-      //  [AllowAnonymous]
+
         public ActionResult Index(string title, string section)
         {
             if (!string.IsNullOrEmpty(title))
@@ -51,7 +51,7 @@ namespace TestWebAppCoolName.Controllers
             return HttpNotFound();
         }
 
-        [AllowAnonymous]
+    
         public ActionResult Detail(int id)
         {
             return View();

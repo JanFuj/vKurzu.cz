@@ -11,7 +11,7 @@ using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName.Controllers
 {
-
+    [Authorize]
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;

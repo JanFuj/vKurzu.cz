@@ -110,7 +110,7 @@ namespace TestWebAppCoolName.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Admin");
+                    return RedirectToAction("Index","Admin");
                    // return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
