@@ -1,0 +1,13 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Admin";
+}
+<main>
+
+    <h2>Admin</h2>
+    @Html.ActionLink("Kurzy", "Course", null, new { @class = "link--gradient" }) 
+    @Html.ActionLink("Blog", "Blog", null, new { @class = "link--gradient" })
+    @Html.ActionLink("Tagy", "Tag",null, new { @class = "link--gradient" })
+</main>
+

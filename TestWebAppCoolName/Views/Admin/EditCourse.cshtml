@@ -1,0 +1,170 @@
+﻿@using TestWebAppCoolName.Helpers
+@model TestWebAppCoolName.Controllers.CourseViewModel
+
+@{
+    ViewBag.Title = "Admin Kurz Edit";
+}
+
+
+<main class="main">
+    <section class="courses">
+        <h1 class="main-heading courses__heading">Editovat kurz</h1>
+        @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                @Html.LabelFor(m => m.Course.Name)
+                @Html.TextBoxFor(m => m.Course.Name)
+                @Html.ValidationMessageFor(m => m.Course.Name)
+            </p>
+
+            <p>
+                @Html.LabelFor(m => m.Course.Description)
+                @Html.TextAreaFor(m => m.Course.Description)
+                @Html.ValidationMessageFor(m => m.Course.Description)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.WillLearn)
+                @Html.HiddenFor(m => m.Course.WillLearn)
+                @Html.ValidationMessageFor(m => m.Course.WillLearn)
+                <div id="toolbarWillLearn"></div>
+                <div id="editorWillLearn"></div>
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Body)
+                @Html.HiddenFor(m => m.Course.Body)
+                @Html.ValidationMessageFor(m => m.Course.Body)
+                <div id="toolbarBody"></div>
+                <div id="editorBody"></div>
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Lector_Id)
+                @Html.DropDownListFor(m => m.Course.Lector_Id, new SelectList(Model.Persons, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.Course.Lector_Id)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.UrlTitle)
+                @Html.TextBoxFor(m => m.Course.UrlTitle)
+                @Html.ValidationMessageFor(m => m.Course.UrlTitle)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Course.Modificator)
+                @Html.TextBoxFor(m => m.Course.Modificator)
+                @Html.ValidationMessageFor(m => m.Course.Modificator)
+            </p>
+
+            <p>
+                @Html.LabelFor(m => m.Course.Svg)
+                @Html.TextAreaFor(m => m.Course.Svg)
+                @Html.ValidationMessageFor(m => m.Course.Svg)
+            </p>
+
+
+            <div>
+
+                <div class="subject-info-box-1">
+                    <select multiple="multiple" id='lstBox1' class="form-control">
+                        @if (Model.Course?.Tags != null)
+                        {
+                            foreach (var tag in Model.Course.Tags)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="subject-info-arrows text-center">
+                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
+                </div>
+
+
+
+                <div class="subject-info-box-2">
+                    <select multiple="multiple" id='lstBox2' class="form-control">
+                        @foreach (var tag in new DataService().GetTags())
+                        {
+                            bool exist = false;
+                            if (Model.Course?.Tags != null)
+                            {
+                                exist = (Model.Course.Tags).Any(t => t.Id == tag.Id);
+                            }
+                            if (!exist)
+                            {
+                                <option value="@tag.Name">@tag.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <p>
+                    <label>tagy</label>
+
+                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+                </p>
+
+            </div>
+
+            <p>
+                @Html.HiddenFor(m => m.Course.Id)
+                <button type="submit">Vytvořit</button>
+                <div id="pageloader" style="display: none;">
+                    <img src="/media/30.svg" alt="processing..." />
+                </div>
+            </p>
+            <span>@ViewBag.Message</span>
+            if (ViewData["Saved"] != null)
+            {
+                @Html.Label(ViewData["Saved"].ToString())
+            }
+        }
+
+    </section>
+</main>
+
+
+@section scripts {
+
+    <script type="text/javascript">
+        let quill = new Quill('#editorBody',
+            {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                theme: 'snow'
+            });
+        let quillWillLearn = new Quill('#editorWillLearn',
+            {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                theme: 'snow'
+            });
+
+        $(document).ready(function () {
+            console.log()
+
+            quill.setContents(@Html.Raw(Model.Course.Body))
+            quillWillLearn.setContents(@Html.Raw(Model.Course.WillLearn))
+        });
+
+
+        var form = document.querySelector('form');
+        form.onsubmit = function () {
+            console.log("submitted")
+            // Populate hidden form on submit
+            var willLearn = document.querySelector('input[id=Course_WillLearn]');
+            willLearn.value = JSON.stringify(quillWillLearn.getContents());
+            var body = document.querySelector('input[id=Course_Body]');
+            body.value = JSON.stringify(quill.getContents());
+
+            console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+
+        };
+    </script>
+
+}
+
+
+

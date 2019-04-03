@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TestWebAppCoolName.Models.Course>
+
+@{
+    ViewBag.Title = "Admin Kurz";
+}
+
+<main class="main">
+
+
+    <p>
+        @Html.ActionLink("Create New", "NewCourse")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lector.FullName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lector.FullName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCourse","Admin", new { id = item.Id }, new { @class = "link--gradient" }) |
+
+                    @Html.ActionLink("Detail", "Index", "Course", new { title = item.UrlTitle }, new { @class = "link--gradient" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</main>
