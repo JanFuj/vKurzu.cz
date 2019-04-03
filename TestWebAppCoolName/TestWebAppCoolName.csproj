@@ -183,7 +183,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
-    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,6 +302,14 @@
     <Compile Include="Migrations\201904020909573_WillLearnInCourseTable.Designer.cs">
       <DependentUpon>201904020909573_WillLearnInCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904030711205_TagNameRequired.cs" />
+    <Compile Include="Migrations\201904030711205_TagNameRequired.Designer.cs">
+      <DependentUpon>201904030711205_TagNameRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904030733302_NameAndSurnameRequiredParsonTable.cs" />
+    <Compile Include="Migrations\201904030733302_NameAndSurnameRequiredParsonTable.Designer.cs">
+      <DependentUpon>201904030733302_NameAndSurnameRequiredParsonTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -398,11 +405,6 @@
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
     <Content Include="Views\Account\Admin.cshtml" />
-    <Content Include="Views\Tags\Create.cshtml" />
-    <Content Include="Views\Tags\Delete.cshtml" />
-    <Content Include="Views\Tags\Details.cshtml" />
-    <Content Include="Views\Tags\Edit.cshtml" />
-    <Content Include="Views\Tags\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Course.cshtml" />
     <Content Include="Views\Admin\Blog.cshtml" />
@@ -413,6 +415,13 @@
     <Content Include="Views\Admin\NewBlog.cshtml" />
     <Content Include="Views\Admin\EditBlog.cshtml" />
     <Content Include="Views\Admin\DeleteBlog.cshtml" />
+    <Content Include="Views\Admin\NewTag.cshtml" />
+    <Content Include="Views\Admin\EditTag.cshtml" />
+    <Content Include="Views\Admin\DeleteTag.cshtml" />
+    <Content Include="Views\Admin\Person.cshtml" />
+    <Content Include="Views\Admin\NewPerson.cshtml" />
+    <Content Include="Views\Admin\EditPerson.cshtml" />
+    <Content Include="Views\Admin\DeletePerson.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -514,6 +523,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904020909573_WillLearnInCourseTable.resx">
       <DependentUpon>201904020909573_WillLearnInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904030711205_TagNameRequired.resx">
+      <DependentUpon>201904030711205_TagNameRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904030733302_NameAndSurnameRequiredParsonTable.resx">
+      <DependentUpon>201904030733302_NameAndSurnameRequiredParsonTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
