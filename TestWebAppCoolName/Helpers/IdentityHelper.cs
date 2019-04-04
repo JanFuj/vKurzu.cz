@@ -26,7 +26,7 @@ namespace TestWebAppCoolName.Helpers
                 var roleresult = roleManager.Create(new IdentityRole(Roles.Lector));
             }
             string adminName = "admin@coolname.cz";
-            string adminPassword = "CoolPassword@1122333";
+            string adminPassword = "CoolPassword@";
             ApplicationUser admin = userManager.FindByName(adminName);
             if (admin == null)
             {

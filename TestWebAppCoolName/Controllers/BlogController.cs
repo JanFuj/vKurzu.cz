@@ -44,12 +44,17 @@ namespace TestWebAppCoolName.Controllers
 
                 var vm = new BlogViewModel();
                 //detail blogu
-                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
-                vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
-                return View("Article", vm);
+                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                if (vm.Blog != null)
+                {
+                    vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
+                    return View("Article", vm);
+                }
+
+                return HttpNotFound();
             }
             //seznam blogu
-            var blogs = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b=>b.Approved).ToList();
+            var blogs = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b => b.Approved).ToList();
             return View(blogs);
         }
 
@@ -62,7 +67,8 @@ namespace TestWebAppCoolName.Controllers
 
 
         [Route("blog/rss/new")]
-        public ActionResult Rss() {
+        public ActionResult Rss()
+        {
             IEnumerable<Blog> blogs = _context.Blogs.Where(b => b.Approved);
             var feed =
                 new SyndicationFeed("CoolName", "Coolname",
@@ -79,7 +85,7 @@ namespace TestWebAppCoolName.Controllers
                         bp.Id.ToString(),
                         bp.Created);
                 items.Add(item);
-               
+
             }
             feed.Items = items;
             return new RssActionResult { Feed = feed };

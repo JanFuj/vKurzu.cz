@@ -38,7 +38,7 @@ namespace TestWebAppCoolName.Controllers
         {
             if (!string.IsNullOrEmpty(title))
             {
-                var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title);
+                var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title && c.Approved);
                 if (course != null)
                 {
                     var viewModel = new CourseViewModel();
