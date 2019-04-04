@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Syndication;
 using System.Web;
 using System.Web.Mvc;
+using TestWebAppCoolName.ActionResults;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
@@ -59,7 +61,28 @@ namespace TestWebAppCoolName.Controllers
         }
 
 
-
-   
+        [Route("blog/rss/new")]
+        public ActionResult Rss() {
+            IEnumerable<Blog> blogs = _context.Blogs.Where(b => b.Approved);
+            var feed =
+                new SyndicationFeed("CoolName", "Coolname",
+                    new Uri("http://coolname.aspfree.cz/"),
+                    Guid.NewGuid().ToString(),
+                    DateTime.Now);
+            var items = new List<SyndicationItem>();
+            foreach (Blog bp in blogs)
+            {
+                string postUrl = $"blog/{bp.UrlTitle}";
+                var item = new SyndicationItem(bp.Name,
+                        bp.Description,
+                        new Uri(postUrl, UriKind.Relative),
+                        bp.Id.ToString(),
+                        bp.Created);
+                items.Add(item);
+               
+            }
+            feed.Items = items;
+            return new RssActionResult { Feed = feed };
+        }
     }
 }
