@@ -29,7 +29,7 @@
                     </div>
                     <div class="article__details">
                         <div class="article__author">@Model.Blog.Author.FullName</div>
-                        <time class="article_release-date">@Model.Blog.Created</time>
+                        <time class="article_release-date">@Model.Blog.Created.ToString("d. M. yyyy")</time>
                     </div>
                 </div><!--hr.article__header-hr-->
             </header>
@@ -108,7 +108,7 @@
                 <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
             </ul>
         </nav>
-        <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> Cool Name</small></p>
+        <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> V Kurzu</small></p>
     </footer>
 </body>
 
