@@ -324,6 +324,10 @@
     <Compile Include="Migrations\201904031015461_ApproveBlog.Designer.cs">
       <DependentUpon>201904031015461_ApproveBlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904041325094_DeletedColumnInBlogAndCourseTable.cs" />
+    <Compile Include="Migrations\201904041325094_DeletedColumnInBlogAndCourseTable.Designer.cs">
+      <DependentUpon>201904041325094_DeletedColumnInBlogAndCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -545,6 +549,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904031015461_ApproveBlog.resx">
       <DependentUpon>201904031015461_ApproveBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041325094_DeletedColumnInBlogAndCourseTable.resx">
+      <DependentUpon>201904041325094_DeletedColumnInBlogAndCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

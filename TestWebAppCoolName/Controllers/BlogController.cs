@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
@@ -32,7 +33,7 @@ namespace TestWebAppCoolName.Controllers
         }
         [AllowAnonymous]
         // GET: Blog
-        public ActionResult Index(string title)
+        public ActionResult Index(string title, bool preview = false)
         {
             if (!string.IsNullOrEmpty(title))
             {
@@ -44,7 +45,13 @@ namespace TestWebAppCoolName.Controllers
 
                 var vm = new BlogViewModel();
                 //detail blogu
-                vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                if (!preview)
+                {
+                    vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                }
+                else {
+                    vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
+                }
                 if (vm.Blog != null)
                 {
                     vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);

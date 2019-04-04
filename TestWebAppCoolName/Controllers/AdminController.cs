@@ -28,7 +28,7 @@ namespace TestWebAppCoolName.Controllers
         }
 
         #region Kurz
-        public ActionResult ApproveCourse(int id,bool approve)
+        public ActionResult ApproveCourse(int id, bool approve)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/kurz")]
         public ActionResult Course()
         {
-            var courses = _context.Courses.Include(b => b.Lector).ToList();
+            var courses = _context.Courses.Include(b => b.Lector).Where(c=> !c.Deleted).ToList();
             return View(courses);
         }
 
@@ -213,7 +213,13 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var course = _context.Courses.FirstOrDefault(c => c.Id == id);
-            _context.Courses.Remove(course ?? throw new InvalidOperationException());
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            //_context.Courses.Remove(course ?? throw new InvalidOperationException());
+            course.Deleted = true;
             _context.SaveChanges();
             return RedirectToAction("Course");
         }
@@ -246,8 +252,7 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/blog")]
         public ActionResult Blog()
         {
-
-            return View(_context.Blogs.Include(b => b.Author).ToList());
+            return View(_context.Blogs.Include(b => b.Author).Where(b=> !b.Deleted).ToList());
         }
 
         [Route("admin/blog/new")]
@@ -415,7 +420,12 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult DeleteBlogConfirmed(int id)
         {
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
-            _context.Blogs.Remove(blog);
+            if (blog == null)
+            {
+                return HttpNotFound();
+            }
+            //  _context.Blogs.Remove(blog);
+            blog.Deleted = true;
             _context.SaveChanges();
             return RedirectToAction("Blog");
         }
