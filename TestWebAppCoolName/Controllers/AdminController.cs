@@ -549,7 +549,7 @@ namespace TestWebAppCoolName.Controllers
                 person.FullName = person.Name + " " + person.LastName;
                 _context.Persons.Add(person);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Person");
             }
 
             return View(person);

@@ -7,8 +7,7 @@ namespace TestWebAppCoolName.Migrations
     {
         public override void Up()
         {
-            Sql("INSERT INTO PEOPLE(Name) VALUES ('Dan')");
-            Sql("INSERT INTO PEOPLE(Name) VALUES ('Honza')");
+          
         }
         
         public override void Down()

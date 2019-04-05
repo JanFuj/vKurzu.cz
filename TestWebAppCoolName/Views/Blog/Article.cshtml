@@ -85,7 +85,7 @@
             <div class="related-articles__grid">
                 @{
                     var articles = new DataService().GetRelatedArticles(Model.Blog);
-                    foreach (var article in articles)
+                    foreach (var article in articles.Where(a=>!a.Deleted))
                     {
                         <article class="article-preview">
                             <div class="article-preview__author">@article.Author.FullName</div>

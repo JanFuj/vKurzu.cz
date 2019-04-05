@@ -9,7 +9,7 @@
 
 
     <p>
-        @Html.ActionLink("Create New", "NewPerson", null, new { @class = "link--gradient" })
+        @Html.ActionLink("Vytvořit", "NewPerson", null, new { @class = "link--gradient" })
     </p>
     <table class="table">
         <tr>
@@ -34,8 +34,8 @@
                 </td>
              
                 <td>
-                    @Html.ActionLink("Edit", "EditPerson", new { id = item.Id }, new { @class = "link--gradient" }) |
-                    @Html.ActionLink("Delete", "DeletePerson", new { id = item.Id }, new { @class = "link--gradient" })
+                    @Html.ActionLink("Upravit", "EditPerson", new { id = item.Id }, new { @class = "link--gradient" }) |
+                    @Html.ActionLink("Smazat", "DeletePerson", new { id = item.Id }, new { @class = "link--gradient" })
                 </td>
             </tr>
         }
