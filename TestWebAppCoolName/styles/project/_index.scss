@@ -1,0 +1,206 @@
+//- Basics
+
+.body--index {
+    grid-gap: 0;
+
+    .main > article {
+        grid-column: full-start / full-end;
+    }
+
+    @media screen and (max-width: $breakpoint-sm) {
+        hr {
+            grid-column: content-start / full-end !important;
+        }
+    }
+}
+
+
+.main-heading {
+    margin-top: var(--gutter);
+    margin-bottom: var(--gutter);
+    margin: 0;
+}
+
+
+hr {
+    height: 2px;
+    width: 100%;
+    margin: var(--gutter) 0;
+    background: $gradient;
+    border: none;
+}
+
+.hr--invisible {
+    background: transparent;
+}
+
+p, ul, ol {
+    color: var(--text-secondary);
+}
+
+//- Blocks
+
+//-- Intro
+
+.intro--index {
+    @include block-layout-reset;
+    grid-column: full-start / full-end;
+    padding: var(--gutter) 0;
+
+    .intro__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column: wide-start / wide-end;
+
+        @media screen and (max-width: $breakpoint-md) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .intro__heading {
+        //color: var(--text-primary);
+        //background: linear-gradient(0.35turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));;
+        @include gradient;
+        @include gradient-stuff;
+        line-height: 1.5;
+        grid-column: 1 / -1;
+
+        mark {
+            color: var(--text-primary);
+            background-clip: initial;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            -webkit-box-decoration-break: initial;
+            box-decoration-break: initial;
+        }
+    }
+
+    .intro__text {
+        color: var(--text-secondary) !important;
+        grid-column: 1 / span 2;
+        //font-weight: normal;
+    }
+}
+
+header,
+.intro {
+    background-color: var(--card-bg);
+    //text-align: center;
+}
+
+//-- Articles
+
+//--- Courses
+
+.courses {
+    @include block-layout-reset;
+    //grid-column: wide-start / wide-end;
+
+    &__heading {
+        grid-column: wide-start / content-end;
+    }
+
+    &__text {
+        grid-column: wide-start / middle;
+    }
+
+    &-cards {
+        grid-column: wide-start / content-end;
+    }
+}
+
+//--- Blog
+
+.blog {
+    @include block-layout-reset;
+    //grid-column: wide-start / full-end;
+
+    hr {
+        grid-column: content-start / full-end;
+    }
+
+    .main-heading {
+        margin: 0;
+        position: -webkit-sticky;
+        position: sticky;
+        top: calc(var(--header-height));
+        transition: transform 0.2s ease-out;
+
+        @media screen and (max-width: $breakpoint-sm) {
+            position: static;
+        }
+    } 
+
+    &__heading {
+        grid-column: content-start / middle;
+        grid-row: 2;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: var(--gutter);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--divider);
+
+            @media screen and (max-width: $breakpoint-sm) {
+                display: none;
+            }
+        }
+
+    }
+
+    .article-previews {
+        display: grid;
+        grid-column: middle / content-end;
+        grid-row-gap: var(--base-4);
+    }
+
+    &__link {
+        grid-column: middle / wide-end;
+        margin-top: var(--article-gap);
+    }
+}
+
+//--- Contact
+
+.contact {
+    @include block-layout-reset;
+    //grid-column: full-start / wide-end;
+
+    > * {
+        grid-column: wide-start / middle;
+    }
+
+    hr {
+        grid-column: full-start / content-end;
+    }
+}
+
+.contact-form {
+    --radius: 20px;
+    display: grid;
+    justify-content: center;
+    grid-gap: var(--base);
+    grid-template-columns: minmax(0, 400px);
+    background-color: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--radius);
+    @include fluidify(padding, 12px, 96px);
+
+    textarea {
+        resize: vertical;
+    }
+}
+
+.teachers {
+    @include fluidify(margin-top, 24px, 64px);
+    &__list{
+        grid-column: wide-start / content-end;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        grid-gap: var(--base-3);
+    }
+}

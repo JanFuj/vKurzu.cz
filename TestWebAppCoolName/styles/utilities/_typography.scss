@@ -1,0 +1,154 @@
+:root {
+	--font-stack: "Inter", system-ui;
+	--font-headings: "Rubik", system-ui;
+	--font-size-small: 80%;
+	--font-size-tiny: 60%;
+}
+
+$type-ratio-max:				1.2;
+$font-size-base-max:    20;
+$font-size-max:      		type-size($font-size-base-max, 1, 1);
+$font-size-h6-max:      type-size($font-size-base-max, 1, 1);
+$font-size-h5-max:      type-size($font-size-base-max, $type-ratio-max, 2);
+$font-size-h4-max:      type-size($font-size-base-max, $type-ratio-max, 3);
+$font-size-h3-max:      type-size($font-size-base-max, $type-ratio-max, 4);
+$font-size-h2-max:      type-size($font-size-base-max, $type-ratio-max, 5);
+$font-size-h1-max:      type-size($font-size-base-max, $type-ratio-max, 6);
+
+$type-ratio-min:				1.125;
+$font-size-base-min:    16;
+$font-size-min:      		type-size($font-size-base-min, 1, 1);
+$font-size-h6-min:      type-size($font-size-base-min, 1, 1);
+$font-size-h5-min:      type-size($font-size-base-min, $type-ratio-min, 2);
+$font-size-h4-min:      type-size($font-size-base-min, $type-ratio-min, 3);
+$font-size-h3-min:      type-size($font-size-base-min, $type-ratio-min, 4);
+$font-size-h2-min:      type-size($font-size-base-min, $type-ratio-min, 5);
+$font-size-h1-min:      type-size($font-size-base-min, $type-ratio-min, 6);
+
+$typography-settings: (
+    html: (
+			min: $font-size-min,
+			max: $font-size-max,
+    ),
+    h1: (
+			min: $font-size-h1-min,
+			max: $font-size-h1-max,
+			weight: 700
+		),
+    h2: (
+			min: $font-size-h2-min,
+			max: $font-size-h2-max,
+			weight: 700
+    ),
+    h3: (
+			min: $font-size-h3-min,
+			max: $font-size-h3-max,
+			weight: 700
+		),
+		h4: (
+			min: $font-size-h4-min,
+			max: $font-size-h4-max,
+			weight: 700
+    ),
+		h5: (
+			min: $font-size-h5-min,
+			max: $font-size-h5-max,
+			weight: 700
+    ),
+		h6: (
+			min: $font-size-h6-min,
+			max: $font-size-h6-max,
+			weight: 700
+    )
+);
+
+@mixin fluidify($properties, $min-value, $max-value, $min-vw: $breakpoint-xs, $max-vw: $breakpoint-lg) {
+	@each $property in $properties {
+		#{$property}: $min-value;
+	}
+
+	@media (min-width: $min-vw) {
+		@each $property in $properties {
+			#{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+		}
+	}
+
+	@media (min-width: $max-vw) {
+		@each $property in $properties {
+			#{$property}: $max-value;
+		}
+	}
+}
+  
+@function strip-unit($number) {
+	@if type-of($number) == "number" and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+
+	@return $number;
+}
+
+@mixin typography-settings() {
+	@each $element, $settings in $typography-settings {
+		#{$element} {
+			@include fluidify(font-size, map-get($settings, min), map-get($settings, max));
+
+			@if map-get($settings, weight) {
+				font-weight: map-get($settings, weight);
+			}
+		}
+	}
+}
+@mixin typography-settings-as-classes() {
+	@each $element, $settings in $typography-settings {
+		.#{$element} {
+			@include fluidify(font-size, map-get($settings, min), map-get($settings, max));
+
+			@if map-get($settings, weight) {
+				font-weight: map-get($settings, weight);
+			}
+		}
+	}
+}
+
+// Font sizes
+
+@include typography-settings;
+@include typography-settings-as-classes;
+
+// Elements settings
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-headings);
+}
+
+p {
+	line-height: 1.5;
+}
+
+ul,
+ol {
+  padding-left: var(--base-2);
+  line-height: 1.5;
+}
+
+blockquote {
+	margin: 0;
+	padding: 0 2em;
+	border-left: 2px solid;
+	//@include themify-border($text-secondary);
+	//@include themify-text-secondary;
+}
+
+dt {
+	line-height: 1.5;
+	font-weight: 500;
+	//@include themify-text-primary;
+}
+
+dd {
+	margin: 0;
+	padding: 0em 2em 0.25em;
+	line-height: 1.5;
+	//@include themify-text-secondary;
+}

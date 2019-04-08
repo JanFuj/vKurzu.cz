@@ -1,0 +1,26 @@
+{
+  "name": "vkruzu.css",
+  "version": "0.1.0",
+  "author": "Daniel Hruška",
+  "description": "V Kurzu",
+  "files": [
+    "pages",
+    "js",
+    "img",
+    "pug",
+    "fonts",
+    "gulpfile.js"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-error-handle": "^1.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-webserver": "^0.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "fibers": "^3.1.1"
+  }
+}

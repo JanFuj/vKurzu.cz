@@ -1,0 +1,21 @@
+
+input,
+textarea {
+    border: 2px solid;
+    border-radius: 6px;
+    padding: 1ex 1ch;
+    color: var(--text-primary);
+    background-color: transparent;
+    border-color: var(--divider);
+    transition: all 0.2s ease-out;
+    transition-property: color, background-color, transform, border-color;
+    
+    &:focus {
+        border-color: var(--text-primary);
+        //box-shadow: 0 0 0 2px var(--clr-primary);
+    }
+}
+
+/* textarea {
+    padding: 0 1ch;
+} */

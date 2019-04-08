@@ -1,0 +1,185 @@
+.article-preview {
+    display: grid;
+    grid-gap: var(--base);
+    align-content: start;
+
+    > * {
+        margin: 0;
+    }
+
+    &__author {
+        color: var(--text-disabled);
+        text-transform: uppercase;
+        font-size: var(--font-size-tiny);
+        font-weight: 700;
+    }
+
+    &__text {
+        color: var(--text-secondary);
+    }
+}
+
+/* .header--article {
+    background-color: var(--clr-shade-2);
+} */
+
+.main--article {
+    @include block-layout-reset;
+    @include fluidify(grid-row-gap, 24px, 72px);
+}
+
+.article {
+    --avatar-size: var(--base-4);
+    --avatar-margin: var(--base);
+
+    grid-column: full-start / full-end;
+
+    &__header {
+        @include block-layout-reset-article;
+        padding-top: var(--gutter);
+        padding-bottom: var(--article-gap);
+        text-align: left;
+        background: linear-gradient(to bottom,var(--clr-shade-2), var(--glob-bg));
+    }
+
+   /*  &__title {
+        @include fluidify(font-size, $font-size-h1-min, $font-size-h1-max*1.5);
+    } */
+
+    &__content {
+        @include block-layout-reset-article;
+
+        > p:first-of-type {
+            &::first-letter {
+                //color: var(--clr-primary);
+                font-family: var(--font-headings);
+                font-weight: 700;
+                line-height: 1;
+                @include fluidify(font-size, $font-size-h1-min, $font-size-h1-max);
+                @include gradient;
+                @include gradient-stuff;
+            }
+        }
+    }
+
+    &__details {
+        color: var(--text-disabled);
+        text-transform: uppercase;
+        font-size: var(--font-size-small);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        > * {
+            display: inline;
+  
+            &::after {
+                content: "—";
+                margin: 0 var(--base-h);
+            }
+        }
+
+        > .article__avatar {
+            display: inline-flex;
+            margin-right: var(--avatar-margin);
+        }
+
+        > .article__avatar::after,
+        > *:last-child::after {
+            display: none;
+        }
+
+    }
+
+    &__avatar {
+        height: var(--avatar-size);
+        width: var(--avatar-size);
+        border-radius: var(--avatar-size);
+        background: var(--card-bg);
+
+        svg {
+            fill: white;
+        }
+    }
+
+    &__tags {
+        //padding-left: calc(var(--avatar-size) + var(--avatar-margin));
+        margin-bottom: var(--base);
+        > .tag {
+            margin-right: var(--base);
+        }
+
+        > .tag:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__header-hr {
+        //width: 36px;
+        grid-column: content-start / full-end;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    h2 {
+        @include fluidify(font-size, $font-size-h4-min, $font-size-h4-max);
+    }
+
+    h3 {
+        @include fluidify(font-size, $font-size-h5-min, $font-size-h5-max);
+    }
+}
+
+.tag {
+    /* padding: 0.5ch 2ch;
+    border: 2px solid var(--divider);
+    border-radius: 1000px; */
+
+    @include gradient;
+    font-family: var(--font-headings);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-decoration: none;
+
+    &::before {
+        content: "";
+        //margin-right: 0.05ch;
+    }
+}
+
+.related-course {
+    padding: var(--base-3) 0;
+
+    &__heading {
+        margin-top: 0;
+        margin-bottom: var(--base);
+        font-weight: normal;
+        color: var(--text-disabled);
+        //color: var(--text-disabled);
+    }
+}
+
+.related-articles {
+    @include block-layout-reset;
+    grid-column: full-start / full-end;
+
+    &__heading {
+        grid-column: wide-start / content-end;
+    }
+    
+    &__grid {
+        display: grid;
+        @include fluidify(grid-gap, 24px, 36px);
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+        grid-column: wide-start / content-end;
+    }
+
+    hr {
+        grid-column: full-start / content-end;
+    }
+}
