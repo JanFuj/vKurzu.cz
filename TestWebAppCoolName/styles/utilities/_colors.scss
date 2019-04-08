@@ -1,0 +1,193 @@
+:root {
+	--text-primary-black: 		black;
+	--text-primary-white: 		white;
+	--text-secondary-black: 	hsla(0, 0%, 0%, 0.6);
+	--text-secondary-white: 	hsla(0, 0%, 100%, 0.7);
+	--text-disabled-black: 		hsla(0, 0%, 0%, 0.35);
+	--text-disabled-white: 		hsla(0, 0%, 100%, 0.4);
+	--divider-black: 			hsla(0, 0%, 0%, 18%);
+	--divider-white: 			hsla(0, 0%, 100%, 24%);
+
+	--clr-shade-1: 		hsl(265, 24%, 7%);
+	--clr-shade-2: 		hsl(265, 18%, 14%);
+	--clr-shade-3: 		hsl(265, 19%, 21%);
+	--clr-shade-4: 		hsl(265, 14%, 80%);
+	--clr-shade-5: 		hsl(265, 10%, 90%);
+	--clr-shade-6: 		hsl(265, 6%, 96%);
+
+	--glob-bg: 			var(--clr-shade-1);
+	--clr-red: 			hsl(352, 80%, 55%);
+	--clr-tomato: 		hsl(12, 85%, 55%);
+	--clr-orange: 		hsl(32, 85%, 55%);
+	--clr-yellow: 		hsl(50, 85%, 55%);
+	--clr-lime: 		hsl(75, 80%, 55%);
+	--clr-green: 		hsl(140, 75%, 55%);
+	--clr-cyan: 		hsl(180, 75%, 47%);
+	--clr-azure: 		hsl(200, 75%, 55%);
+	--clr-blue: 		hsl(220, 75%, 60%);
+	--clr-ultramarine: 	hsl(244, 85%, 60%);
+	--clr-purple: 		hsl(270, 85%, 60%);
+	--clr-pink: 		hsl(330, 80%, 60%);
+	--clr-crimson: 		hsl(348, 80%, 55%);
+	--text-primary:		var(--text-primary-white);
+	--text-secondary: 	var(--text-secondary-white);
+	--text-disabled: 	var(--text-disabled-white);
+	--divider: 			var(--divider-white);
+	--card-bg: 			var(--clr-shade-2);
+	--card-shadow: 		0 12px 30px hsla(0, 0%, 0%, 0.5);
+	--button-shadow: 	0 6px 16px hsla(0, 0%, 0%, 0.5);
+
+	--clr-primary: 		var(--clr-tomato);
+	--clr-secondary: 	var(--clr-crimson);
+
+	--gradient: 		linear-gradient(to right, var(--clr-primary) 5%, var(--clr-secondary) 20%, var(--divider) 100%);
+}
+
+$gradient: linear-gradient(to right, var(--clr-primary) 5%, var(--clr-secondary) 20%, var(--divider) 100%);
+
+/* :root {
+	$this-settings: (
+		light: (
+			--glob-bg: var(--clr-shade-6),
+			--clr-red: hsl(0, 80%, 47%),
+			--clr-tomato: hsl(12, 80%, 50%),
+			--clr-orange: hsl(32, 90%, 50%),
+			--clr-yellow: hsl(50, 85%, 48%),
+			--clr-green: hsl(140, 80%, 47%),
+			--clr-cyan: hsl(180, 80%, 45%),
+			--clr-azure: hsl(200, 75%, 47%),
+			--clr-blue: hsl(220, 75%, 47%),
+			--clr-ultramarine: hsl(244, 75%, 47%),
+			--clr-purple: hsl(270, 75%, 47%),
+			--clr-pink: hsl(330, 75%, 47%),
+			--clr-crimson: hsl(348, 80%, 47%),
+			--text-primary: var(--text-primary-black),
+			--text-secondary: var(--text-secondary-black),
+			--text-disabled: var(--text-disabled-black),
+			--divider: var(--divider-black),
+			--card-bg: white,
+			--card-shadow: 0 12px 30px hsla(0, 0%, 0%, 0.2),
+			--button-shadow: 0 6px 16px hsla(0, 45%, 2%, 0.2)
+		),
+		dark: (
+			--glob-bg: var(--clr-shade-1),
+			--clr-red: hsl(352, 80%, 55%),
+			--clr-tomato: hsl(12, 85%, 55%),
+			--clr-orange: hsl(32, 85%, 55%),
+			--clr-yellow: hsl(50, 85%, 55%),
+			--clr-green: hsl(140, 75%, 55%),
+			--clr-cyan: hsl(180, 75%, 47%),
+			--clr-azure: hsl(200, 75%, 55%),
+			--clr-blue: hsl(220, 75%, 62%),
+			--clr-ultramarine: hsl(244, 85%, 70%),
+			--clr-purple: hsl(270, 85%, 70%),
+			--clr-pink: hsl(330, 80%, 63%),
+			--clr-crimson: hsl(348, 80%, 55%),
+			--text-primary: var(--text-primary-white),
+			--text-secondary: var(--text-secondary-white),
+			--text-disabled: var(--text-disabled-white),
+			--divider: var(--divider-white),
+			--card-bg: var(--clr-shade-2),
+			--card-shadow: 0 12px 30px hsla(0, 0%, 0%, 0.5),
+			--button-shadow: 0 6px 16px hsla(0, 0%, 0%, 0.5)
+		)
+	);
+
+	@include themify-settings($this-settings);
+} */
+
+@mixin gradient-pattern() {
+	background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary)), url("../media/pattern.svg");
+	background-blend-mode: multiply;
+	background-size: cover;
+}
+
+@mixin gradient() {
+	background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+}
+
+@mixin gradient-swapped() {
+	background: linear-gradient(0.4turn, var(--clr-secondary), var(--clr-secondary) 20%, var(--clr-primary));
+}
+
+@mixin gradient-stuff() {
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+	text-decoration: none;
+}
+
+@mixin colors-modifiers() {
+	&--web-basics {
+        --clr-primary: var(--clr-tomato);
+        --clr-secondary: var(--clr-red);
+    }
+
+    &--css-advanced {
+        --clr-primary: var(--clr-cyan);
+        --clr-secondary: var(--clr-blue);
+    }
+
+    &--sass {
+        --clr-primary: var(--clr-pink);
+        --clr-secondary: var(--clr-purple);
+
+    }
+
+    &--xamarin {
+        --clr-primary: var(--clr-cyan);
+        --clr-secondary: var(--clr-azure);
+    }
+
+    &--sketch {
+        --clr-primary: var(--clr-yellow);
+        --clr-secondary: var(--clr-tomato);
+    }
+
+    &--mvc {
+        --clr-primary: var(--clr-blue);
+        --clr-secondary: var(--clr-ultramarine);
+    }
+}
+
+@mixin gradient-url {
+	&--web-basics {
+        svg {
+            fill: url(#gradient-web-basics);
+        }
+    }
+
+    &--css-advanced {
+        svg {
+            fill: url(#gradient-css-advanced);
+        }
+    }
+
+    &--sass {
+		 svg {
+            fill: url(#gradient-sass);
+        }
+    }
+
+    &--xamarin {
+		svg {
+            fill: url(#gradient-xamarin);
+        }
+    }
+
+    &--sketch {
+		svg {
+            fill: url(#gradient-sketch);
+        }
+    }
+
+    &--mvc {
+		svg {
+            fill: url(#gradient-mvc);
+        }
+    }
+}
+
+

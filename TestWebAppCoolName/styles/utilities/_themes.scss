@@ -1,0 +1,106 @@
+$themes: (
+    light,
+    dark
+);
+
+$default-theme: dark;
+
+@mixin themify-settings($settings) {
+    & {
+        @include list-to-properties(map-get($settings, $default-theme));
+    }
+
+    @each $theme in $themes {
+        $i: index($themes, $theme);
+
+        @media (prefers-color-scheme: #{$theme}) {
+            & {
+                @include list-to-properties(map-get($settings, $theme));
+            }
+        }
+    }
+}
+
+// Shorthands
+
+@mixin shadify($shades) {
+    // shades: wb (white/black)
+    //         bb (black/black)
+    //         ww (white/white)
+    //         any value will be the default (black/white)
+    @if ($shades == wb) {
+        $this-settings: (
+            light: (
+                --text-primary: var(--text-primary-white),
+                --text-secondary: var(--text-secondary-white),
+                --text-disabled: var(--text-disabled-white),
+                --divider: var(--divider-white)
+            ),
+            dark: (
+                --text-primary: var(--text-primary-black),
+                --text-secondary: var(--text-secondary-black),
+                --text-disabled: var(--text-disabled-black),
+                --divider: var(--divider-black)
+            )
+        );
+
+        @include themify-settings($this-settings);
+    }
+
+    @else if ($shades == bb) {
+        $this-settings: (
+            light: (
+                --text-primary: var(--text-primary-black),
+                --text-secondary: var(--text-secondary-black),
+                --text-disabled: var(--text-disabled-black),
+                --divider: var(--divider-black)
+            ),
+            dark: (
+                --text-primary: var(--text-primary-black),
+                --text-secondary: var(--text-secondary-black),
+                --text-disabled: var(--text-disabled-black),
+                --divider: var(--divider-black)
+            )
+        );
+
+        @include themify-settings($this-settings);
+    }
+
+    @else if ($shades == ww) {
+        $this-settings: (
+            light: (
+                --text-primary: var(--text-primary-white),
+                --text-secondary: var(--text-secondary-white),
+                --text-disabled: var(--text-disabled-white),
+                --divider: var(--divider-white)
+            ),
+            dark: (
+                --text-primary: var(--text-primary-white),
+                --text-secondary: var(--text-secondary-white),
+                --text-disabled: var(--text-disabled-white),
+                --divider: var(--divider-white)
+            )
+        );
+
+        @include themify-settings($this-settings);
+    }
+
+    @else {
+        $this-settings: (
+            light: (
+                --text-primary: var(--text-primary-black),
+                --text-secondary: var(--text-secondary-black),
+                --text-disabled: var(--text-disabled-black),
+                --divider: var(--divider-black)
+            ),
+            dark: (
+                --text-primary: var(--text-primary-white),
+                --text-secondary: var(--text-secondary-white),
+                --text-disabled: var(--text-disabled-white),
+                --divider: var(--divider-white)
+            )
+        );
+
+        @include themify-settings($this-settings);
+    }
+}

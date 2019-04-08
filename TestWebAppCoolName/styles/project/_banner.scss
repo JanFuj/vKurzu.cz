@@ -1,0 +1,36 @@
+.banner {
+    display: grid;
+    grid-template-columns: var(--layout-columns);
+    grid-template-rows: [top] 0px [content-start] minmax(var(--base-4), 1fr) [middle] 1fr [content-end] 0 [bottom];
+    grid-column: full-start / full-end;
+    grid-column-gap: var(--gutter);
+    margin: 0;
+    @include shadify(bw);
+    color: var(--text-primary);
+
+    &__top {
+        grid-column: full-start / full-end;
+        grid-row: top / middle;
+    }
+
+    &__bottom {
+        grid-column: full-start / full-end;
+        grid-row: middle / bottom;
+        //background: linear-gradient(to right, var(--course-color-1), var(--course-color-2));
+        background-color: var(--glob-bg);
+    }
+
+    &__content-wrapper {
+        grid-column: content-start / middle;
+        grid-row: content-start / content-end;
+        display: flex;        
+    }
+
+    &__content {
+        background-color: var(--card-bg);
+        box-shadow: var(--card-shadow);
+        border-radius: 20px;
+        @include fluidify(padding, 24px, 36px);
+        width: 100%;
+    }
+}

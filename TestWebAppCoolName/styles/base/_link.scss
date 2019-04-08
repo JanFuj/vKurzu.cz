@@ -1,0 +1,67 @@
+a {
+    &:link {
+        color: var(--clr-primary);
+    }
+
+    &:visited {
+        color: var(--clr-purple);
+    }
+}
+
+.link--gradient {
+    @include gradient;
+    font-family: var(--font-headings);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-decoration: none;
+    font-weight: 700;
+
+    &:hover {
+        background: linear-gradient(to right,var(--text-primary), var(--text-primary));
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+}
+
+.link--gradient-inversed {
+    font-family: var(--font-headings);
+    background: linear-gradient(to right, var(--text-primary), var(--text-primary));
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-decoration: none;
+    font-weight: 700;
+
+    &:hover {
+        @include gradient;
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+}
+
+.link--border {
+    border-bottom: 1px solid var(--divider);
+
+    &:hover {
+        border-color: var(--text-secondary);
+    }
+}
+
+.link--border-hover {
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+        border-color: var(--text-secondary);
+    }
+}
