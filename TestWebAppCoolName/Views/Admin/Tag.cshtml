@@ -3,32 +3,31 @@
 @{
     ViewBag.Title = "Admin Tag";
 }
+<body class="body--admin">
+    @Html.Partial("_LoginPartial")
+    <main class="main">
+        <div class="admin-list-header">
+            <h1>Tagy</h1>
+            @Html.ActionLink("Vytvořit", "NewTag", null, new { @class = "button" })
+        </div>
 
-<main class="main">
+        <ul class="admin-list">
+
+            @foreach (var item in Model)
+            {
 
 
-    <p>
-        @Html.ActionLink("Vytvořit", "NewTag",null, new { @class = "link--gradient" })
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-            </th>
-            <th></th>
-        </tr>
+                <li class="admin-list__item">
+                    <div class="admin-list__cell admin-list__cell--info">
+                        <div class="">@Html.DisplayFor(modelItem => item.Name)</div>
+                    </div>
+                    <div class="admin-list__cell admin-list__cell--buttons">
+                        @Html.ActionLink("Upravit", "EditTag", new { id = item.Id }, new { @class = "link--gradient" }) 
+                        @Html.ActionLink("Smazat", "DeleteTag", new { id = item.Id }, new { @class = "link--gradient" })
+                    </div>
+                </li>
+            }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Upravit", "EditTag", new { id = item.Id }, new { @class = "link--gradient" }) |
-                    @Html.ActionLink("Smazat", "DeleteTag", new { id = item.Id }, new { @class = "link--gradient" })
-                </td>
-            </tr>
-        }
-
-    </table>
-</main>
+        </ul>
+    </main>
+</body>

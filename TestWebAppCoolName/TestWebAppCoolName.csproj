@@ -347,9 +347,7 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\main.css" />
     <Content Include="Content\main.min.css" />
-    <Content Include="Content\quill.bubble.css" />
-    <Content Include="Content\quill.snow.css" />
-    <Content Include="Content\tags.css" />
+    <Content Include="error.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="media\30.svg" />
@@ -362,12 +360,12 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\main.min.css.map" />
     <Content Include="fonts\rubik-bold.woff2" />
     <Content Include="fonts\rubik-regular.woff2" />
     <Content Include="fonts\inter-bold.woff2" />
     <Content Include="fonts\Inter-regular.woff2" />
     <Content Include="libman.json" />
+    <Content Include="Content\main.min.css.map" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

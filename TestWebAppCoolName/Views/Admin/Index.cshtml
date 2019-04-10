@@ -3,16 +3,97 @@
 @{
     ViewBag.Title = "Admin";
 }
+
+<body class="body--admin">
 @Html.Partial("_LoginPartial")
-<main>
+    <main class="main main--admin">
+        <div class="admin-cards">
+            <div class="card card--clickable card--admin">
+                <div class="card__content">
+                    <a class="card__link" href="@Url.Action("Course","Admin")"></a>
+                    <div class="card__image">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                             class="svg-inline--fa fa-graduation-cap fa-w-20" data-icon="graduation-cap"
+                             data-prefix="fas" focusable="false" role="img" viewBox="0 0 640 512">
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                <stop offset="0%" stop-color="var(--clr-primary)"></stop>
+                                <stop offset="100%" stop-color="var(--clr-secondary)"></stop>
+                            </linearGradient>
+                            <path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z" />
+                        </svg>
+                        <header class="card__header">
+                            <h2 class="card__title">Kurzy</h2>
+                        </header>
+                    </div>
+                </div>
 
-    <h2>Admin</h2>
-    @Html.ActionLink("Kurzy", "Course", null, new { @class = "link--gradient" })
-    @Html.ActionLink("Blog", "Blog", null, new { @class = "link--gradient" })
-    @Html.ActionLink("Tagy", "Tag", null, new { @class = "link--gradient" })
-    @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
-    {
-        @Html.ActionLink("Lidi", "Person", null, new { @class = "link--gradient" })
-    }
-</main>
+            </div>
+            <div class="card card--clickable card--admin">
+                <div class="card__content">
+                    <a class="card__link" href="@Url.Action("Blog","Admin")"></a>
+                    <div class="card__image">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                             class="svg-inline--fa fa-align-left fa-w-14" data-icon="align-left" data-prefix="fas"
+                             focusable="false" role="img" viewBox="0 0 448 512">
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                <stop offset="0%" stop-color="var(--clr-primary)"></stop>
+                                <stop offset="100%" stop-color="var(--clr-secondary)"></stop>
+                            </linearGradient>
+                            <path d="M288 44v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16V44c0-8.837 7.163-16 16-16h256c8.837 0 16 7.163 16 16zM0 172v40c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16zm16 312h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm256-200H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16h256c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16z" />
+                        </svg>
 
+
+                    </div>
+                    <header class="card__header">
+                        <h2 class="card__title">Blog</h2>
+                    </header>
+                </div>
+            </div>
+
+            <div class="card card--clickable card--admin">
+                <div class="card__content">
+                    <a class="card__link" href="@Url.Action("Tag","Admin")"></a>
+                    <div class="card__image">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                             class="svg-inline--fa fa-hashtag fa-w-14" data-icon="hashtag" data-prefix="fas"
+                             focusable="false" role="img" viewBox="0 0 448 512">
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                <stop offset="0%" stop-color="var(--clr-primary)"></stop>
+                                <stop offset="100%" stop-color="var(--clr-secondary)"></stop>
+                            </linearGradient>
+                            <path d="M440.667 182.109l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l14.623-81.891C377.123 38.754 371.468 32 363.997 32h-40.632a12 12 0 0 0-11.813 9.891L296.175 128H197.54l14.623-81.891C213.477 38.754 207.822 32 200.35 32h-40.632a12 12 0 0 0-11.813 9.891L132.528 128H53.432a12 12 0 0 0-11.813 9.891l-7.143 40C33.163 185.246 38.818 192 46.289 192h74.81L98.242 320H19.146a12 12 0 0 0-11.813 9.891l-7.143 40C-1.123 377.246 4.532 384 12.003 384h74.81L72.19 465.891C70.877 473.246 76.532 480 84.003 480h40.632a12 12 0 0 0 11.813-9.891L151.826 384h98.634l-14.623 81.891C234.523 473.246 240.178 480 247.65 480h40.632a12 12 0 0 0 11.813-9.891L315.472 384h79.096a12 12 0 0 0 11.813-9.891l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l22.857-128h79.096a12 12 0 0 0 11.813-9.891zM261.889 320h-98.634l22.857-128h98.634l-22.857 128z" />
+                        </svg>
+
+
+                    </div>
+                    <header class="card__header">
+                        <h2 class="card__title">Tagy</h2>
+                    </header>
+                </div>
+            </div>
+            @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
+            {
+                <div class="card card--clickable card--admin">
+                    <div class="card__content">
+                        <a class="card__link" href="@Url.Action("Person","Admin")"></a>
+                        <div class="card__image">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                 class="svg-inline--fa fa-user-astronaut fa-w-14" data-icon="user-astronaut"
+                                 data-prefix="fas" focusable="false" role="img" viewBox="0 0 448 512">
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                    <stop offset="0%" stop-color="var(--clr-primary)"></stop>
+                                    <stop offset="100%" stop-color="var(--clr-secondary)"></stop>
+                                </linearGradient>
+                                <path d="M64 224h13.5c24.7 56.5 80.9 96 146.5 96s121.8-39.5 146.5-96H384c8.8 0 16-7.2 16-16v-96c0-8.8-7.2-16-16-16h-13.5C345.8 39.5 289.6 0 224 0S102.2 39.5 77.5 96H64c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16zm40-88c0-22.1 21.5-40 48-40h144c26.5 0 48 17.9 48 40v24c0 53-43 96-96 96h-48c-53 0-96-43-96-96v-24zm72 72l12-36 36-12-36-12-12-36-12 36-36 12 36 12 12 36zm151.6 113.4C297.7 340.7 262.2 352 224 352s-73.7-11.3-103.6-30.6C52.9 328.5 0 385 0 454.4v9.6c0 26.5 21.5 48 48 48h80v-64c0-17.7 14.3-32 32-32h128c17.7 0 32 14.3 32 32v64h80c26.5 0 48-21.5 48-48v-9.6c0-69.4-52.9-125.9-120.4-133zM272 448c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16zm-96 0c-8.8 0-16 7.2-16 16v48h32v-48c0-8.8-7.2-16-16-16z" />
+                            </svg>
+
+                        </div>
+                        <header class="card__header">
+                            <h2 class="card__title">Lidi</h2>
+                        </header>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>
+</body>

@@ -4,20 +4,20 @@
 @{
     ViewBag.Title = "Nový kurz";
 }
+<body>
+    <main class="main">
 
-<main class="main">
-    <section class="courses">
-        <h1 class="main-heading courses__heading">Vytvořit nový kurz</h1>
-        @using (Html.BeginForm("NewCourse", "Admin", FormMethod.Post))
+        <h1 class="">Vytvořit nový kurz</h1>
+        @using (Html.BeginForm("NewCourse", "Admin", FormMethod.Post, new { @class = "admin-form" }))
         {
             @Html.AntiForgeryToken()
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.Name)
                 @Html.TextBoxFor(m => m.Course.Name)
                 @Html.ValidationMessageFor(m => m.Course.Name)
             </p>
 
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.Description)
                 @Html.TextAreaFor(m => m.Course.Description)
                 @Html.ValidationMessageFor(m => m.Course.Description)
@@ -26,8 +26,11 @@
                 @Html.LabelFor(m => m.Course.WillLearn)
                 @Html.HiddenFor(m => m.Course.WillLearn)
                 @Html.ValidationMessageFor(m => m.Course.WillLearn)
-                <div id="toolbarWillLearn"></div>
-                <div id="editorWillLearn"></div>
+                <div class="quill--will-learn">
+
+                    <div id="toolbarWillLearn"></div>
+                    <div id="editorWillLearn"></div>
+                </div>
             </p>
             <p>
                 @Html.LabelFor(m => m.Course.Body)
@@ -36,30 +39,30 @@
                 <div id="toolbarBody"></div>
                 <div id="editorBody"></div>
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.Lector_Id)
                 @Html.DropDownListFor(m => m.Course.Lector_Id, new SelectList(Model.Persons, "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Course.Lector_Id)
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.UrlTitle)
                 @Html.TextBoxFor(m => m.Course.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Course.UrlTitle)
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.Modificator)
                 @Html.TextBoxFor(m => m.Course.Modificator)
                 @Html.ValidationMessageFor(m => m.Course.Modificator)
             </p>
 
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Course.Svg)
                 @Html.TextAreaFor(m => m.Course.Svg)
                 @Html.ValidationMessageFor(m => m.Course.Svg)
             </p>
 
 
-            <div>
+            <div style="display: inline-block; width: 100%;">
                 <div class="subject-info-box-1">
                     <select multiple="multiple" id='lstBox1' class="form-control">
                         @if (Model.Course?.Tags != null)
@@ -95,22 +98,20 @@
                         }
                     </select>
                 </div>
-                <p>
+                <div id="tags-output">
                     <label>tagy</label>
 
                     @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
 
-                </p>
+                </div>
             </div>
-
-
-
-            <p>
+            <br>
+            <div>
                 <button type="submit">Vytvořit</button>
                 <div id="pageloader" style="display: none;">
                     <img src="/media/30.svg" alt="processing..." />
                 </div>
-            </p>
+            </div>
             <span>@ViewBag.Message</span>
             if (ViewData["Saved"] != null)
             {
@@ -118,9 +119,8 @@
             }
         }
 
-    </section>
-</main>
-
+    </main>
+</body>
 
 @section scripts {
 
