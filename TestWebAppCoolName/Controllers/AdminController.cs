@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
@@ -52,7 +53,13 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/kurz")]
         public ActionResult Course()
         {
-            var courses = _context.Courses.Include(b => b.Lector).Where(c=> !c.Deleted).ToList();
+            var userId = User.Identity.GetUserId();
+            var courses = _context.Courses.Include(b => b.Lector).Where(c => !c.Deleted).ToList();
+            if (User.IsInRole(Roles.Lector))
+            {
+                courses = _context.Courses.Include(b => b.Lector).Where(c => !c.Deleted && c.OwnerId == userId).ToList();
+            }
+
             return View(courses);
         }
 
@@ -96,7 +103,7 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-
+            vm.Course.OwnerId = User.Identity.GetUserId();
             vm.Course.Created = DateTime.Now;
             vm.Course.Changed = DateTime.Now;
             vm.Course.Tags = tags;
@@ -106,6 +113,7 @@ namespace TestWebAppCoolName.Controllers
             return RedirectToAction("Course");
         }
 
+        //GET 
         [Route("admin/kurz/edit/{id?}")]
         public ActionResult EditCourse(int? id)
         {
@@ -115,9 +123,14 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+
             if (course == null)
             {
                 return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && course.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
             var persons = _context.Persons.ToList();
@@ -252,7 +265,7 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/blog")]
         public ActionResult Blog()
         {
-            return View(_context.Blogs.Include(b => b.Author).Where(b=> !b.Deleted).ToList());
+            return View(_context.Blogs.Include(b => b.Author).Where(b => !b.Deleted).ToList());
         }
 
         [Route("admin/blog/new")]

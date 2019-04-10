@@ -4,102 +4,101 @@
 @{
     ViewBag.Title = "New Blog";
 }
-
-<main class="main">
-    <section class="courses">
-        <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
-        @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new { id = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            <p>
-                @Html.LabelFor(m => m.Blog.Name)
-                @Html.TextBoxFor(m => m.Blog.Name)
-                @Html.ValidationMessageFor(m => m.Blog.Name)
-            </p>
-
-            <p>
-                @Html.LabelFor(m => m.Blog.Description)
-                @Html.TextBoxFor(m => m.Blog.Description)
-                @Html.ValidationMessageFor(m => m.Blog.Description)
-            </p>
-            <p>
-                @Html.LabelFor(m => m.Blog.Body)
-                @Html.HiddenFor(m => m.Blog.Body)
-                @Html.ValidationMessageFor(m => m.Blog.Body)
-                <div id="toolbar"></div>
-                <div id="editor"></div>
-            </p>
-            <p>
-                @Html.LabelFor(m => m.Blog.Author_Id)
-                @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.Blog.Author_Id)
-            </p>
-            <p>
-                @Html.LabelFor(m => m.Blog.UrlTitle)
-                @Html.TextBoxFor(m => m.Blog.UrlTitle)
-                @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
-            </p>
-
-            <div>
-                <div class="subject-info-box-1">
-                    <select multiple="multiple" id='lstBox1' class="form-control">
-                        @if (Model.Blog?.Tags != null)
-                        {
-                            foreach (var tag in Model.Blog.Tags)
-                            {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-
-                <div class="subject-info-arrows text-center">
-                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
-                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
-                </div>
-
-
-
-                <div class="subject-info-box-2">
-                    <select multiple="multiple" id='lstBox2' class="form-control">
-                        @foreach (var tag in new DataService().GetTags())
-                        {
-                            bool exist = false;
-                            if (Model.Blog?.Tags != null)
-                            {
-                                exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
-                            }
-                            if (!exist)
-                            {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <p>
-                    <label>tagy</label>
-
-                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
-
-                </p>
-            </div>
-
-            <p>
-                <button type="submit">Vytvořit</button>
-                <div id="pageloader" style="display: none;">
-                    <img src="/media/30.svg" alt="processing..." />
-                </div>
-            </p>
-            <span>@ViewBag.Message</span>
-            if (ViewData["Saved"] != null)
+<body class="body--admin">
+    <main class="main main--admin-form">
+            <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
+            @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new { id = "form" , @class = "admin-form admin-form--blog" }))
             {
-                @Html.Label(ViewData["Saved"].ToString())
+                @Html.AntiForgeryToken()
+                <p class="admin-form__title">
+                    @Html.TextAreaFor(m => m.Blog.Name, new {placeholder = "Nadpis",@class = "h3 admin-form__textarea" })
+                    @Html.ValidationMessageFor(m => m.Blog.Name)
+                </p>
+
+                <p class="admin-form__desc">
+                    @Html.TextAreaFor(m => m.Blog.Description, new {placeholder = "Popis",@class= "admin-form__textarea" })
+                    @Html.ValidationMessageFor(m => m.Blog.Description)
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Blog.Author_Id)
+                    @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
+                    @Html.ValidationMessageFor(m => m.Blog.Author_Id)
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Blog.UrlTitle)
+                    @Html.TextBoxFor(m => m.Blog.UrlTitle)
+                    @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
+                </p>
+               
+                <hr>
+               
+                <p>
+                    @Html.HiddenFor(m => m.Blog.Body)
+                    @Html.ValidationMessageFor(m => m.Blog.Body)
+                    <div id="toolbar"></div>
+                    <div id="editor"></div>
+                </p>
+               
+                <hr>
+               
+                <div>
+                    <div class="subject-info-box-1">
+                        <select multiple="multiple" id='lstBox1' class="form-control">
+                            @if (Model.Blog?.Tags != null)
+                            {
+                                foreach (var tag in Model.Blog.Tags)
+                                {
+                                    <option value="@tag.Name">@tag.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="subject-info-arrows text-center">
+                        <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
+                        <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
+                    </div>
+
+
+
+                    <div class="subject-info-box-2">
+                        <select multiple="multiple" id='lstBox2' class="form-control">
+                            @foreach (var tag in new DataService().GetTags())
+                            {
+                                bool exist = false;
+                                if (Model.Blog?.Tags != null)
+                                {
+                                    exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                                }
+                                if (!exist)
+                                {
+                                    <option value="@tag.Name">@tag.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <p id="tags-output">
+                        <label>tagy</label>
+                        @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+                    </p>
+                </div>
+
+                <p>
+                    <button type="submit">Vytvořit</button>
+                    <div id="pageloader" style="display: none;">
+                        <img src="/media/30.svg" alt="processing..." />
+                    </div>
+                </p>
+                <span>@ViewBag.Message</span>
+                if (ViewData["Saved"] != null)
+                {
+                    @Html.Label(ViewData["Saved"].ToString())
+                }
             }
-        }
 
-    </section>
-</main>
-
+    </main>
+</body>
 
 @section scripts {
     <!-- Theme included stylesheets -->
@@ -113,9 +112,9 @@
         let quill = new Quill('#editor',
             {
                 modules: {
-                    toolbar:toolbarOptions
+                    toolbar: toolbarOptions
                 },
-                theme:'snow'
+                theme: 'snow'
             });
 
 

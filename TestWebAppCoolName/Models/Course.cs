@@ -44,6 +44,7 @@ namespace TestWebAppCoolName.Models
         public string UrlTitle { get; set; }
         public bool Deleted { get; set; }
         public bool Approved { get; set; }
+        public string OwnerId { get; set; }
         public List<Tag> Tags { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }
