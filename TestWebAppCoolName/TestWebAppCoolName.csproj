@@ -191,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\DataService.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
     <Compile Include="Helpers\IdentityHelper.cs" />
@@ -353,6 +354,9 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\favicon-2x.png" />
+    <Content Include="Content\favicon-6x.png" />
+    <Content Include="Content\favicon.png" />
     <Content Include="Content\main.css" />
     <Content Include="Content\main.min.css" />
     <Content Include="error.html" />
@@ -442,6 +446,7 @@
     <Content Include="Views\Admin\NewPerson.cshtml" />
     <Content Include="Views\Admin\EditPerson.cshtml" />
     <Content Include="Views\Admin\DeletePerson.cshtml" />
+    <Content Include="Views\Shared\logoPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

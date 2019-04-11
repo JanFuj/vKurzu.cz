@@ -3,53 +3,46 @@
 @{
     ViewBag.Title = "Přihlášení";
 }
-<main class="main">
+<body>
+    <main class="main" style="justify-items: center; align-content: center; margin: 0; min-height: 100vh;">
 
-  
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <h4>Přihlašte se.</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
+
+        <div class="card">
+            <div class="card__content" style="padding: var(--card-padding)">
+                <div class="card__header">
+                    <h2 style="margin-top: 0">Přihlášení</h2>
+                </div>
+                <section id="loginForm" class="card__body">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <p class="form-item">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
+
+                        </p>
+                        <p class="form-item">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit">Přihlásit</button>
-                        </div>
-                    </div>
-               
-                }
-            </section>
-        </div>
-     
-    </div>
 
-</main>
+                        </p>
+                        <p class="form-item" style="margin-bottom: 0;">
+                            <button type="submit">Přihlásit</button>
+                        </p>
+
+                    }
+                </section>
+            </div>
+
+        </div>
+
+    </main>
+</body>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

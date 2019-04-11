@@ -543,7 +543,7 @@ namespace TestWebAppCoolName.Controllers
 
 
         // GET: Tags/Delete/5
-        [Route("admin/tag/delete")]
+        [Route("admin/tag/delete/{id?}")]
         public async Task<ActionResult> DeleteTag(int? id)
         {
             if (id == null)
@@ -559,7 +559,7 @@ namespace TestWebAppCoolName.Controllers
         }
 
         // POST: Tags/Delete/5
-        [Route("admin/tag/delete")]
+        [Route("admin/tag/delete/{id?}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteTagConfirmed(int id)

@@ -1,6 +1,6 @@
 ﻿@model TestWebAppCoolName.Controllers.HomeViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "vKurzu.cz – pojď se učit s námi";
 }
 
 <body class="body body--index">
@@ -8,12 +8,7 @@
     <header class="header header--index" id="site-header">
         <nav class="nav" role="navigation">
             <a class="site-branding" href="@Url.Action("Index","Home")">
-                <div class="site-logo">
-                    <svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <linearGradient id="gradient-logo" x2="0" y2="2"><stop offset="0%" stop-color="var(--clr-primary)" /><stop offset="100%" stop-color="var(--clr-secondary)" /></linearGradient>
-                        <path d="M50.2916265,15.1816557 C53.2237995,10.1192138 58.641442,7 64.5044262,7 C70.3674104,7 75.7850529,10.1192138 78.7172259,15.1816557 C92.1959609,38.4596546 112.335754,73.2435736 125.804956,96.505277 C128.731681,101.558213 128.731681,107.783061 125.804956,112.83464 C122.879592,117.887576 117.474207,121 111.622118,121 C84.6564765,121 44.3237759,121 17.3649439,121 C11.5183026,121 6.11564095,117.890292 3.19300122,112.841429 C0.268999593,107.792567 0.268999593,101.573151 3.19300122,96.5242883 C16.662203,73.2612269 36.8101676,38.4664443 50.2916265,15.1816557 Z"></path>
-                    </svg>
-                </div><h1 class="h6 site-name link--gradient">Cool Name</h1>
+              @Html.Partial("logoPartialView")
             </a>
             <ul class="nav__list">
                 <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li>
@@ -27,14 +22,18 @@
 
         <div class="intro intro--index">
             <div class="intro__content">
-                <h1 class="main-heading intro__heading">
-                    Jsme
-                    <mark>vývojáři</mark>,
-                    <mark>designéři</mark>
-                </h1>
-                <p class="h4 intro__text">Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.</p>
+                <div class="h1 main-heading">
+                    <span class="intro__heading">Jsme</span>
+                    <span class="flipper">
+                        <span class="flipper__word">designeři</span>
+                        <span class="flipper__word">vývojáři</span>
+                        <span class="flipper__word">marketéři</span>
+                    </span>
+                </div>
+                <p class="h2 intro__text">Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.</p>
             </div>
         </div>
+
         <article class="courses" id="courses">
             <hr class="hr--invisible">
             <h1 class="main-heading courses__heading">Kurzy</h1>

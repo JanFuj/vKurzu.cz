@@ -3,31 +3,18 @@
 @{
     ViewBag.Title = "Delete person";
 }
-<main>
+<body>
+<main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
 
 
-    <h3>Opravdu chcete smazat tuto osobu?</h3>
-    <div>
-      
-        <hr />
-        <dl class="dl-horizontal">
-            
+    <h1 class="" style="margin-bottom: 0;">Smazat osobu?</h1>
+    <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.FullName</h2>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-            <dd>
-                @Html.DisplayFor(model => model.FullName)
-            </dd>
-
-           
-
-        </dl>
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <button type="submit" >Smazat </button>
-            </div>
-        }
-    </div>
-</main>
+                <button class="button">Nenávratně smazat</button>
+            }
+    <a class="link--gradient link--border" href="/admin/person">Ponechat</a>
+    </main>
+</body>

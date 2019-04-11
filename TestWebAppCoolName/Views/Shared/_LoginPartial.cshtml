@@ -9,15 +9,18 @@
 
     <header class="header header--index header--down header--up-top" id="site-header">
         <nav class="nav" role="navigation">
-            <a class="site-branding" href="@Url.Action("Index","Admin")">
-                <h1 class="h6 site-name link--gradient-inversed">V Kurzu <span class="site-tag">Admin</span></h1>
+            <a class="site-branding" href="@Url.Action("Index", "Admin")">
+                @Html.Partial("logoPartialView")
+                <h1 class="h6 site-name link--gradient-inversed">
+                    <span class="site-tag">Admin</span>
+                </h1>
             </a>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
                 @Html.AntiForgeryToken()
                 <ul class="nav__list">
                     <li class="nav__item">
-                        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class= "nav__link link--gradient link--border - hover" })
+                        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav__link link--gradient link--border - hover" })
                     </li>
                     <li class="nav__item">
                         <a class="nav__link link--gradient link--border-hover" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
