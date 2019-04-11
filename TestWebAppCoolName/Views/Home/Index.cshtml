@@ -25,10 +25,16 @@
 
     <main class="main">
 
-        <article class="intro intro--index">
-            <h1 class="main-heading intro__heading">Jsme <mark>vývojáři</mark>, <mark>designéři</mark></h1>
-            <p class="h4 intro__text">Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.</p>
-        </article>
+        <div class="intro intro--index">
+            <div class="intro__content">
+                <h1 class="main-heading intro__heading">
+                    Jsme
+                    <mark>vývojáři</mark>,
+                    <mark>designéři</mark>
+                </h1>
+                <p class="h4 intro__text">Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.</p>
+            </div>
+        </div>
         <article class="courses" id="courses">
             <hr class="hr--invisible">
             <h1 class="main-heading courses__heading">Kurzy</h1>
@@ -36,7 +42,7 @@
             <div class="courses-cards">
 
                 @{
-                    foreach (var course in Model.Courses.Where(c=>c.Approved))
+                    foreach (var course in Model.Courses.Where(c => c.Approved))
                     {
                         <div class="course-card course-card--@course.Modificator">
                             <a class="course-card__link" href="@Url.Action("Index", "Course", new {title = course.UrlTitle})"></a>
@@ -69,7 +75,7 @@
             </div>
             <div class="article-previews">
                 @{
-                    foreach (var blog in Model.Blogs.Where(b=>b.Approved))
+                    foreach (var blog in Model.Blogs.Where(b => b.Approved))
                     {
                         <article class="article-preview">
                             <div class="article-preview__author">@blog.Author.Name</div>
@@ -148,14 +154,16 @@
 
 
     </main>
-<footer class="footer">
-    <hr>
-    <nav class="nav" role="navigation">
-        <ul class="nav__list">
-            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog")">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
-        </ul>
-    </nav>
-    <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> Cool Name</small></p>
-</footer>
+    <footer class="footer">
+        <hr>
+        <nav class="nav" role="navigation">
+            <ul class="nav__list">
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li>
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog")">Blog</a></li>
+                <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+        <p><small>&copy; <span id="copyright-year">@DateTime.Now.Year</span> Cool Name</small></p>
+    </footer>
 
 </body>

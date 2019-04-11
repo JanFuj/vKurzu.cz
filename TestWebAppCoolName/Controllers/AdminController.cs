@@ -182,6 +182,10 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var cour = _context.Courses.Include(c => c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
+            if (User.IsInRole(Roles.Lector) && cour?.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (cour != null)
             {
                 cour.Name = vm.Course.Name;
@@ -216,7 +220,10 @@ namespace TestWebAppCoolName.Controllers
             {
                 return HttpNotFound();
             }
-
+            if (User.IsInRole(Roles.Lector) && course.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             return View(course);
         }
 
@@ -229,6 +236,10 @@ namespace TestWebAppCoolName.Controllers
             if (course == null)
             {
                 return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && course.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
             //_context.Courses.Remove(course ?? throw new InvalidOperationException());
@@ -264,8 +275,16 @@ namespace TestWebAppCoolName.Controllers
 
         [Route("admin/blog")]
         public ActionResult Blog()
+
         {
-            return View(_context.Blogs.Include(b => b.Author).Where(b => !b.Deleted).ToList());
+            var userId = User.Identity.GetUserId();
+            var blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted).ToList();
+            if (User.IsInRole(Roles.Lector))
+            {
+                blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted && b.OwnerId == userId).ToList();
+            }
+
+            return View(blogs);
         }
 
         [Route("admin/blog/new")]
@@ -309,7 +328,7 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-
+            vm.Blog.OwnerId = User.Identity.GetUserId();
             vm.Blog.Created = DateTime.Now;
             vm.Blog.Changed = DateTime.Now;
             vm.Blog.Tags = tags;
@@ -330,6 +349,11 @@ namespace TestWebAppCoolName.Controllers
 
             Blog blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (blog == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }
@@ -387,7 +411,10 @@ namespace TestWebAppCoolName.Controllers
             var blo = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == vm.Blog.Id);
             if (blo != null)
             {
-
+                if (User.IsInRole(Roles.Lector) && blo.OwnerId != User.Identity.GetUserId())
+                {
+                    return HttpNotFound();
+                }
 
                 blo.Tags = null;
                 _context.SaveChanges();
@@ -417,11 +444,14 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog == null)
+            if (blog == null )
             {
                 return HttpNotFound();
             }
-
+            if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();
+            }
             return View(blog);
         }
 
@@ -434,6 +464,10 @@ namespace TestWebAppCoolName.Controllers
         {
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
             if (blog == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }

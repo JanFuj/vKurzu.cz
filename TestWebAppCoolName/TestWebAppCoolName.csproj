@@ -332,6 +332,10 @@
     <Compile Include="Migrations\201904101755041_OwnerIdInCourseTable.Designer.cs">
       <DependentUpon>201904101755041_OwnerIdInCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904110530502_OwnerIdInBlog.cs" />
+    <Compile Include="Migrations\201904110530502_OwnerIdInBlog.Designer.cs">
+      <DependentUpon>201904110530502_OwnerIdInBlog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -557,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904101755041_OwnerIdInCourseTable.resx">
       <DependentUpon>201904101755041_OwnerIdInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904110530502_OwnerIdInBlog.resx">
+      <DependentUpon>201904110530502_OwnerIdInBlog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
