@@ -447,6 +447,7 @@
     <Content Include="Views\Admin\EditPerson.cshtml" />
     <Content Include="Views\Admin\DeletePerson.cshtml" />
     <Content Include="Views\Shared\logoPartialView.cshtml" />
+    <Content Include="Views\Shared\toolbarPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
