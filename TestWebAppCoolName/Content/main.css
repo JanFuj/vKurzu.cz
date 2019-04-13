@@ -15,7 +15,7 @@
   --clr-shade-5: 		hsl(265, 10%, 90%);
   --clr-shade-6: 		hsl(265, 6%, 96%);
   --glob-bg: 			var(--clr-shade-1);
-  --clr-red: 			hsl(352, 80%, 55%);
+  --clr-red: 			hsl(0, 80%, 55%);
   --clr-tomato: 		hsl(12, 85%, 55%);
   --clr-orange: 		hsl(32, 85%, 55%);
   --clr-yellow: 		hsl(50, 85%, 55%);
@@ -89,6 +89,51 @@
 
 	@include themify-settings($this-settings);
 } */
+:root {
+  --grad-1: var(--clr-primary);
+  --grad-2: var(--clr-secondary); }
+  :root .gradient-1 {
+    --grad-1: var(--clr-pink);
+    --grad-2: var(--clr-purple); }
+  :root .gradient-2 {
+    --grad-1: var(--clr-pink);
+    --grad-2: var(--clr-crimson); }
+  :root .gradient-3 {
+    --grad-1: var(--clr-crimson);
+    --grad-2: var(--clr-red); }
+  :root .gradient-4 {
+    --grad-1: var(--clr-orange);
+    --grad-2: var(--clr-red); }
+  :root .gradient-5 {
+    --grad-1: var(--clr-yellow);
+    --grad-2: var(--clr-tomato); }
+  :root .gradient-6 {
+    --grad-1: var(--clr-yellow);
+    --grad-2: var(--clr-lime); }
+  :root .gradient-7 {
+    --grad-1: var(--clr-lime);
+    --grad-2: var(--clr-green); }
+  :root .gradient-8 {
+    --grad-1: var(--clr-green);
+    --grad-2: var(--clr-cyan); }
+  :root .gradient-9 {
+    --grad-1: var(--clr-cyan);
+    --grad-2: var(--clr-blue); }
+  :root .gradient-10 {
+    --grad-1: var(--clr-azure);
+    --grad-2: var(--clr-ultramarine); }
+  :root .gradient-11 {
+    --grad-1: var(--clr-ultramarine);
+    --grad-2: var(--clr-purple); }
+
+.gradient-1 {
+  --clr-primary: var(--clr-pink);
+  --clr-secondary: var(--clr-red); }
+
+.gradient-2 {
+  --clr-1: var(--clr-cyan);
+  --clr-2: var(--clr-blue); }
+
 :root {
   --breakpoint-xs: 480px;
   --breakpoint-sm: 600px;
@@ -494,8 +539,8 @@ button,
     .card--admin .card__title {
       display: inline; }
     .card--admin .card__image {
-      max-height: 72px;
-      min-height: 100%; }
+      height: 72px;
+      text-align: left; }
       .card--admin .card__image svg {
         height: 100%;
         fill: url(#gradient); }
@@ -2436,8 +2481,8 @@ header,
       padding-left: 0;
       grid-gap: var(--base-h); }
   .course-card--web-basics {
-    --clr-primary: var(--clr-pink);
-    --clr-secondary: var(--clr-red); }
+    --clr-primary: var(--clr-red);
+    --clr-secondary: var(--clr-crimson); }
   .course-card--css-advanced {
     --clr-primary: var(--clr-cyan);
     --clr-secondary: var(--clr-blue); }
@@ -2723,8 +2768,8 @@ header,
     grid-column: full-start / content-end; }
 
 .body--web-basics {
-  --clr-primary: var(--clr-pink);
-  --clr-secondary: var(--clr-red); }
+  --clr-primary: var(--clr-red);
+  --clr-secondary: var(--clr-crimson); }
 
 .body--css-advanced {
   --clr-primary: var(--clr-cyan);
@@ -3347,6 +3392,9 @@ header,
     width: 100%;
     word-wrap: break-word;
     padding: var(--base); }
+  .admin-form .quill-wrapper {
+    display: flex;
+    flex-direction: column; }
   .admin-form .ql-toolbar {
     position: -webkit-sticky;
     position: sticky;
@@ -3387,6 +3435,44 @@ header,
   display: grid;
   grid-gap: var(--base-2);
   justify-items: center; }
+
+.gradient-picker {
+  --size: 64px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, var(--size));
+  grid-gap: var(--base); }
+  .gradient-picker__color {
+    width: var(--size);
+    height: var(--size); }
+    .gradient-picker__color input {
+      display: none; }
+      .gradient-picker__color input:checked + label::before {
+        box-shadow: var(--card-shadow), inset 0 0 0 2px white;
+        content: "✓"; }
+    .gradient-picker__color label {
+      display: flex;
+      position: relative;
+      height: inherit;
+      width: inherit; }
+      .gradient-picker__color label::before {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
+        border-radius: 50%;
+        box-shadow: var(--card-shadow);
+        transition: transform .15s ease-out;
+        font-size: 150%; }
+
+.field-validation-valid {
+  color: var(--clr-yellow); }
 
 .main--error {
   margin: 0;
