@@ -24,7 +24,7 @@ namespace TestWebAppCoolName.Controllers
         public string Tagy { get; set; }
     }
 
- 
+
     public class CourseController : Controller
     {
         private ApplicationDbContext _context;
@@ -34,15 +34,23 @@ namespace TestWebAppCoolName.Controllers
         }
         // GET: Course
 
-        public ActionResult Index(string title, string section)
+        public ActionResult Index(string title, string section, bool preview = false)
         {
             if (!string.IsNullOrEmpty(title))
             {
-                var course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title && c.Approved);
-                if (course != null)
+                var viewModel = new CourseViewModel();
+
+                if (!preview)
                 {
-                    var viewModel = new CourseViewModel();
-                    viewModel.Course = course;
+                    viewModel.Course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title && c.Approved);
+                }
+                else
+                {
+                    viewModel.Course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title );
+                }
+
+                if (viewModel.Course != null)
+                {
                     viewModel.Section = section;
                     return View("Detail", viewModel);
                 }
@@ -51,13 +59,13 @@ namespace TestWebAppCoolName.Controllers
             return HttpNotFound();
         }
 
-    
+
         public ActionResult Detail(int id)
         {
             return View();
         }
 
-   
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendEmail(CourseViewModel viewModel)
