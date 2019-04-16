@@ -7,28 +7,29 @@
 
 <main class="main">
     <section class="courses">
-        <h1 class="main-heading courses__heading">Editovat blog</h1>
-        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post))
+ 
+        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
         {
             @Html.AntiForgeryToken()
             <p>
-                @Html.LabelFor(m => m.Blog.Name)
-                @Html.TextBoxFor(m => m.Blog.Name)
+                <h1 class="main-heading courses__heading">Upravit blog</h1>
+               
+                @Html.TextAreaFor(m => m.Blog.Name, new {placeholder = "Nadpis", @class = "h3 admin-form__textarea"})
                 @Html.ValidationMessageFor(m => m.Blog.Name)
             </p>
 
             <p>
 
-                @Html.LabelFor(m => m.Blog.Description)
-                @Html.TextBoxFor(m => m.Blog.Description)
+                @Html.TextAreaFor(m => m.Blog.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.Blog.Description)
             </p>
             <p>
-                @Html.LabelFor(m => m.Blog.Body)
                 @Html.HiddenFor(m => m.Blog.Body)
                 @Html.ValidationMessageFor(m => m.Blog.Body)
-                <div id="toolbar"></div>
-                <div id="editor"></div>
+                <div class="quill-wrapper">
+                    <div id="toolbar"></div>
+                    <div id="editor"></div>
+                </div>
             </p>
             <p>
                 @Html.LabelFor(m => m.Blog.Author_Id)
@@ -77,7 +78,7 @@
                         }
                     </select>
                 </div>
-                <p>
+                <p id="tags-output">
                     <label>tagy</label>
 
                     @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
