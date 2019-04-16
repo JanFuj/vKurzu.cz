@@ -7,14 +7,14 @@
 
 <main class="main">
     <section class="courses">
- 
+
         @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
         {
             @Html.AntiForgeryToken()
             <p>
                 <h1 class="main-heading courses__heading">Upravit blog</h1>
-               
-                @Html.TextAreaFor(m => m.Blog.Name, new {placeholder = "Nadpis", @class = "h3 admin-form__textarea"})
+
+                @Html.TextAreaFor(m => m.Blog.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.Blog.Name)
             </p>
 
@@ -107,15 +107,15 @@
 
 @section scripts {
 
+
     <script type="text/javascript">
-
-
-
-
+      
+  
         let quill = new Quill('#editor',
             {
                 modules: {
-                    toolbar: toolbarOptions
+                    toolbar: toolbarOptions,
+                    syntax:true
                 },
                 theme: 'snow'
             });

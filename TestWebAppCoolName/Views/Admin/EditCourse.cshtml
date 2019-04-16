@@ -132,14 +132,16 @@
         let quill = new Quill('#editorBody',
             {
                 modules: {
-                    toolbar: toolbarOptions
+                    toolbar: toolbarOptions,
+                    syntax:true
                 },
                 theme: 'snow'
             });
         let quillWillLearn = new Quill('#editorWillLearn',
             {
                 modules: {
-                    toolbar: toolbarOptions
+                    toolbar: toolbarOptions,
+                    syntax:true
                 },
                 theme: 'snow'
             });
