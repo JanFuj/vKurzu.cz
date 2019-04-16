@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TestWebAppCoolName.Models
 {
@@ -20,6 +21,7 @@ namespace TestWebAppCoolName.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "Zadejte tělo blogu")]
         [Display(Name = "Tělo blogu")]
+        [AllowHtml]
         public string Body { get; set; }
 
         [Display(Name = "Autor")]

@@ -27,7 +27,6 @@
             <div class="article__content">
                 <p>
                     <div id="editor"></div>
-
                 </p>
                 @{
                     if (@Model.RelatedCourse != null)
@@ -111,13 +110,17 @@
 
         let quill = new Quill('#editor',
             {
-               
+                modules: {
+                    "toolbar": false,
+                    syntax:true
+                },
+                theme: 'snow'
             });
 
         $(document).ready(function () {
-            console.log()
 
             quill.setContents(@Html.Raw(Model.Blog.Body))
+     
             quill.enable(false);
         });
 
