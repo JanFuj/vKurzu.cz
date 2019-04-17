@@ -1,0 +1,43 @@
+﻿@model TestWebAppCoolName.Models.Svg
+
+@{
+    ViewBag.Title = "title";
+}
+
+<main>
+
+    <h3>Upravit svg</h3>
+    @using (Html.BeginForm("EditSvg", "Admin", FormMethod.Post, new { @class = "admin-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+
+            <p>
+                @Html.LabelFor(model => model.Name)
+
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+            </p>
+
+            <p>
+                @Html.LabelFor(model => model.Path)
+                @Html.TextAreaFor(model => model.Path)
+                @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
+
+            </p>
+            @Html.HiddenFor(m => m.ID)
+            <div>
+                <button type="submit">Upravit</button>
+            </div>
+        </div>
+    }
+
+
+
+</main>
+

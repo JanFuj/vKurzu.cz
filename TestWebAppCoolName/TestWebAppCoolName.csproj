@@ -337,6 +337,22 @@
     <Compile Include="Migrations\201904110530502_OwnerIdInBlog.Designer.cs">
       <DependentUpon>201904110530502_OwnerIdInBlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904161233155_SvgTable.cs" />
+    <Compile Include="Migrations\201904161233155_SvgTable.Designer.cs">
+      <DependentUpon>201904161233155_SvgTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904161238225_SvgColumnNameString.cs" />
+    <Compile Include="Migrations\201904161238225_SvgColumnNameString.Designer.cs">
+      <DependentUpon>201904161238225_SvgColumnNameString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904161238591_InitSvgTable.cs" />
+    <Compile Include="Migrations\201904161238591_InitSvgTable.Designer.cs">
+      <DependentUpon>201904161238591_InitSvgTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904171304089_NameAndPathRequiredInSvgTable.cs" />
+    <Compile Include="Migrations\201904171304089_NameAndPathRequiredInSvgTable.Designer.cs">
+      <DependentUpon>201904171304089_NameAndPathRequiredInSvgTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -347,6 +363,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Svg.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -541,6 +558,11 @@
     <Content Include="Views\Admin\DeletePerson.cshtml" />
     <Content Include="Views\Shared\logoPartialView.cshtml" />
     <Content Include="Views\Shared\toolbarPartialView.cshtml" />
+    <Content Include="Views\Shared\svgPicker.cshtml" />
+    <Content Include="Views\Admin\Svg.cshtml" />
+    <Content Include="Views\Admin\NewSvg.cshtml" />
+    <Content Include="Views\Admin\EditSvg.cshtml" />
+    <Content Include="Views\Admin\DeleteSvg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -663,6 +685,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904110530502_OwnerIdInBlog.resx">
       <DependentUpon>201904110530502_OwnerIdInBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904161233155_SvgTable.resx">
+      <DependentUpon>201904161233155_SvgTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904161238225_SvgColumnNameString.resx">
+      <DependentUpon>201904161238225_SvgColumnNameString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904161238591_InitSvgTable.resx">
+      <DependentUpon>201904161238591_InitSvgTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904171304089_NameAndPathRequiredInSvgTable.resx">
+      <DependentUpon>201904171304089_NameAndPathRequiredInSvgTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -49,60 +49,99 @@
                 @Html.TextBoxFor(m => m.Course.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Course.UrlTitle)
             </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.Course.Svg)
+                @Html.TextAreaFor(m => m.Course.Svg)
+                @Html.ValidationMessageFor(m => m.Course.Svg)
+            </p>
+            <p>
+                <label for="">Ikona</label>
+            </p>
 
+            <div class="svg-picker">
+                <div class="svg-picker__item">
+                    @Html.RadioButtonFor(m => m.Course.Svg, "svg-1", new { id = "svg-1", @checked = true })
+                    <label for="svg-1"></label>
+                    <svg viewBox="0 0 128 128">
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                            <stop offset="0%" stop-color="var(--grad-1)"></stop>
+                            <stop offset="100%" stop-color="var(--grad-2)"></stop>
+                        </linearGradient>
+                        <path d="M9.032 2l10.005 112.093 44.896 12.401 45.02-12.387 10.015-112.107h-109.936zm89.126 26.539l-.627 7.172-.276 3.289h-52.665000000000006l1.257 14h50.156000000000006l-.336 3.471-3.233 36.119-.238 2.27-28.196 7.749v.002l-.034.018-28.177-7.423-1.913-21.206h13.815000000000001l.979 10.919 15.287 4.081h.043v-.546l15.355-3.875 1.604-17.579h-47.698l-3.383-38.117-.329-3.883h68.939l-.33 3.539z">
+                        </path>
+                    </svg>
+                </div>
+                <div id="divsvg-2" class="svg-picker__item">
+                    @Html.RadioButtonFor(m => m.Course.Svg, "svg-2", new { id = "svg-2" })
+                    <label for="svg-2"></label>
+                    <svg  viewBox="0 0 128 128">
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                            <stop offset="0%" stop-color="var(--grad-1)"></stop>
+                            <stop offset="100%" stop-color="var(--grad-2)"></stop>
+                        </linearGradient>
+                        <path id="pathsvg-2" d="M8.76 1l10.055 112.883 45.118 12.58 45.244-12.626 10.063-112.837h-110.48zm89.591 25.862l-3.347 37.605.01.203-.014.467v-.004l-2.378 26.294-.262 2.336-28.36 7.844v.001l-.022.019-28.311-7.888-1.917-21.739h13.883l.985 11.054 15.386 4.17-.004.008v-.002l15.443-4.229 1.632-18.001h-32.282999999999994l-.277-3.043-.631-7.129-.331-3.828h34.748999999999995l1.264-14h-52.926l-.277-3.041-.63-7.131-.332-3.828h69.281l-.331 3.862z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+
+
+            <p>
+                <label for="">Barva</label>
+            </p>
             <div class="form-item gradient-picker">
-                <div class="gradient-picker__color gradient-1">
+                <div class="gradient-picker__color" data-gradient="gradient-1">
                     @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-1", new { id = "gradient-1", @checked = true })
                     <label for="gradient-1"></label>
                 </div>
-                <div class="gradient-picker__color gradient-2">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-2", new { id = "gradient-2"})
+                <div class="gradient-picker__color" data-gradient="gradient-2">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-2", new { id = "gradient-2" })
                     <label for="gradient-2"></label>
                 </div>
-                <div class="gradient-picker__color gradient-3">
+                <div class="gradient-picker__color" data-gradient="gradient-3">
                     @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-3", new { id = "gradient-3" })
                     <label for="gradient-3"></label>
                 </div>
-                <div class="gradient-picker__color gradient-4">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-4", new { id = "gradient-4"})
+                <div class="gradient-picker__color" data-gradient="gradient-4">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-4", new { id = "gradient-4" })
                     <label for="gradient-4"></label>
                 </div>
-                <div class="gradient-picker__color gradient-5">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-5", new { id = "gradient-5"})
+                <div class="gradient-picker__color" data-gradient="gradient-5">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-5", new { id = "gradient-5" })
                     <label for="gradient-5"></label>
                 </div>
-                <div class="gradient-picker__color gradient-6">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-6", new { id = "gradient-6"})
+                <div class="gradient-picker__color" data-gradient="gradient-6">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-6", new { id = "gradient-6" })
                     <label for="gradient-6"></label>
                 </div>
-                <div class="gradient-picker__color gradient-7">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-7", new { id = "gradient-7"})
+                <div class="gradient-picker__color" data-gradient="gradient-7">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-7", new { id = "gradient-7" })
                     <label for="gradient-7"></label>
                 </div>
-                <div class="gradient-picker__color gradient-8">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-8", new { id = "gradient-8"})
+                <div class="gradient-picker__color" data-gradient="gradient-8">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-8", new { id = "gradient-8" })
                     <label for="gradient-8"></label>
                 </div>
-                <div class="gradient-picker__color gradient-9">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-9", new { id = "gradient-9"})
+                <div class="gradient-picker__color" data-gradient="gradient-9">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-9", new { id = "gradient-9" })
                     <label for="gradient-9"></label>
                 </div>
-                <div class="gradient-picker__color gradient-10">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-10", new { id = "gradient-10"})
+                <div class="gradient-picker__color" data-gradient="gradient-10">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-10", new { id = "gradient-10" })
                     <label for="gradient-10"></label>
                 </div>
-                <div class="gradient-picker__color gradient-11">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-11", new { id = "gradient-11"})
+                <div class="gradient-picker__color" data-gradient="gradient-11">
+                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-11", new { id = "gradient-11" })
                     <label for="gradient-11"></label>
                 </div>
             </div>
 
 
             @*<p class="form-item">
-                @Html.LabelFor(m => m.Course.Modificator)
-                @Html.TextBoxFor(m => m.Course.Modificator)
-                @Html.ValidationMessageFor(m => m.Course.Modificator)
-            </p>*@
+                    @Html.LabelFor(m => m.Course.Modificator)
+                    @Html.TextBoxFor(m => m.Course.Modificator)
+                    @Html.ValidationMessageFor(m => m.Course.Modificator)
+                </p>*@
 
             <p class="form-item">
                 @Html.LabelFor(m => m.Course.Svg)
@@ -174,12 +213,31 @@
 @section scripts {
 
     <script type="text/javascript">
+
+        var grad = "";
+
+        $(document).on('click', '.gradient-picker__color', function () {
+            grad = $(this).attr("data-gradient");
+            console.log(grad);
+            $("body").attr("data-gradient", grad);
+            var radioValue = $("input[name='svg']:checked").attr('id');
+
+
+            var svg = document.getElementById("pathsvg-2");
+            var serializer = new XMLSerializer();
+            //  var path =svg.getElementsByTagName("path");
+            var str = serializer.serializeToString(svg);
+            console.log("checked " + radioValue);
+            console.log("path " + str);
+        });
+
+
         let quill = new Quill('#editorBody',
             {
                 modules: {
-                  
+
                     toolbar: toolbarOptions,
-                    syntax:true
+                    syntax: true
                 },
                 theme: 'snow'
             });
@@ -187,7 +245,7 @@
             {
                 modules: {
                     toolbar: toolbarOptions,
-                    syntax:true
+                    syntax: true
                 },
                 theme: 'snow'
             });
@@ -205,9 +263,13 @@
 
             console.log("Submitted", $(form).serialize(), $(form).serializeArray());
 
+            var svg = document.getElementById("pathsvg-2");
+            var serializer = new XMLSerializer();
+            //  var path =svg.getElementsByTagName("path");
+            var str = serializer.serializeToString(svg);
+            var body = document.querySelector('input[id=Course_Body]');
+
         };
-
-
 
 
     </script>

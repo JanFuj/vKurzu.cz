@@ -24,7 +24,8 @@ namespace TestWebAppCoolName.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Tag> Tags { get; set; }    
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Svg> Svgs { get; set; }    
         public ApplicationDbContext(): base("DefaultConnection", throwIfV1Schema: false)
         {
            // Database.SetInitializer(new AppInitializer());

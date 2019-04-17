@@ -444,7 +444,7 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog == null )
+            if (blog == null)
             {
                 return HttpNotFound();
             }
@@ -670,6 +670,145 @@ namespace TestWebAppCoolName.Controllers
             _context.Persons.Remove(person);
             _context.SaveChanges();
             return RedirectToAction("Person");
+        }
+
+        #endregion
+
+        #region Svg
+        [Route("admin/svg")]
+        public ActionResult Svg()
+        {
+            return View(_context.Svgs.ToList());
+        }
+        [Route("admin/svg/new")]
+        public ActionResult NewSvg()
+        {
+            return View();
+        }
+        // POST: People/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("admin/svg/new")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewSvg([Bind(Include = "Name,Path")] Svg svg)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(svg);
+            }
+            var exist = _context.Svgs.FirstOrDefault(c => c.Name == svg.Name);
+
+            if (exist != null)
+            {
+                ModelState.AddModelError("svg.Name", "Zadany nazev již existuje");
+                return View(svg);
+            }
+            _context.Svgs.Add(svg);
+            _context.SaveChanges();
+            return RedirectToAction("Svg");
+
+        }
+
+        [Route("admin/svg/edit/{id?}")]
+        public ActionResult EditSvg(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var svg = _context.Svgs.FirstOrDefault(s => s.ID == id);
+
+            if (svg == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector))
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+ 
+            return View(svg);
+        }
+        [Route("admin/svg/edit/{id?}")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSvg(Svg svg)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(svg);
+            }
+
+            var existingSvg = _context.Svgs.FirstOrDefault(c => c.Name == svg.Name);
+            bool sameUrlInAnotherCourse = false;
+            if (existingSvg != null)
+            {
+                sameUrlInAnotherCourse = existingSvg?.ID != svg.ID;
+            }
+
+            if (sameUrlInAnotherCourse)
+            {
+                ModelState.AddModelError("svg.Name", "Zadany nazev již existuje");
+                return View(svg); 
+            }
+
+            var sv = _context.Svgs.FirstOrDefault(s => s.ID == svg.ID);
+          
+            if (sv != null) {
+                sv.Name = svg.Name;
+                sv.Path = svg.Path;
+                _context.SaveChanges();
+                return RedirectToAction("Svg");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [Route("admin/svg/delete/{id?}")]
+        public ActionResult DeleteSvg(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var svg = _context.Svgs.FirstOrDefault(b => b.ID == id);
+            if (svg == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) )
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            return View(svg);
+        }
+
+        // POST: Blog/Delete/5
+        [Route("admin/svg/delete/{id?}")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSvgConfirmed(int id)
+        {
+            var svg = _context.Svgs.FirstOrDefault(b => b.ID == id);
+            if (svg == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) )
+            {
+                return HttpNotFound();
+            }
+            //  _context.Blogs.Remove(blog);
+            _context.Svgs.Remove(svg);
+            _context.SaveChanges();
+            return RedirectToAction("Svg");
         }
 
         #endregion
