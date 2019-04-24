@@ -67,9 +67,15 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult NewCourse()
         {
             var persons = _context.Persons.ToList();
+            var newCourse = new Course();
+            newCourse.Svg = _context.Svgs.First();
+            newCourse.Svg_id = newCourse.Svg.ID;
             var viewModel = new CourseViewModel()
             {
-                Persons = persons
+                Persons = persons,
+                Svgs = _context.Svgs.ToList(),
+                Course = newCourse
+
             };
             return View(viewModel);
         }
@@ -90,6 +96,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 viewModel.Course = vm.Course;
                 viewModel.Course.Tags = tags;
+                viewModel.Svgs = _context.Svgs.ToList();
                 return View(viewModel);
             }
 
@@ -100,6 +107,7 @@ namespace TestWebAppCoolName.Controllers
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
                 viewModel.Course = vm.Course;
                 viewModel.Course.Tags = tags;
+                viewModel.Svgs = _context.Svgs.ToList();
                 return View(viewModel);
             }
 
@@ -107,6 +115,7 @@ namespace TestWebAppCoolName.Controllers
             vm.Course.Created = DateTime.Now;
             vm.Course.Changed = DateTime.Now;
             vm.Course.Tags = tags;
+            vm.Course.Svg = _context.Svgs.First(s => s.ID == vm.Course.Svg_id);
             _context.Courses.Add(vm.Course);
             _context.SaveChanges();
 
@@ -122,7 +131,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).Include(s=>s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -137,7 +146,8 @@ namespace TestWebAppCoolName.Controllers
             var viewModel = new CourseViewModel()
             {
                 Persons = persons,
-                Course = course
+                Course = course,
+                Svgs = _context.Svgs.ToList()
             };
             return View(viewModel);
         }
@@ -198,6 +208,7 @@ namespace TestWebAppCoolName.Controllers
                 cour.UrlTitle = vm.Course.UrlTitle;
                 cour.Tags = tags;
                 cour.Changed = DateTime.Now;
+                cour.Svg = _context.Svgs.First(s => s.ID == vm.Course.Svg_id);
                 _context.SaveChanges();
                 return RedirectToAction("Course");
             }

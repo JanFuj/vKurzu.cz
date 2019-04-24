@@ -50,6 +50,36 @@
                     @Html.TextBoxFor(m => m.Course.UrlTitle)
                     @Html.ValidationMessageFor(m => m.Course.UrlTitle)
                 </p>
+                
+                <p>
+                    <label for="">Ikona</label>
+                </p>
+
+                <div class="svg-picker">
+
+                    @{
+                        foreach (var svg in Model.Svgs)
+                        {
+                            <div class="svg-picker__item">
+                                @Html.RadioButtonFor(m => m.Course.Svg_id, svg.ID, new { id = svg.ID})
+                                <label for="@svg.ID"></label>
+                                <svg viewBox="0 0 128 128">
+                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                        <stop offset="0%" stop-color="var(--grad-1)"></stop>
+                                        <stop offset="100%" stop-color="var(--grad-2)"></stop>
+                                    </linearGradient>
+                                    @Html.Raw(svg.Path);
+                                </svg>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+
+                <p>
+                    <label for="">Barva</label>
+                </p>
                 <div class="form-item gradient-picker">
                     <div class="gradient-picker__color" data-gradient="gradient-1">
                         @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-1", new { id = "gradient-1" })
@@ -97,11 +127,7 @@
                     </div>
                 </div>
 
-                <p class="form-item">
-                    @Html.LabelFor(m => m.Course.Svg)
-                    @Html.TextAreaFor(m => m.Course.Svg)
-                    @Html.ValidationMessageFor(m => m.Course.Svg)
-                </p>
+         
 
 
                 <div style="display: inline-block; width: 100%;">
@@ -170,6 +196,27 @@
 @section scripts {
 
     <script type="text/javascript">
+        var grad = "";
+
+        $(document).on('click', '.gradient-picker__color', function () {
+            grad = $(this).attr("data-gradient");
+            console.log(grad);
+            $("body").attr("data-gradient", grad);
+            var radioValue = $("input[name='svg']:checked").attr('id');
+
+            console.log("checked " + radioValue);
+        });
+
+        $(document).ready(function () {
+            ColorizeIcons();
+        });
+
+        function ColorizeIcons() {
+            var grad = $("input[name='Course.Modificator']:checked").parent().attr('data-gradient');
+            console.log(grad);
+            $("body").attr("data-gradient", grad);
+        }
+
         let quill = new Quill('#editorBody',
             {
                 modules: {

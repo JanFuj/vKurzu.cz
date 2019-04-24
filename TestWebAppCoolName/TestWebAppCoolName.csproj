@@ -353,6 +353,10 @@
     <Compile Include="Migrations\201904171304089_NameAndPathRequiredInSvgTable.Designer.cs">
       <DependentUpon>201904171304089_NameAndPathRequiredInSvgTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241135368_SvgAddedToCourseTable.cs" />
+    <Compile Include="Migrations\201904241135368_SvgAddedToCourseTable.Designer.cs">
+      <DependentUpon>201904241135368_SvgAddedToCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
@@ -697,6 +701,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904171304089_NameAndPathRequiredInSvgTable.resx">
       <DependentUpon>201904171304089_NameAndPathRequiredInSvgTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241135368_SvgAddedToCourseTable.resx">
+      <DependentUpon>201904241135368_SvgAddedToCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

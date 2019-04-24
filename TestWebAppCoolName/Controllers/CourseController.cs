@@ -22,6 +22,7 @@ namespace TestWebAppCoolName.Controllers
         public string Section { get; set; }
 
         public string Tagy { get; set; }
+        public List<Svg> Svgs { get; set; }
     }
 
 
@@ -42,11 +43,11 @@ namespace TestWebAppCoolName.Controllers
 
                 if (!preview)
                 {
-                    viewModel.Course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title && c.Approved);
+                    viewModel.Course = _context.Courses.Include(c => c.Svg).FirstOrDefault(c => c.UrlTitle == title && c.Approved);
                 }
                 else
                 {
-                    viewModel.Course = _context.Courses.FirstOrDefault(c => c.UrlTitle == title );
+                    viewModel.Course = _context.Courses.Include(c=>c.Svg).FirstOrDefault(c => c.UrlTitle == title );
                 }
 
                 if (viewModel.Course != null)

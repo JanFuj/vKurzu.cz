@@ -24,10 +24,10 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Tělo kurzu - Mělo by obsahovat nadpisy - Proč se zůčastnit, Osnova, Kdy a kde")]
         public string Body { get; set; }
 
-        [Display(Name = "Svg (<Path>...</Path>)")]
-        [Required(ErrorMessage = "Zadejte svg (pouze <Path>...</Path>)")]
-        [AllowHtml]
-        public string Svg { get; set; }
+        [ForeignKey("Svg")]
+        public int Svg_id { get; set; }
+
+        public Svg Svg { get; set; }
 
         [Display(Name = "Modificator")]
         [Required(ErrorMessage = "Zadejte modifikator")]

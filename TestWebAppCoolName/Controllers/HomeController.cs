@@ -29,7 +29,7 @@ namespace TestWebAppCoolName.Controllers
         }
         public ActionResult Index() {
        
-            _viewModel.Courses = _context.Courses.Include(b => b.Lector).ToList();
+            _viewModel.Courses = _context.Courses.Include(b => b.Lector).Include(c=>c.Svg).ToList();
             _viewModel.Blogs = _context.Blogs.Include(b=>b.Author).ToList();
             return View(_viewModel);
         }

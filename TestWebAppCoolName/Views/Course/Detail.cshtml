@@ -13,7 +13,7 @@
     <main class="main">
 
         <div class="intro intro--course">
-            <div class="course-image"><svg viewBox="0 0 128 128" role="img"><linearGradient id="gradient-@Model.Course.Modificator" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>@Html.Raw(Model.Course.Svg)</svg></div>
+            <div class="course-image"><svg viewBox="0 0 128 128" role="img"><linearGradient id="gradient-@Model.Course.Modificator" x2="0" y2="1"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>@Html.Raw(Model.Course.Svg.Path)</svg></div>
             <div class="course-texts">
                 <h1 class="course-title">@Model.Course.Name</h1>
                 <p class="h4 course-desc">@Model.Course.Description</p>
