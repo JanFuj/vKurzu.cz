@@ -37,8 +37,10 @@
                     @Html.LabelFor(m => m.Course.Body)
                     @Html.HiddenFor(m => m.Course.Body)
                     @Html.ValidationMessageFor(m => m.Course.Body)
-                    <div id="toolbarBody"></div>
-                    <div id="editorBody"></div>
+                    <div>
+                        <div id="toolbarBody"></div>
+                        <div id="editorBody"></div>
+                    </div>
                 </p>
                 <p class="form-item">
                     @Html.LabelFor(m => m.Course.Lector_Id)
@@ -50,7 +52,7 @@
                     @Html.TextBoxFor(m => m.Course.UrlTitle)
                     @Html.ValidationMessageFor(m => m.Course.UrlTitle)
                 </p>
-                
+
                 <p>
                     <label for="">Ikona</label>
                 </p>
@@ -61,7 +63,7 @@
                         foreach (var svg in Model.Svgs)
                         {
                             <div class="svg-picker__item">
-                                @Html.RadioButtonFor(m => m.Course.Svg_id, svg.ID, new { id = svg.ID})
+                                @Html.RadioButtonFor(m => m.Course.Svg_id, svg.ID, new { id = svg.ID })
                                 <label for="@svg.ID"></label>
                                 <svg viewBox="0 0 128 128">
                                     <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
@@ -127,7 +129,7 @@
                     </div>
                 </div>
 
-         
+
 
 
                 <div style="display: inline-block; width: 100%;">

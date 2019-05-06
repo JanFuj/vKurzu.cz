@@ -18,7 +18,7 @@ namespace TestWebAppCoolName.Helpers
         public List<Blog> GetRelatedArticles(Blog blog)
         {
             //TODO some logic to pick up 3 related articles
-            return _context.Blogs.Include(b => b.Author).Where(b => b.UrlTitle != blog.UrlTitle).Take(3).ToList();
+            return _context.Blogs.Include(b => b.Author).Where(b => b.UrlTitle != blog.UrlTitle && b.Approved).Take(3).ToList();
         }
         public List<Tag> GetTags()
         {

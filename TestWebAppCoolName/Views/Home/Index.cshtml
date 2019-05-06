@@ -34,12 +34,12 @@
                 @{
                     foreach (var course in Model.Courses.Where(c => c.Approved))
                     {
-                        <div class="course-card course-card--@course.Modificator">
+                        <div class="course-card", data-gradient="@course.Modificator">
                             <a class="course-card__link" href="@Url.Action("Index", "Course", new {title = course.UrlTitle})"></a>
                             <div class="course-card__content">
                                 <div class="course-card__image">
                                     <svg viewBox="0 0 128 128">
-                                        <linearGradient id="gradient-@course.Modificator" x1="0%" y1="0%" x2="66%" y2="100%"><stop offset="0%" stop-color="var(--course-card-bg-1)" /><stop offset="100%" stop-color="var(--course-card-bg-2)" /></linearGradient>
+                                        <linearGradient id="@course.Modificator" x1="0%" y1="0%" x2="66%" y2="100%"><stop offset="0%" stop-color="var(--grad-1)" /><stop offset="100%" stop-color="var(--grad-2)" /></linearGradient>
 
                                         @Html.Raw(course.Svg.Path)
 
