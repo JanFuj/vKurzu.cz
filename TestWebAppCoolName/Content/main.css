@@ -37,7 +37,7 @@
   --button-shadow: 	0 6px 16px hsla(0, 0%, 0%, 0.5);
   --clr-primary: 		var(--clr-tomato);
   --clr-secondary: 	var(--clr-crimson);
-  --gradient: 		linear-gradient(to right, var(--clr-primary) 5%, var(--clr-secondary) 20%, var(--divider) 100%); }
+  --gradient: 		linear-gradient(to right, var(--grad-1) 5%, var(--grad-2) 20%, var(--divider) 100%); }
 
 /* :root {
 	$this-settings: (
@@ -383,7 +383,7 @@ main {
 
 button,
 .button {
-  background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+  background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
   color: var(--text-primary);
   box-shadow: var(--button-shadow), 0 0 0 2px transparent inset;
   padding: 1.5ch 2ch;
@@ -515,7 +515,7 @@ button,
   .card--clickable:hover .card__content {
     transform: translateY(-12px); }
   .card--clickable:hover .card__title {
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -678,7 +678,7 @@ select {
   select:focus {
     border-color: var(--text-primary); }
     select:focus option:checked {
-      background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary)); }
+      background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2)); }
   select option:not(:checked):hover {
     background: var(--clr-shade-2); }
 
@@ -689,7 +689,7 @@ a:visited {
   color: var(--clr-purple); }
 
 .link--gradient {
-  background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+  background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
   font-family: var(--font-headings);
   background-clip: border-box;
   -webkit-background-clip: text;
@@ -717,7 +717,7 @@ a:visited {
   text-decoration: none;
   font-weight: 700; }
   .link--gradient-inversed:hover {
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -855,7 +855,7 @@ sup {
   top: -0.5em; }
 
 mark {
-  background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+  background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
   color: var(--text-primary);
   border-radius: 4px; }
   mark {
@@ -2025,7 +2025,7 @@ hr {
   height: 2px;
   width: 100%;
   margin: var(--gutter) 0;
-  background: linear-gradient(to right, var(--clr-primary) 5%, var(--clr-secondary) 20%, var(--divider) 100%);
+  background: linear-gradient(to right, var(--grad-1) 5%, var(--grad-2) 20%, var(--divider) 100%);
   border: none; }
 
 .hr--invisible {
@@ -2063,7 +2063,7 @@ p, ul, ol {
   .intro--index .main-heading {
     display: inline-flex; }
   .intro--index .intro__heading {
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2096,7 +2096,7 @@ header,
     color: black;
     border-radius: 8px;
     padding: 0 8px;
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     animation-duration: var(--duration);
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(1, 0, 0, 1.65);
@@ -2402,8 +2402,6 @@ header,
   grid-gap: var(--base-2); }
 
 .course-card {
-  --course-card-bg-1: var(--clr-primary);
-  --course-card-bg-2: var(--clr-secondary);
   display: grid;
   min-height: 400px;
   cursor: pointer;
@@ -2413,7 +2411,7 @@ header,
   .course-card:hover .course-card__image {
     opacity: 1; }
   .course-card:hover .course-card__title {
-    background: linear-gradient(0.4turn, var(--clr-secondary), var(--clr-secondary) 20%, var(--clr-primary));
+    background: linear-gradient(0.4turn, var(--grad-2), var(--grad-1) 20%, var(--grad-1));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2441,7 +2439,36 @@ header,
       left: var(--base-2);
       height: 100%;
       transform-origin: top left;
-      transform: scale(0.75); }
+      transform: scale(0.75);
+      /* path {
+                fill: url(#gradient);
+            } */ }
+      [data-gradient="gradient-1"] .course-card__image svg {
+        fill: url(#gradient-1); }
+      [data-gradient="gradient-2"] .course-card__image svg {
+        fill: url(#gradient-2); }
+      [data-gradient="gradient-3"] .course-card__image svg {
+        fill: url(#gradient-3); }
+      [data-gradient="gradient-4"] .course-card__image svg {
+        fill: url(#gradient-4); }
+      [data-gradient="gradient-5"] .course-card__image svg {
+        fill: url(#gradient-5); }
+      [data-gradient="gradient-6"] .course-card__image svg {
+        fill: url(#gradient-6); }
+      [data-gradient="gradient-7"] .course-card__image svg {
+        fill: url(#gradient-7); }
+      [data-gradient="gradient-8"] .course-card__image svg {
+        fill: url(#gradient-8); }
+      [data-gradient="gradient-9"] .course-card__image svg {
+        fill: url(#gradient-9); }
+      [data-gradient="gradient-10"] .course-card__image svg {
+        fill: url(#gradient-10); }
+      [data-gradient="gradient-11"] .course-card__image svg {
+        fill: url(#gradient-11); }
+      .course-card__image svg stop:nth-child(1) {
+        stop-color: var(--grad-1); }
+      .course-card__image svg stop:nth-child(2) {
+        stop-color: var(--grad-2); }
   .course-card__info {
     display: grid;
     grid-template-rows: max-content;
@@ -2476,36 +2503,6 @@ header,
     .course-card--related .course-card__info {
       padding-left: 0;
       grid-gap: var(--base-h); }
-  .course-card--web-basics {
-    --clr-primary: var(--clr-red);
-    --clr-secondary: var(--clr-crimson); }
-  .course-card--css-advanced {
-    --clr-primary: var(--clr-cyan);
-    --clr-secondary: var(--clr-blue); }
-  .course-card--sass {
-    --clr-primary: var(--clr-pink);
-    --clr-secondary: var(--clr-purple); }
-  .course-card--xamarin {
-    --clr-primary: var(--clr-cyan);
-    --clr-secondary: var(--clr-azure); }
-  .course-card--sketch {
-    --clr-primary: var(--clr-yellow);
-    --clr-secondary: var(--clr-tomato); }
-  .course-card--mvc {
-    --clr-primary: var(--clr-blue);
-    --clr-secondary: var(--clr-ultramarine); }
-  .course-card--web-basics svg {
-    fill: url(#gradient-web-basics); }
-  .course-card--css-advanced svg {
-    fill: url(#gradient-css-advanced); }
-  .course-card--sass svg {
-    fill: url(#gradient-sass); }
-  .course-card--xamarin svg {
-    fill: url(#gradient-xamarin); }
-  .course-card--sketch svg {
-    fill: url(#gradient-sketch); }
-  .course-card--mvc svg {
-    fill: url(#gradient-mvc); }
 
 .person {
   display: grid;
@@ -2591,7 +2588,7 @@ header,
     font-weight: 700;
     line-height: 1;
     font-size: 29px;
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2659,7 +2656,7 @@ header,
       font-weight: 700;
       line-height: 1;
       font-size: 29px;
-      background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+      background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
       background-clip: border-box;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -2728,7 +2725,7 @@ header,
   /* padding: 0.5ch 2ch;
     border: 2px solid var(--divider);
     border-radius: 1000px; */
-  background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+  background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
   font-family: var(--font-headings);
   background-clip: border-box;
   -webkit-background-clip: text;
@@ -2780,30 +2777,6 @@ header,
         grid-gap: 36px; } }
   .related-articles hr {
     grid-column: full-start / content-end; }
-
-.body--web-basics {
-  --clr-primary: var(--clr-red);
-  --clr-secondary: var(--clr-crimson); }
-
-.body--css-advanced {
-  --clr-primary: var(--clr-cyan);
-  --clr-secondary: var(--clr-blue); }
-
-.body--sass {
-  --clr-primary: var(--clr-pink);
-  --clr-secondary: var(--clr-purple); }
-
-.body--xamarin {
-  --clr-primary: var(--clr-cyan);
-  --clr-secondary: var(--clr-azure); }
-
-.body--sketch {
-  --clr-primary: var(--clr-yellow);
-  --clr-secondary: var(--clr-tomato); }
-
-.body--mvc {
-  --clr-primary: var(--clr-blue);
-  --clr-secondary: var(--clr-ultramarine); }
 
 .body--course {
   /* grid-template-rows: minmax(85vh,min-content) 1fr;
@@ -2875,7 +2848,7 @@ header,
   padding-top: var(--header-height);
   margin-top: calc(var(--header-height) * (-1));
   margin-bottom: 24px;
-  background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary)), url("../media/pattern.svg");
+  background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2)), url("../media/pattern.svg");
   background-blend-mode: multiply;
   background-size: cover;
   display: grid;
@@ -2958,11 +2931,12 @@ header,
             grid-column: content-start / full-end !important;
         }
     } */
-  position: relative; }
+  position: relative;
+  /* > * {
+        grid-column: content-start / middle;
+    }  */ }
   .course > * {
     grid-column: content-start / content-end; }
-  .course > * {
-    grid-column: content-start / middle; }
   .course::before {
     content: "";
     grid-column: wide-start / content-start;
@@ -2970,7 +2944,7 @@ header,
     width: 2px;
     height: 100%;
     margin-right: auto;
-    background: linear-gradient(to bottom, var(--clr-secondary), var(--clr-primary) 25%, var(--divider) 100%);
+    background: linear-gradient(to bottom, var(--grad-1), var(--grad-2) 25%, var(--divider) 100%);
     transform-origin: right; }
   .course__details {
     margin-bottom: 48px; }
@@ -3034,7 +3008,7 @@ header,
         border-top-right-radius: 0; } }
   .reg-form__title {
     border-radius: inherit;
-    background: linear-gradient(0.4turn, var(--clr-primary), var(--clr-primary) 20%, var(--clr-secondary));
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
     text-align: right;
     padding: var(--base-4);
     padding-left: 10ch;
