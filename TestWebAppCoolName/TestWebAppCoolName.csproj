@@ -45,9 +45,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -357,12 +354,17 @@
     <Compile Include="Migrations\201904241135368_SvgAddedToCourseTable.Designer.cs">
       <DependentUpon>201904241135368_SvgAddedToCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905090855467_PositionInCourseTable.cs" />
+    <Compile Include="Migrations\201905090855467_PositionInCourseTable.Designer.cs">
+      <DependentUpon>201905090855467_PositionInCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\ContactFormModel.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseContactForm.cs" />
+    <Compile Include="Models\Dto\CourseOrderUpdateDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />
@@ -374,7 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\favicon-2x.png" />
     <Content Include="Content\favicon-6x.png" />
     <Content Include="Content\favicon.png" />
@@ -493,6 +494,7 @@
     <Content Include="Content\main.min.css.map" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\highlight.js" />
@@ -573,6 +575,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -705,6 +708,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904241135368_SvgAddedToCourseTable.resx">
       <DependentUpon>201904241135368_SvgAddedToCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905090855467_PositionInCourseTable.resx">
+      <DependentUpon>201905090855467_PositionInCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

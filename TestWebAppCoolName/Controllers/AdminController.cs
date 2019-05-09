@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
+using TestWebAppCoolName.Models.Dto;
 
 namespace TestWebAppCoolName.Controllers
 {
@@ -60,7 +61,7 @@ namespace TestWebAppCoolName.Controllers
                 courses = _context.Courses.Include(b => b.Lector).Where(c => !c.Deleted && c.OwnerId == userId).ToList();
             }
 
-            return View(courses);
+            return View(courses.OrderBy(c=>c.Position));
         }
 
         [Route("admin/kurz/new")]
@@ -131,7 +132,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).Include(s=>s.Svg).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -258,7 +259,21 @@ namespace TestWebAppCoolName.Controllers
             _context.SaveChanges();
             return RedirectToAction("Course");
         }
+        [HttpPost]
+        public HttpStatusCode UpdateCourseOrder(List<CourseOrderUpdateDto> orderDto)
+        {
+            foreach (var item in orderDto)
+            {
+                var course = _context.Courses.FirstOrDefault(x => x.Id == item.Id);
+                if (course != null) {
+                    course.Position = item.Position;
+                }
 
+                _context.SaveChanges();
+            }
+
+            return HttpStatusCode.OK;
+        }
         #endregion
 
         #region Blog
@@ -740,7 +755,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
- 
+
             return View(svg);
         }
         [Route("admin/svg/edit/{id?}")]
@@ -764,12 +779,13 @@ namespace TestWebAppCoolName.Controllers
             if (sameUrlInAnotherCourse)
             {
                 ModelState.AddModelError("svg.Name", "Zadany nazev již existuje");
-                return View(svg); 
+                return View(svg);
             }
 
             var sv = _context.Svgs.FirstOrDefault(s => s.ID == svg.ID);
-          
-            if (sv != null) {
+
+            if (sv != null)
+            {
                 sv.Name = svg.Name;
                 sv.Path = svg.Path;
                 _context.SaveChanges();
@@ -794,7 +810,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 return HttpNotFound();
             }
-            if (User.IsInRole(Roles.Lector) )
+            if (User.IsInRole(Roles.Lector))
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -812,7 +828,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 return HttpNotFound();
             }
-            if (User.IsInRole(Roles.Lector) )
+            if (User.IsInRole(Roles.Lector))
             {
                 return HttpNotFound();
             }
@@ -832,6 +848,7 @@ namespace TestWebAppCoolName.Controllers
             }
             base.Dispose(disposing);
         }
+
 
 
     }

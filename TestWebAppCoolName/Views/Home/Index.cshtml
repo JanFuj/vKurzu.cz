@@ -34,7 +34,7 @@
                 @{
                     foreach (var course in Model.Courses.Where(c => c.Approved))
                     {
-                        <div class="course-card", data-gradient="@course.Modificator">
+                        <div class="course-card" data-gradient="@course.Modificator">
                             <a class="course-card__link" href="@Url.Action("Index", "Course", new {title = course.UrlTitle})"></a>
                             <div class="course-card__content">
                                 <div class="course-card__image">

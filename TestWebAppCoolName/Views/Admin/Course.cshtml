@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TestWebAppCoolName.Models.Course>
+﻿@using System.Security.AccessControl
+@model IEnumerable<TestWebAppCoolName.Models.Course>
 
 @{
     ViewBag.Title = "Admin Kurz";
@@ -14,12 +15,12 @@
             @Html.ActionLink("Vytvořit", "NewCourse", null, new { @class = "button" })
         </div>
 
-        <ul class="admin-list">
+        <ul class="admin-list" id="sortable">
             @foreach (var item in Model)
             {
 
 
-                <li class="admin-list__item">
+                <li class="admin-list__item" id="@item.Id">
                     <div class="admin-list__cell admin-list__cell--info">
                         <div class="">@Html.DisplayFor(modelItem => item.Name)</div>
                         <div class="">@Html.DisplayFor(modelItem => item.Lector.FullName)</div>
@@ -48,3 +49,47 @@
 
     </main>
 </body>
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#sortable").sortable({
+                axis: 'y',
+                update: function () {
+                    let order = 1;
+                    let model = [];
+                    let sortableli = 1
+                    $("#sortable li").each(function () {
+                        //building a new object and pushing in modal array
+                        //Here I am setting OrderNo property which is i am using in my db and building my object
+                        var objModel = { Id: this.id, position: order }; //This is for example to build your object and push in a modal array.
+                        model.push(objModel);
+                        order++;
+                    });
+                    console.log(model);
+                    if (model.length > 1)
+                    {               
+                        $.ajax({
+                            type: "POST",                            
+                            contentType: "application/json; charset=utf-8",
+                            url: '@Url.Action("UpdateCourseOrder", "Admin")', //This is my url put your url here and pass model as data it is an array of my items
+                            data: JSON.stringify(model),
+                            success: function (data) {
+                                console.log("position changed");
+                            },
+                            error: function (e) {
+                                //do something
+                            }
+                        });
+                    }
+                }
+            }
+            );
+            $("#sortable").disableSelection();
+
+        });
+    </script>
+
+}
