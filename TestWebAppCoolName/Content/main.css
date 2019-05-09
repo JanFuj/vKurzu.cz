@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 :root {
   --text-primary-black: 		black;
   --text-primary-white: 		white;
@@ -1121,7 +1121,7 @@ template {
 
 .ql-editor ol,
 .ql-editor ul {
-  padding-left: 1.5em; }
+  /* padding-left: 1.5em; */ }
 
 .ql-editor ol > li,
 .ql-editor ul > li {
@@ -1157,8 +1157,8 @@ template {
 
 .ql-editor li:not(.ql-direction-rtl)::before {
   margin-left: -1.5em;
-  margin-right: 0.3em;
-  text-align: right; }
+  /* margin-right: 0.3em; */
+  /* text-align: right; */ }
 
 .ql-editor li.ql-direction-rtl::before {
   margin-left: 0.3em;
@@ -2411,7 +2411,7 @@ header,
   .course-card:hover .course-card__image {
     opacity: 1; }
   .course-card:hover .course-card__title {
-    background: linear-gradient(0.4turn, var(--grad-2), var(--grad-1) 20%, var(--grad-1));
+    background: linear-gradient(0.4turn, var(--grad-2), var(--grad-2) 20%, var(--grad-1));
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2957,11 +2957,11 @@ header,
   .course__toc-title {
     margin-top: 0;
     margin-bottom: var(--gutter); }
-  .course__toc {
-    line-height: 1.5;
-    list-style-type: circle;
-    margin: 0;
-    color: var(--text-secondary); }
+
+#editorWillLearn ul {
+  line-height: 1.5;
+  margin: 0;
+  color: var(--text-secondary); }
 
 .course__heading--why {
   margin-top: 0; }
