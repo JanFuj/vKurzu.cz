@@ -10,7 +10,7 @@
     <script src="/scripts/highlight.js"></script>
     <link rel="stylesheet"
           href="/Content/Highlight/monokai-sublime.css">
- 
+
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
@@ -20,13 +20,31 @@
 
 </head>
 
-       
-     
+
+
 
 @RenderBody()
 
 
 
 @RenderSection("scripts", required: false)
+
+
+
+    <script type="text/javascript">
+        jQuery(document).keydown(function(event) {
+                // If Control or Command key is pressed and the S key is pressed
+                // run save function. 83 is the key code for S.
+                if ((event.ctrlKey || event.metaKey) && event.which == 83) {
+                    // Save Function
+                    console.log("save")
+                    $('#save').click()
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        );
+    </script>
+
 
 </html>

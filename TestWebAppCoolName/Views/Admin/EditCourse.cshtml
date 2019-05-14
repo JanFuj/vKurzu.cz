@@ -179,7 +179,7 @@
 
                 <p>
                     @Html.HiddenFor(m => m.Course.Id)
-                    <button type="submit">Uložit</button>
+                    <button type="submit" id="save">Uložit</button>
                     <div id="pageloader" style="display: none;">
                         <img src="/media/30.svg" alt="processing..." />
                     </div>
@@ -198,6 +198,18 @@
 @section scripts {
 
     <script type="text/javascript">
+        jQuery(document).keydown(function(event) {
+                // If Control or Command key is pressed and the S key is pressed
+                // run save function. 83 is the key code for S.
+                if((event.ctrlKey || event.metaKey) && event.which == 83) {
+                    // Save Function
+                    console.log("save")
+                    $('#save').click()
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        );
         var grad = "";
 
         $(document).on('click', '.gradient-picker__color', function () {
