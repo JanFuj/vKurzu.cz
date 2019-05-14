@@ -43,7 +43,7 @@ namespace TestWebAppCoolName.Controllers
 
                 if (!preview)
                 {
-                    viewModel.Course = _context.Courses.Include(c => c.Svg).FirstOrDefault(c => c.UrlTitle == title && c.Approved);
+                    viewModel.Course = _context.Courses.Include(c => c.Svg).FirstOrDefault(c => c.UrlTitle == title && c.Approved && !c.Deleted);
                 }
                 else
                 {
