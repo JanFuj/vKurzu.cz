@@ -30,7 +30,12 @@ namespace TestWebAppCoolName.Helpers
             List<Course> relatedCourses = new List<Course>();
             foreach (var blogTag in blog.Tags)
             {
-                relatedCourses.Add(_context.Courses.FirstOrDefault(c => c.Tags.Any(b => b.Id == blogTag.Id)));
+                var relatedCourse = _context.Courses.Include(x => x.Svg)
+                    .FirstOrDefault(c => c.Tags.Any(b => b.Id == blogTag.Id));
+                if (relatedCourse != null)
+                {
+                    relatedCourses.Add(relatedCourse);
+                }
             }
 
             if (relatedCourses.Count > 0)
