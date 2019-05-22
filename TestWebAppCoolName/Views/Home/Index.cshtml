@@ -85,7 +85,15 @@
             <hr>
             <h1 class="main-heading">Kontakt</h1>
             <p>Vešteré dotazy ohledně kurzů, blogu, čehokoliv, vesmíru s klidným svědomím vepište níže, od toho kontaktní formuláře existují.</p>
-            <form class="contact-form" action=""><input type="email" name="email" placeholder="E-mail" required><textarea name="" rows="10" placeholder="Co máte na srdci?" required></textarea><button class="contact-form__button" type="submit">Odeslat</button></form>
+            <form class="contact-form" ction="@Url.Action("SendEmail","Home")" method="post">
+
+                @Html.TextBoxFor(m => m.FormModel.Email, new { placeholder = "E-mail", type="email", @required = "required" })
+                @Html.TextAreaFor(m => m.FormModel.Email, new { rows = "10", placeholder = "Co máte na srdci?", @required = "required" })
+               
+                <button class="contact-form__button" type="submit">Odeslat</button>
+                @Html.AntiForgeryToken()
+            </form>
+
             <div class="teachers">
                 <h2 class="h4">Lektoři</h2>
                 <p class="teachers__desc">Sterilní fotografie v bílé košili s úsměvem Mony Lisy nám nic neříkají. Možná není naše podoba v konečném důsledku ani důležitá – každopádně – tohle jsme my:</p>

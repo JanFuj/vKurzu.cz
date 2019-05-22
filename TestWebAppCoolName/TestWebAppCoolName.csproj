@@ -365,6 +365,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseContactForm.cs" />
     <Compile Include="Models\Dto\CourseOrderUpdateDto.cs" />
+    <Compile Include="Models\HomeContactForm.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />
@@ -484,6 +485,7 @@
     <Content Include="media\test.svg">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="media\web-thumbnail.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\rubik-bold.woff2" />

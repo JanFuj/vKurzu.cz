@@ -120,9 +120,11 @@
      
             quill.enable(false);
         });
+       //.css( "background-color", "red" ); moving related course 
+        let firstParagraph = $('.ql-editor').children().first(); 
+        let relatedCourse = $('.related-course');
 
-    
-
+        relatedCourse.appendTo(firstParagraph);
     </script>
 
 }
