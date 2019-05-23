@@ -30,6 +30,15 @@ namespace TestWebAppCoolName.Controllers
             _viewModel = new HomeViewModel();
 
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         public ActionResult Index() {
        
             _viewModel.Courses = _context.Courses.Include(b => b.Lector).Include(c=>c.Svg).Where(c=>!c.Deleted).OrderBy(c=>c.Position).ToList();

@@ -31,6 +31,14 @@ namespace TestWebAppCoolName.Controllers
         {
             _context = new ApplicationDbContext();
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         [AllowAnonymous]
         // GET: Blog
         public ActionResult Index(string title, bool preview = false)

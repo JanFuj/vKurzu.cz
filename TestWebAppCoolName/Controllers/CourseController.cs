@@ -33,6 +33,15 @@ namespace TestWebAppCoolName.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         // GET: Course
 
         public ActionResult Index(string title, string section, bool preview = false)
