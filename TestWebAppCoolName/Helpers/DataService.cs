@@ -31,7 +31,7 @@ namespace TestWebAppCoolName.Helpers
             foreach (var blogTag in blog.Tags)
             {
                 var relatedCourse = _context.Courses.Include(x => x.Svg)
-                    .FirstOrDefault(c => c.Tags.Any(b => b.Id == blogTag.Id));
+                    .FirstOrDefault(c => !c.Deleted && c.Approved && c.Tags.Any(b => b.Id == blogTag.Id));
                 if (relatedCourse != null)
                 {
                     relatedCourses.Add(relatedCourse);
