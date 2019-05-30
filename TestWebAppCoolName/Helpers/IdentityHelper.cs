@@ -27,7 +27,7 @@ namespace TestWebAppCoolName.Helpers
             }
             string adminName = "admin@coolname.cz";
             string adminPassword = "CoolPassword@";
-            string xxx = "xxxxxcvkjhvxkjh GITIGNORE";
+            string xxx = "GITIGNORE2";
             ApplicationUser admin = userManager.FindByName(adminName);
             if (admin == null)
             {
