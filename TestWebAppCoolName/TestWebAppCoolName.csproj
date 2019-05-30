@@ -200,6 +200,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\DataService.cs" />
     <Compile Include="Helpers\EmailSender.cs" />
+    <Compile Include="Helpers\IdentityHelper.cs" />
     <Compile Include="Helpers\TagParser.cs" />
     <Compile Include="Init\AppInitializer.cs" />
     <Compile Include="Migrations\201901311458157_initialModel.cs" />
