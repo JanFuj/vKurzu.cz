@@ -26,9 +26,30 @@ namespace TestWebAppCoolName.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
+            Models.AdminNote adminNote = null;
+            try
+            {
 
+                adminNote = _context.AdminNotes.First();
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                _context.AdminNotes.Add(new AdminNote() { Note = "" });
+                _context.SaveChanges();
+            }
+
+            return View(adminNote);
+        }
+        [HttpPost]
+        public ActionResult AdminNote(AdminNote adminNote)
+        {
+            var aNote = _context.AdminNotes.First();
+            aNote.Note = adminNote.Note;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
         #region Kurz
         public ActionResult ApproveCourse(int id, bool approve)
         {
@@ -55,13 +76,13 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult Course()
         {
             var userId = User.Identity.GetUserId();
-            var courses = _context.Courses.Include(b => b.Lector).Where(c => !c.Deleted).ToList();
+            var courses = _context.Courses.Where(c => !c.Deleted).ToList();
             if (User.IsInRole(Roles.Lector))
             {
-                courses = _context.Courses.Include(b => b.Lector).Where(c => !c.Deleted && c.OwnerId == userId).ToList();
+                courses = _context.Courses.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
             }
 
-            return View(courses.OrderBy(c=>c.Position));
+            return View(courses.OrderBy(c => c.Position));
         }
 
         [Route("admin/kurz/new")]
@@ -132,7 +153,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Lector).Include(b => b.Tags).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Tags).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -203,7 +224,6 @@ namespace TestWebAppCoolName.Controllers
                 cour.Description = vm.Course.Description;
                 cour.WillLearn = vm.Course.WillLearn;
                 cour.Body = vm.Course.Body;
-                cour.Lector_Id = vm.Course.Lector_Id;
                 cour.Modificator = vm.Course.Modificator;
                 cour.Svg = vm.Course.Svg;
                 cour.UrlTitle = vm.Course.UrlTitle;
@@ -265,7 +285,8 @@ namespace TestWebAppCoolName.Controllers
             foreach (var item in orderDto)
             {
                 var course = _context.Courses.FirstOrDefault(x => x.Id == item.Id);
-                if (course != null) {
+                if (course != null)
+                {
                     course.Position = item.Position;
                 }
 

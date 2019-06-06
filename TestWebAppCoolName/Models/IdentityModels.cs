@@ -25,10 +25,11 @@ namespace TestWebAppCoolName.Models
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<Svg> Svgs { get; set; }    
-        public ApplicationDbContext(): base("DefaultConnection", throwIfV1Schema: false)
+        public DbSet<Svg> Svgs { get; set; }
+        public DbSet<AdminNote> AdminNotes { get; set; }
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
-           // Database.SetInitializer(new AppInitializer());
+            // Database.SetInitializer(new AppInitializer());
         }
 
         public static ApplicationDbContext Create()

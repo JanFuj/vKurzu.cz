@@ -33,12 +33,12 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte modifikator")]
         public string Modificator { get; set; }
 
-        [Display(Name = "Lektor")]
-        [Required(ErrorMessage = "Vyberte lektora")]
-        [ForeignKey("Lector")]
-        public int Lector_Id { get; set; }
+        //[Display(Name = "Lektor")]
+        //[Required(ErrorMessage = "Vyberte lektora")]
+        //[ForeignKey("Lector")]
+     //   public int Lector_Id { get; set; }
 
-        public Person Lector { get; set; }
+      //  public Person Lector { get; set; }
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }

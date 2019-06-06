@@ -41,11 +41,7 @@
                     <div id="editorBody"></div>
                 </div>
             </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.Lector_Id)
-                @Html.DropDownListFor(m => m.Course.Lector_Id, new SelectList(Model.Persons, "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.Course.Lector_Id)
-            </p>
+      
             <p class="form-item">
                 @Html.LabelFor(m => m.Course.UrlTitle)
                 @Html.TextBoxFor(m => m.Course.UrlTitle)

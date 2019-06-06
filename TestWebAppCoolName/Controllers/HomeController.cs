@@ -41,7 +41,7 @@ namespace TestWebAppCoolName.Controllers
         }
         public ActionResult Index() {
        
-            _viewModel.Courses = _context.Courses.Include(b => b.Lector).Include(c=>c.Svg).Where(c=>!c.Deleted).OrderBy(c=>c.Position).ToList();
+            _viewModel.Courses = _context.Courses.Include(c=>c.Svg).Where(c=>!c.Deleted).OrderBy(c=>c.Position).ToList();
             _viewModel.Blogs = _context.Blogs.Include(b=>b.Author).ToList();
             return View(_viewModel);
         }

@@ -367,8 +367,17 @@
     <Compile Include="Migrations\201905090855467_PositionInCourseTable.Designer.cs">
       <DependentUpon>201905090855467_PositionInCourseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906040737387_LectorNotIncludedToCourse.cs" />
+    <Compile Include="Migrations\201906040737387_LectorNotIncludedToCourse.Designer.cs">
+      <DependentUpon>201906040737387_LectorNotIncludedToCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906060854475_AdminNoteTable.cs" />
+    <Compile Include="Migrations\201906060854475_AdminNoteTable.Designer.cs">
+      <DependentUpon>201906060854475_AdminNoteTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminNote.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\ContactFormModel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -722,6 +731,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905090855467_PositionInCourseTable.resx">
       <DependentUpon>201905090855467_PositionInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906040737387_LectorNotIncludedToCourse.resx">
+      <DependentUpon>201906040737387_LectorNotIncludedToCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906060854475_AdminNoteTable.resx">
+      <DependentUpon>201906060854475_AdminNoteTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
