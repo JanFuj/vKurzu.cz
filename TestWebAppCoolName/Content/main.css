@@ -2506,11 +2506,12 @@ header,
       grid-gap: 0; }
     .course-card--related .course-card__image {
       display: flex;
-      justify-content: center; }
+      justify-content: center;
+      align-items: center; }
       .course-card--related .course-card__image svg {
         position: static;
-        height: auto;
-        transform: scale(0.66);
+        height: 60px;
+        transform: none;
         transform-origin: center; }
     .course-card--related .course-card__info {
       padding: var(--base-2);
