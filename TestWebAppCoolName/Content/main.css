@@ -1667,17 +1667,20 @@ template {
 
 .ql-snow .ql-editor pre {
   white-space: pre-wrap;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  padding: 5px 10px; }
+  margin-bottom: var(--base);
+  margin-top: var(--base);
+  padding: var(--base-2);
+  font-size: 80%; }
 
 .ql-snow .ql-editor code {
   font-size: 85%;
   padding: 2px 4px; }
 
 .ql-snow .ql-editor pre.ql-syntax {
-  background-color: #23241f;
-  color: #f8f8f2;
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  border-radius: 12px;
+  color: var(--text-secondary);
   overflow: visible; }
 
 .ql-snow .ql-editor img {
@@ -2427,9 +2430,9 @@ header,
   .course-card__content {
     background-color: var(--card-bg);
     box-shadow: var(--card-shadow);
+    border-radius: 20px;
     display: grid;
     grid-template-rows: 150px auto;
-    border-radius: 20px;
     overflow: hidden;
     transition: transform ease-out 0.15s; }
   .course-card__image {
@@ -2500,10 +2503,17 @@ header,
     .course-card--related .course-card__content {
       grid-template-columns: 96px 1fr;
       grid-template-rows: auto;
-      grid-column-gap: var(--base); }
-    .course-card--related .course-card__image svg {
-      height: auto; }
+      grid-gap: 0; }
+    .course-card--related .course-card__image {
+      display: flex;
+      justify-content: center; }
+      .course-card--related .course-card__image svg {
+        position: static;
+        height: auto;
+        transform: scale(0.66);
+        transform-origin: center; }
     .course-card--related .course-card__info {
+      padding: var(--base-2);
       padding-left: 0;
       grid-gap: var(--base-h); }
 
@@ -2740,7 +2750,7 @@ header,
     content: ""; }
 
 .related-course {
-  padding: var(--base-3) 0; }
+  padding: var(--base) 0; }
   .related-course__heading {
     margin-top: 0;
     margin-bottom: var(--base);
@@ -3459,7 +3469,7 @@ header,
         transition: transform .15s ease-out;
         font-size: 150%; }
 
-.field-validation-valid {
+.field-validation-error {
   color: var(--clr-yellow); }
 
 .svg-picker {
