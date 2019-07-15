@@ -56,7 +56,7 @@ namespace TestWebAppCoolName.Controllers
                 }
                 else
                 {
-                    viewModel.Course = _context.Courses.Include(c=>c.Svg).FirstOrDefault(c => c.UrlTitle == title );
+                    viewModel.Course = _context.Courses.Include(c => c.Svg).FirstOrDefault(c => c.UrlTitle == title);
                 }
 
                 if (viewModel.Course != null)
@@ -84,10 +84,14 @@ namespace TestWebAppCoolName.Controllers
             viewModel.Course = course;
 
             var emailSender = new EmailSender();
-            var sent = await emailSender.SendEmail(viewModel.FormModel.Email, course.Name, $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email}");
+            var sent = await emailSender.SendEmail(viewModel.FormModel.Email, $"Kurz: {course.Name}", $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email}");
             if (!sent)
             {
                 Console.WriteLine("sending email error");
+            }
+            else
+            {
+                TempData["EmailSent"] = true;
             }
             // zabrani opetovnemu odeslani formulare a presune na /kurz/{urlTitle},
             // jinak by zustal na /Course/SendEmail a po refreshi by znovu odeslal mail

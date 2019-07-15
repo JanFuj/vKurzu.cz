@@ -39,10 +39,12 @@ namespace TestWebAppCoolName.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult Index() {
-       
-            _viewModel.Courses = _context.Courses.Include(c=>c.Svg).Where(c=>!c.Deleted).OrderBy(c=>c.Position).ToList();
-            _viewModel.Blogs = _context.Blogs.Include(b=>b.Author).ToList();
+        public ActionResult Index()
+        {
+
+            _viewModel.Courses = _context.Courses.Include(c => c.Svg).Where(c => !c.Deleted).OrderBy(c => c.Position).ToList();
+            _viewModel.Blogs = _context.Blogs.Include(b => b.Author).ToList();
+
             return View(_viewModel);
         }
 
@@ -64,13 +66,17 @@ namespace TestWebAppCoolName.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendEmail(HomeViewModel viewModel)
         {
-        
+
 
             var emailSender = new EmailSender();
             var sent = await emailSender.SendEmail(viewModel.FormModel.Email, "Dotaz", $"{viewModel.FormModel.Message} \n {viewModel.FormModel.Email}");
             if (!sent)
             {
                 Console.WriteLine("sending email error");
+            }
+            else
+            {
+                TempData["EmailSent"] = true;
             }
             // zabrani opetovnemu odeslani formulare a presune na /kurz/{urlTitle},
             // jinak by zustal na /Course/SendEmail a po refreshi by znovu odeslal mail

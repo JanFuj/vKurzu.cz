@@ -137,16 +137,21 @@
                 </div>
             }
         </div>
+        @{
+            if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
+            {
 
-        @using (Html.BeginForm("AdminNote", "Admin", FormMethod.Post, new { @class = "admin-form", id="formx" }))
-        {
-                <h3>Poznámky</h3>
-                @Html.HiddenFor(model => model.Note)
-            <div class="quill--will-learn" style="margin-bottom: 50px">
-                <div id="toolbarQuillAdminNote"></div>
-                <div id="editorQuillAdminNote"></div>
-            </div>
-            <button type="submit" hidden="" id="save">Vytvořit</button>
+                using (Html.BeginForm("AdminNote", "Admin", FormMethod.Post, new { @class = "admin-form", id = "formx" }))
+                {
+                    <h3>Poznámky</h3>
+                    @Html.HiddenFor(model => model.Note)
+                    <div class="quill--will-learn" style="margin-bottom: 50px">
+                        <div id="toolbarQuillAdminNote"></div>
+                        <div id="editorQuillAdminNote"></div>
+                    </div>
+                    <button type="submit" hidden="" id="save">Vytvořit</button>
+                }
+            }
         }
     </main>
 </body>

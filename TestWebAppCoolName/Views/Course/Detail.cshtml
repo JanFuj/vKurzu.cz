@@ -49,7 +49,7 @@
                     @Html.ValidationMessageFor(m => m.FormModel.Email)
                     @Html.HiddenFor(m => m.Course.UrlTitle)
                     @Html.AntiForgeryToken()
-                    <button class="reg-form__button" type="submit">Počítejte se mnou!</button>
+                    <button class="reg-form__button" type="submit">Mám zájem!</button>
                 </div>
             </form>
 
@@ -103,6 +103,12 @@
         quillBody.setContents(@Html.Raw(Model.Course.Body))
         quillBody.enable(false);
     });
+
+    @{
+            if (TempData["EmailSent"] != null){
+              @: Swal.fire('Děkujeme','Brzy se ozveme','success');
+            }
+         }
     </script>
 }
 
