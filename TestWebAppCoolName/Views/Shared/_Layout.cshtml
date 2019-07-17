@@ -57,7 +57,17 @@
 
 @RenderSection("scripts", required: false)
 
+<footer class="footer footer--blog">
 
+    <hr>
+    <nav class="nav" role="navigation">
+        <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog",new{title = "index"})">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
+        </ul></nav>
+    <p>
+        <small>&copy;
+            <span id="copyright-year">2019</span> vKurzu.cz</small></p>
+</footer>
 
     <script type="text/javascript">
         jQuery(document).keydown(function(event) {

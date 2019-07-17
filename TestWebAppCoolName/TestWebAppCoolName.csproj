@@ -194,6 +194,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TutorialsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -375,9 +376,18 @@
     <Compile Include="Migrations\201906060854475_AdminNoteTable.Designer.cs">
       <DependentUpon>201906060854475_AdminNoteTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907170637572_TutorialCategoryTable.cs" />
+    <Compile Include="Migrations\201907170637572_TutorialCategoryTable.Designer.cs">
+      <DependentUpon>201907170637572_TutorialCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907170645075_PositionInTutorialTable.cs" />
+    <Compile Include="Migrations\201907170645075_PositionInTutorialTable.Designer.cs">
+      <DependentUpon>201907170645075_PositionInTutorialTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\ContactFormModel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -390,6 +400,7 @@
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Svg.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TutorialCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -590,6 +601,11 @@
     <Content Include="Views\Admin\NewSvg.cshtml" />
     <Content Include="Views\Admin\EditSvg.cshtml" />
     <Content Include="Views\Admin\DeleteSvg.cshtml" />
+    <Content Include="Views\Tutorials\Index.cshtml" />
+    <Content Include="Views\Admin\TutorialCategory.cshtml" />
+    <Content Include="Views\Admin\NewTutorialCategory.cshtml" />
+    <Content Include="Views\Admin\DeleteTutorialCategory.cshtml" />
+    <Content Include="Views\Admin\EditTutorialCategory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -737,6 +753,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906060854475_AdminNoteTable.resx">
       <DependentUpon>201906060854475_AdminNoteTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907170637572_TutorialCategoryTable.resx">
+      <DependentUpon>201907170637572_TutorialCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907170645075_PositionInTutorialTable.resx">
+      <DependentUpon>201907170645075_PositionInTutorialTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

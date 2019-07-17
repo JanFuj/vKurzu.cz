@@ -1,0 +1,40 @@
+﻿@model TestWebAppCoolName.Models.TutorialCategory
+
+@{
+    ViewBag.Title = "Edit Tutorial Category";
+}
+
+<main class="main">
+
+
+
+    @using (Html.BeginForm("EditTutorialCategory", "Admin", FormMethod.Post, new { @class = "admin-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h3>Editovat kategorii tutorialu</h3>
+        <div>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <p class="form-item">
+                @Html.LabelFor(model => model.Name)
+
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.UrlTitle)
+                @Html.TextBoxFor(m => m.UrlTitle)
+                @Html.ValidationMessageFor(m => m.UrlTitle)
+            </p>
+            <p>
+                @Html.HiddenFor(m => m.Id)
+                <button type="submit" id="save">Uložit</button>
+
+            </p>
+        </div>
+    }
+
+
+</main>

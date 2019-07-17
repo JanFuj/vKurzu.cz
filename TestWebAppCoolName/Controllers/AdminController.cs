@@ -279,6 +279,7 @@ namespace TestWebAppCoolName.Controllers
             _context.SaveChanges();
             return RedirectToAction("Course");
         }
+
         [HttpPost]
         public HttpStatusCode UpdateCourseOrder(List<CourseOrderUpdateDto> orderDto)
         {
@@ -860,6 +861,179 @@ namespace TestWebAppCoolName.Controllers
         }
 
         #endregion
+
+
+        #region Tutorials
+        [Route("admin/tutorialCategory")]
+        public ActionResult TutorialCategory()
+        {
+            var userId = User.Identity.GetUserId();
+            var categories = _context.TutorialCategory.Where(c => !c.Deleted).ToList();
+            if (User.IsInRole(Roles.Lector))
+            {
+                categories = _context.TutorialCategory.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
+            }
+            return View("TutorialCategory",categories.OrderBy(c => c.Position));
+        }
+        [Route("admin/tutorialCategory/new")]
+        public ActionResult NewTutorialCategory()
+        {
+            return View();
+        }
+        // POST: Tags/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("admin/tutorialCategory/new")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> NewTutorialCategory([Bind(Include = "Id,Name,UrlTitle")] TutorialCategory tutorialCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                tutorialCategory.Created = DateTime.Now;
+                tutorialCategory.Changed = DateTime.Now;
+                _context.TutorialCategory.Add(tutorialCategory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("TutorialCategory");
+            }
+
+            return View(tutorialCategory);
+        }
+
+
+        //GET 
+        [Route("admin/tutorialCategory/edit/{id?}")]
+        public ActionResult EditTutorialCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var tutorialCategory = _context.TutorialCategory.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+
+            if (tutorialCategory == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && tutorialCategory.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+           
+            return View(tutorialCategory);
+        }
+
+        [Route("admin/tutorialCategory/edit/{id?}")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTutorialCategory(TutorialCategory tutorialCategory)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(tutorialCategory);
+            }
+
+            var existingTutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.UrlTitle == tutorialCategory.UrlTitle);
+            bool sameUrlInAnotherTutorialCategory = false;
+            if (existingTutorialCategory != null)
+            {
+                sameUrlInAnotherTutorialCategory = existingTutorialCategory?.Id != existingTutorialCategory.Id;
+            }
+
+            if (sameUrlInAnotherTutorialCategory)
+            {
+                ModelState.AddModelError("tutorialCategory.UrlTitle", "Zadany url titulek již existuje");
+                
+                return View(tutorialCategory);
+            }
+
+            var tutor = _context.TutorialCategory.Include(c => c.Tags).FirstOrDefault(c => c.Id == tutorialCategory.Id);
+            if (User.IsInRole(Roles.Lector) && tutor?.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            if (tutor != null)
+            {
+                tutor.Name = tutorialCategory.Name;
+                tutor.UrlTitle = tutorialCategory.UrlTitle;
+                tutor.Changed = DateTime.Now;
+                _context.SaveChanges();
+                return RedirectToAction("TutorialCategory");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+
+        [Route("admin/tutorialCategory/delete/{id?}")]
+        public ActionResult DeleteTutorialCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var tutorialCategory = _context.TutorialCategory.FirstOrDefault(b => b.Id == id);
+            if (tutorialCategory == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && tutorialCategory.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            return View(tutorialCategory);
+        }
+
+        [Route("admin/tutorialCategory/delete/{id?}")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTutorialCategory(int id)
+        {
+            var tutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.Id == id);
+            if (tutorialCategory == null)
+            {
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && tutorialCategory.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            tutorialCategory.Deleted = true;
+            _context.SaveChanges();
+            return RedirectToAction("TutorialCategory");
+        }
+
+        public ActionResult ApproveTutorialCategory(int id, bool approve)
+        {
+            try
+            {
+
+                var tutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.Id == id);
+                if (tutorialCategory == null)
+                {
+                    return HttpNotFound();
+                }
+
+                tutorialCategory.Approved = approve;
+                _context.SaveChanges();
+                return RedirectToAction("TutorialCategory");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {
