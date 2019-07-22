@@ -890,6 +890,12 @@ namespace TestWebAppCoolName.Controllers
         {
             if (ModelState.IsValid)
             {
+                var existingCategory = _context.TutorialCategory.FirstOrDefault(b => b.UrlTitle == tutorialCategory.UrlTitle);
+                if (existingCategory != null)
+                {
+                    ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
+                    return View(tutorialCategory);
+                }
                 tutorialCategory.Created = DateTime.Now;
                 tutorialCategory.Changed = DateTime.Now;
                 _context.TutorialCategory.Add(tutorialCategory);
@@ -901,7 +907,6 @@ namespace TestWebAppCoolName.Controllers
         }
 
 
-        //GET 
         [Route("admin/tutorialCategory/edit/{id?}")]
         public ActionResult EditTutorialCategory(int? id)
         {
@@ -911,17 +916,17 @@ namespace TestWebAppCoolName.Controllers
             }
 
             var tutorialCategory = _context.TutorialCategory.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
-
             if (tutorialCategory == null)
             {
                 return HttpNotFound();
             }
+
             if (User.IsInRole(Roles.Lector) && tutorialCategory.OwnerId != User.Identity.GetUserId())
             {
-                return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return HttpNotFound();
             }
 
-           
+        
             return View(tutorialCategory);
         }
 
@@ -940,12 +945,12 @@ namespace TestWebAppCoolName.Controllers
             bool sameUrlInAnotherTutorialCategory = false;
             if (existingTutorialCategory != null)
             {
-                sameUrlInAnotherTutorialCategory = existingTutorialCategory?.Id != existingTutorialCategory.Id;
+                sameUrlInAnotherTutorialCategory = existingTutorialCategory?.Id != tutorialCategory.Id;
             }
 
             if (sameUrlInAnotherTutorialCategory)
             {
-                ModelState.AddModelError("tutorialCategory.UrlTitle", "Zadany url titulek již existuje");
+                ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
                 
                 return View(tutorialCategory);
             }
@@ -1031,6 +1036,214 @@ namespace TestWebAppCoolName.Controllers
                 throw;
             }
         }
+
+
+
+
+
+        //[Route("admin/blog")]
+        //public ActionResult Blog()
+
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted).ToList();
+        //    if (User.IsInRole(Roles.Lector))
+        //    {
+        //        blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted && b.OwnerId == userId).ToList();
+        //    }
+
+        //    return View(blogs);
+        //}
+
+        //[Route("admin/blog/new")]
+        //public ActionResult NewBlog()
+        //{
+        //    var persons = _context.Persons.ToList();
+        //    var viewModel = new BlogViewModel()
+        //    {
+        //        Persons = persons,
+        //        Blog = new Blog(),
+
+        //    };
+        //    return View(viewModel);
+        //}
+
+        //[Route("admin/blog/new")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult NewBlog(BlogViewModel vm)
+        //{
+
+        //    var tags = TagParser.ParseTags(vm.Tagy, _context); // ParseTags(vm.Tagy);
+        //    var persons = _context.Persons.ToList();
+        //    var viewModel = new BlogViewModel()
+        //    {
+        //        Persons = persons
+        //    };
+        //    if (!ModelState.IsValid)
+        //    {
+        //        viewModel.Blog = vm.Blog;
+        //        viewModel.Blog.Tags = tags;
+        //        return View(viewModel);
+        //    }
+
+        //    var exist = _context.Blogs.FirstOrDefault(b => b.UrlTitle == vm.Blog.UrlTitle);
+        //    if (exist != null)
+        //    {
+        //        ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
+        //        viewModel.Blog = vm.Blog;
+        //        viewModel.Blog.Tags = tags;
+        //        return View(viewModel);
+        //    }
+
+        //    vm.Blog.OwnerId = User.Identity.GetUserId();
+        //    vm.Blog.Created = DateTime.Now;
+        //    vm.Blog.Changed = DateTime.Now;
+        //    vm.Blog.Tags = tags;
+        //    _context.Blogs.Add(vm.Blog);
+        //    _context.SaveChanges();
+        //    ViewData["Saved"] = "Blog byl vyrvořen";
+        //    ModelState.Clear();
+        //    return RedirectToAction("Blog");
+
+        //}
+        //[Route("admin/blog/edit/{id?}")]
+        //public ActionResult EditBlog(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    Blog blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+        //    if (blog == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    var persons = _context.Persons.ToList();
+        //    var viewModel = new BlogViewModel()
+        //    {
+        //        Persons = persons,
+        //        Blog = blog
+
+        //    };
+        //    return View(viewModel);
+        //}
+
+        //// POST: Blog/Edit/5
+        //[Route("admin/blog/edit/{id?}")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditBlog(BlogViewModel vm)
+        //{
+        //    var tags = TagParser.ParseTags(vm.Tagy, _context); //ParseTags(vm.Tagy);
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var persons = _context.Persons.ToList();
+        //        var viewModel = new BlogViewModel()
+        //        {
+        //            Persons = persons,
+        //            Blog = vm.Blog
+
+        //        };
+        //        return View(viewModel);
+        //    }
+
+        //    //muze editovat pouze pokud stejny url title neexistuje u jineho blogu
+        //    var existingBlog = _context.Blogs.FirstOrDefault(b => b.UrlTitle == vm.Blog.UrlTitle);
+        //    bool sameUrlInAnotherBlog = false;
+        //    if (existingBlog != null)
+        //    {
+        //        sameUrlInAnotherBlog = existingBlog.Id != vm.Blog.Id;
+        //    }
+
+        //    if (sameUrlInAnotherBlog)
+        //    {
+        //        ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
+        //        var persons = _context.Persons.ToList();
+        //        var viewModel = new BlogViewModel()
+        //        {
+        //            Persons = persons,
+        //            Blog = vm.Blog
+
+        //        };
+        //        return View(viewModel);
+        //    }
+
+        //    var blo = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == vm.Blog.Id);
+        //    if (blo != null)
+        //    {
+        //        if (User.IsInRole(Roles.Lector) && blo.OwnerId != User.Identity.GetUserId())
+        //        {
+        //            return HttpNotFound();
+        //        }
+
+        //        blo.Tags = null;
+        //        _context.SaveChanges();
+
+
+        //        blo.Name = vm.Blog.Name;
+        //        blo.Description = vm.Blog.Description;
+        //        blo.Body = vm.Blog.Body;
+        //        blo.Author_Id = vm.Blog.Author_Id;
+        //        blo.UrlTitle = vm.Blog.UrlTitle;
+        //        blo.Tags = tags;
+        //        blo.Changed = DateTime.Now;
+        //        _context.SaveChanges();
+        //        return RedirectToAction("Blog");
+        //    }
+        //    else
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //}
+        //[Route("admin/blog/delete/{id?}")]
+        //public ActionResult DeleteBlog(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
+        //    if (blog == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(blog);
+        //}
+
+
+        //// POST: Blog/Delete/5
+        //[Route("admin/blog/delete/{id?}")]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteBlogConfirmed(int id)
+        //{
+        //    var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
+        //    if (blog == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    if (User.IsInRole(Roles.Lector) && blog.OwnerId != User.Identity.GetUserId())
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    //  _context.Blogs.Remove(blog);
+        //    blog.Deleted = true;
+        //    _context.SaveChanges();
+        //    return RedirectToAction("Blog");
+        //}
 
         #endregion
 

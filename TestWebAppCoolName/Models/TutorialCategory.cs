@@ -8,7 +8,7 @@ namespace TestWebAppCoolName.Models
 {
     public class TutorialCategory : BaseModel
     {
-      
+
         [Required(ErrorMessage = "Zadejte název tutoriálu")]
         [Display(Name = "Název")]
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte url")]
         public string UrlTitle { get; set; }
         public List<Tag> Tags { get; set; }
-      
+        public List<Blog> Posts { get; set; }
 
     }
 }
