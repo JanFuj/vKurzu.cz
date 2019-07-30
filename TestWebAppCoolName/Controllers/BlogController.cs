@@ -10,6 +10,7 @@ using System.ServiceModel.Syndication;
 using System.Web;
 using System.Web.Mvc;
 using TestWebAppCoolName.ActionResults;
+using TestWebAppCoolName.DAL;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
@@ -26,10 +27,11 @@ namespace TestWebAppCoolName.Controllers
     public class BlogController : Controller
     {
         private ApplicationDbContext _context;
+        private IBlogRepository _repo;
 
-        public BlogController()
-        {
+        public BlogController() {
             _context = new ApplicationDbContext();
+            _repo = new BlogRepository(_context);
         }
         protected override void Dispose(bool disposing)
         {
@@ -37,6 +39,7 @@ namespace TestWebAppCoolName.Controllers
             {
                 _context.Dispose();
             }
+            _repo.Dispose();
             base.Dispose(disposing);
         }
         [AllowAnonymous]
@@ -69,7 +72,7 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();
             }
             //seznam blogu
-            var blogs = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b => b.Approved).ToList();
+            var blogs = _repo.GetBlogPosts();
             return View(blogs);
         }
 

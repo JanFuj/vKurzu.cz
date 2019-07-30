@@ -12,7 +12,7 @@
 
         <div class="admin-list-header">
             <h1>@Model.Name </h1>
-            @Html.ActionLink("Vytvořit", "NewTutorialPost", "Admin", null, new { @class = "button" })
+            @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new{title = Model.UrlTitle}, new { title = Model.UrlTitle, @class = "button" })
         </div>
 
         <ul class="admin-list" id="sortable">

@@ -863,9 +863,9 @@ namespace TestWebAppCoolName.Controllers
         #endregion
 
 
-        #region Tutorials
-        [Route("admin/tutorialCategory")]
-        public ActionResult TutorialCategory()
+        #region TutorialCategories
+        [Route("admin/tutorialCategories")]
+        public ActionResult TutorialCategories()
         {
             var userId = User.Identity.GetUserId();
             var categories = _context.TutorialCategory.Where(c => !c.Deleted).ToList();
@@ -873,9 +873,9 @@ namespace TestWebAppCoolName.Controllers
             {
                 categories = _context.TutorialCategory.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
             }
-            return View("TutorialCategory",categories.OrderBy(c => c.Position));
+            return View("TutorialCategories", categories.OrderBy(c => c.Position));
         }
-        [Route("admin/tutorialCategory/new")]
+        [Route("admin/tutorialCategories/new")]
         public ActionResult NewTutorialCategory()
         {
             return View();
@@ -883,7 +883,7 @@ namespace TestWebAppCoolName.Controllers
         // POST: Tags/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("admin/tutorialCategory/new")]
+        [Route("admin/tutorialCategories/new")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewTutorialCategory([Bind(Include = "Id,Name,UrlTitle")] TutorialCategory tutorialCategory)
@@ -900,7 +900,7 @@ namespace TestWebAppCoolName.Controllers
                 tutorialCategory.Changed = DateTime.Now;
                 _context.TutorialCategory.Add(tutorialCategory);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("TutorialCategory");
+                return RedirectToAction("TutorialCategories");
             }
 
             return View(tutorialCategory);
@@ -926,7 +926,7 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();
             }
 
-        
+
             return View(tutorialCategory);
         }
 
@@ -951,7 +951,7 @@ namespace TestWebAppCoolName.Controllers
             if (sameUrlInAnotherTutorialCategory)
             {
                 ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
-                
+
                 return View(tutorialCategory);
             }
 
@@ -966,7 +966,7 @@ namespace TestWebAppCoolName.Controllers
                 tutor.UrlTitle = tutorialCategory.UrlTitle;
                 tutor.Changed = DateTime.Now;
                 _context.SaveChanges();
-                return RedirectToAction("TutorialCategory");
+                return RedirectToAction("TutorialCategories");
             }
             else
             {
@@ -1012,7 +1012,7 @@ namespace TestWebAppCoolName.Controllers
 
             tutorialCategory.Deleted = true;
             _context.SaveChanges();
-            return RedirectToAction("TutorialCategory");
+            return RedirectToAction("TutorialCategories");
         }
 
         public ActionResult ApproveTutorialCategory(int id, bool approve)
@@ -1028,7 +1028,7 @@ namespace TestWebAppCoolName.Controllers
 
                 tutorialCategory.Approved = approve;
                 _context.SaveChanges();
-                return RedirectToAction("TutorialCategory");
+                return RedirectToAction("TutorialCategories");
             }
             catch (Exception e)
             {
@@ -1038,7 +1038,13 @@ namespace TestWebAppCoolName.Controllers
         }
 
 
+        #endregion
 
+        #region Tutorials
+       
+
+
+        #endregion
 
 
         //[Route("admin/blog")]
@@ -1245,7 +1251,7 @@ namespace TestWebAppCoolName.Controllers
         //    return RedirectToAction("Blog");
         //}
 
-        #endregion
+
 
 
         protected override void Dispose(bool disposing)

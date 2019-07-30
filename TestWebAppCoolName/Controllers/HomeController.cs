@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using TestWebAppCoolName.DAL;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
@@ -23,11 +24,13 @@ namespace TestWebAppCoolName.Controllers
     {
         private ApplicationDbContext _context;
         private HomeViewModel _viewModel;
+        private BlogRepository _blogRepo;
 
         public HomeController()
         {
             _context = new ApplicationDbContext();
             _viewModel = new HomeViewModel();
+            _blogRepo = new BlogRepository(_context);
 
         }
 
@@ -37,13 +40,14 @@ namespace TestWebAppCoolName.Controllers
             {
                 _context.Dispose();
             }
+            _blogRepo.Dispose();
             base.Dispose(disposing);
         }
         public ActionResult Index()
         {
 
             _viewModel.Courses = _context.Courses.Include(c => c.Svg).Where(c => !c.Deleted).OrderBy(c => c.Position).ToList();
-            _viewModel.Blogs = _context.Blogs.Include(b => b.Author).ToList();
+            _viewModel.Blogs = _blogRepo.GetFirst3BlogPosts();
 
             return View(_viewModel);
         }

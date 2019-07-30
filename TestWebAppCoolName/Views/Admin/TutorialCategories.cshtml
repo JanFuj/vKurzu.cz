@@ -1,5 +1,5 @@
 ﻿@using System.Security.AccessControl
-@model TestWebAppCoolName.Models.TutorialCategory
+@model System.Linq.IOrderedEnumerable<TestWebAppCoolName.Models.TutorialCategory>
 
 @{
     ViewBag.Title = "Admin Tutoriály";
@@ -11,32 +11,32 @@
 
 
         <div class="admin-list-header">
-            <h1>@Model.Name </h1>
-            @Html.ActionLink("Vytvořit", "NewTutorialPost", "Admin", null, new { @class = "button" })
+            <h1>Tutoriály</h1>
+            @Html.ActionLink("Vytvořit", "NewTutorialCategory","Admin", null, new { @class = "button" })
         </div>
 
         <ul class="admin-list" id="sortable">
-            @foreach (var item in Model.Posts.OrderBy(c => c.Position))
+            @foreach (var item in Model)
             {
 
 
                 <li class="admin-list__item" id="@item.Id">
                     <div class="admin-list__cell admin-list__cell--info">
-                        <div class="">@item.Name</div>
+                        <div class="">@Html.ActionLink(item.Name, "TutorialCategory", new { title = item.UrlTitle })</div>
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
-                        @Html.ActionLink("Upravit", "EditTutorialPost", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
+                        @Html.ActionLink("Upravit", "EditTutorialCategory", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
 
-                        @Html.ActionLink("Smazat", "DeleteTutorialPost", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
+                        @Html.ActionLink("Smazat", "DeleteTutorialCategory", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
                         @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
                         {
                             if (item.Approved)
                             {
-                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialPost", "Admin", new { id = item.Id, approve = false }, new { @class = "link--gradient" })
+                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialCategory", "Admin", new { id = item.Id, approve = false }, new { @class = "link--gradient" })
                             }
                             else
                             {
-                                @Html.ActionLink("Publikovat", "ApproveTutorialPost", "Admin", new { id = item.Id, approve = true }, new { @class = "link--gradient" })
+                                @Html.ActionLink("Publikovat", "ApproveTutorialCategory", "Admin", new { id = item.Id, approve = true }, new { @class = "link--gradient" })
                             }
                         }
                     </div>
@@ -91,5 +91,4 @@
     </script>
 
 }
-
 

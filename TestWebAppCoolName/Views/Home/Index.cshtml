@@ -64,7 +64,7 @@
             </div>
             <div class="article-previews">
                 @{
-                    foreach (var blog in Model.Blogs.Where(b => b.Approved))
+                    foreach (var blog in Model.Blogs)
                     {
                         <article class="article-preview">
                             <div class="article-preview__author">@blog.Author.Name</div>

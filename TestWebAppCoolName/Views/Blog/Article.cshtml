@@ -1,6 +1,8 @@
 ﻿@using TestWebAppCoolName.Helpers
 @model TestWebAppCoolName.Controllers.BlogViewModel
-
+@{
+    ViewBag.Title = Model.Blog.Name;
+}
 <body class="body body-article">
     <header class="header header--article" id="site-header">
         @Html.Partial("toolbarPartialView")
@@ -72,7 +74,7 @@
             <div class="related-articles__grid">
                 @{
                     var articles = new DataService().GetRelatedArticles(Model.Blog);
-                    foreach (var article in articles.Where(a=>!a.Deleted))
+                    foreach (var article in articles.Where(a => !a.Deleted))
                     {
                         <article class="article-preview">
                             <div class="article-preview__author">@article.Author.FullName</div>
@@ -104,14 +106,14 @@
                 theme: 'snow'
             });
 
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
             quill.setContents(@Html.Raw(Model.Blog.Body))
-     
+
             quill.enable(false);
-        });
-       //.css( "background-color", "red" ); moving related course 
-        //let firstParagraph = $('.ql-editor').children().first(); 
+       // });
+       //.css( "background-color", "red" ); moving related course
+        //let firstParagraph = $('.ql-editor').children().first();
         //let relatedCourse = $('.related-course');
 
         //relatedCourse.appendTo(firstParagraph);
