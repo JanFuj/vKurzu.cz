@@ -33,14 +33,14 @@ namespace TestWebAppCoolName.Controllers.Admin
         public ActionResult Index(string title)
         {
             //  var userId = User.Identity.GetUserId();
-            var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
-                .FirstOrDefault(x => x.UrlTitle == title);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
+            //var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
+            //    .FirstOrDefault(x => x.UrlTitle == title);
+            //if (category == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
-            return View(category);
+            return View();
         }
 
         // GET: TutorialCategory/Details/5
@@ -81,13 +81,13 @@ namespace TestWebAppCoolName.Controllers.Admin
         public ActionResult Details(string title, int id)
         {
 
-            var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
-                .FirstOrDefault(x => x.UrlTitle == title);
-            var post = category?.Posts.FirstOrDefault(x => x.Id == id);
-            if (category == null || post == null)
-            {
-                return HttpNotFound();
-            }
+            //var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
+            //    .FirstOrDefault(x => x.UrlTitle == title);
+            //var post = category?.Posts.FirstOrDefault(x => x.Id == id);
+            //if (category == null || post == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
 
             return View();

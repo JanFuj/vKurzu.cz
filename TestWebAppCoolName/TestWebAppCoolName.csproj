@@ -393,6 +393,14 @@
     <Compile Include="Migrations\201907230449234_PositionInBlogTable.Designer.cs">
       <DependentUpon>201907230449234_PositionInBlogTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908010928076_RemoveBlogFromTutorialCategory.cs" />
+    <Compile Include="Migrations\201908010928076_RemoveBlogFromTutorialCategory.Designer.cs">
+      <DependentUpon>201908010928076_RemoveBlogFromTutorialCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908010928581_TutorialPostsTable.cs" />
+    <Compile Include="Migrations\201908010928581_TutorialPostsTable.Designer.cs">
+      <DependentUpon>201908010928581_TutorialPostsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -410,6 +418,7 @@
     <Compile Include="Models\Svg.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TutorialCategory.cs" />
+    <Compile Include="Models\TutorialPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\BlogRepository.cs" />
     <Compile Include="DAL\IBlogRepository.cs" />
@@ -780,6 +789,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907230449234_PositionInBlogTable.resx">
       <DependentUpon>201907230449234_PositionInBlogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908010928076_RemoveBlogFromTutorialCategory.resx">
+      <DependentUpon>201908010928076_RemoveBlogFromTutorialCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908010928581_TutorialPostsTable.resx">
+      <DependentUpon>201908010928581_TutorialPostsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

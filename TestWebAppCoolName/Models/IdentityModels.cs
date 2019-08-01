@@ -28,6 +28,7 @@ namespace TestWebAppCoolName.Models
         public DbSet<Svg> Svgs { get; set; }
         public DbSet<AdminNote> AdminNotes { get; set; }
         public DbSet<TutorialCategory> TutorialCategory { get; set; }
+        public DbSet<TutorialPost> TutorialPosts { get; set; }
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
             // Database.SetInitializer(new AppInitializer());

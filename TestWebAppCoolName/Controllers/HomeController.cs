@@ -18,6 +18,7 @@ namespace TestWebAppCoolName.Controllers
         public List<Course> Courses { get; set; }
         public List<Blog> Blogs { get; set; }
         public HomeContactForm FormModel { get; set; } = new HomeContactForm();
+        public bool ShowAlert { get; set; } = false;
     }
     [AllowAnonymous]
     public class HomeController : Controller
@@ -48,7 +49,7 @@ namespace TestWebAppCoolName.Controllers
 
             _viewModel.Courses = _context.Courses.Include(c => c.Svg).Where(c => !c.Deleted).OrderBy(c => c.Position).ToList();
             _viewModel.Blogs = _blogRepo.GetFirst3BlogPosts();
-
+            _viewModel.ShowAlert = !string.IsNullOrEmpty(TempData["EmailSent"]?.ToString());
             return View(_viewModel);
         }
 
@@ -80,7 +81,7 @@ namespace TestWebAppCoolName.Controllers
             }
             else
             {
-                TempData["EmailSent"] = true;
+                TempData["EmailSent"] = "sent";
             }
             // zabrani opetovnemu odeslani formulare a presune na /kurz/{urlTitle},
             // jinak by zustal na /Course/SendEmail a po refreshi by znovu odeslal mail

@@ -151,7 +151,7 @@
 
 
     </main>
-   
+
 
 </body>
 
@@ -159,10 +159,10 @@
 
     <script type="text/javascript">
 
-
         @{
-            if (TempData["EmailSent"] != null){
-              @: Swal.fire('Děkujeme','Brzy Vám odpovíme','success');
+            if (Model.ShowAlert){
+              @: Swal.fire('Děkujeme', 'Brzy Vám odpovíme', 'success');
+              Model.ShowAlert = false;
             }
          }
 

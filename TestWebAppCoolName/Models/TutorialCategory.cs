@@ -16,7 +16,7 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte url")]
         public string UrlTitle { get; set; }
         public List<Tag> Tags { get; set; }
-        public List<Blog> Posts { get; set; }
+        public List<TutorialPost> Posts { get; set; }
 
     }
 }
