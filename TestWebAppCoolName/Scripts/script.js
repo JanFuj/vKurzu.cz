@@ -9,7 +9,7 @@ var toolbarOptions = [
     [{ 'direction': 'rtl' }],
     [{ 'size': ['small', false, 'large', 'huge'] }],
     ['link', 'image', 'video', 'formula'],
-    [{ 'color': [] }, { 'background': [] }],
+    [ { 'background': [] }],
     [{ 'font': [] }],
     [{ 'align': [] }]
 ];

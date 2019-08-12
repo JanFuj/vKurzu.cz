@@ -868,7 +868,7 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult TutorialCategories()
         {
             var userId = User.Identity.GetUserId();
-            var categories = _context.TutorialCategory.Where(c => !c.Deleted).ToList();
+            var categories = _context.TutorialCategory.Where(c=>!c.Deleted).ToList();
             if (User.IsInRole(Roles.Lector))
             {
                 categories = _context.TutorialCategory.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
@@ -898,6 +898,7 @@ namespace TestWebAppCoolName.Controllers
                 }
                 tutorialCategory.Created = DateTime.Now;
                 tutorialCategory.Changed = DateTime.Now;
+                tutorialCategory.OwnerId = User.Identity.GetUserId();
                 _context.TutorialCategory.Add(tutorialCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("TutorialCategories");
@@ -996,7 +997,7 @@ namespace TestWebAppCoolName.Controllers
         }
 
         [Route("admin/tutorialCategory/delete/{id?}")]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteTutorialCategory(int id)
         {
@@ -1009,8 +1010,8 @@ namespace TestWebAppCoolName.Controllers
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-
             tutorialCategory.Deleted = true;
+            tutorialCategory.Changed = DateTime.Now;
             _context.SaveChanges();
             return RedirectToAction("TutorialCategories");
         }

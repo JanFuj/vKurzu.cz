@@ -1,5 +1,5 @@
 ﻿@using TestWebAppCoolName.Helpers
-@model TestWebAppCoolName.Controllers.BlogViewModel
+@model TestWebAppCoolName.Controllers.Admin.TutorialCategoryViewModel
 
 @{
     ViewBag.Title = "New tutorial Post";
@@ -11,18 +11,18 @@
             @Html.AntiForgeryToken()
             <p class="admin-form__title">
                 <h1 class="main-heading courses__heading">Vytvořit nový článek</h1>
-                @Html.TextAreaFor(m => m.Blog.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
-                @Html.ValidationMessageFor(m => m.Blog.Name)
+                @Html.TextAreaFor(m => m.TutorialPost.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
+                @Html.ValidationMessageFor(m => m.TutorialPost.Name)
             </p>
 
             <p class="admin-form__desc">
-                @Html.TextAreaFor(m => m.Blog.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
-                @Html.ValidationMessageFor(m => m.Blog.Description)
+                @Html.TextAreaFor(m => m.TutorialPost.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
+                @Html.ValidationMessageFor(m => m.TutorialPost.Description)
             </p>
 
             <p>
-                @Html.HiddenFor(m => m.Blog.Body)
-                @Html.ValidationMessageFor(m => m.Blog.Body)
+                @Html.HiddenFor(m => m.TutorialPost.Body)
+                @Html.ValidationMessageFor(m => m.TutorialPost.Body)
                 <div class="quill-wrapper">
                     <div id="toolbar"></div>
                     <div id="editor"></div>
@@ -30,21 +30,21 @@
             </p>
 
             <p>
-                @Html.LabelFor(m => m.Blog.Author_Id)
-                @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.Blog.Author_Id)
+                @Html.LabelFor(m => m.TutorialPost.Author_Id)
+                @Html.DropDownListFor(m => m.TutorialPost.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.TutorialPost.Author_Id)
             </p>
             <p>
-                @Html.LabelFor(m => m.Blog.UrlTitle)
-                @Html.TextBoxFor(m => m.Blog.UrlTitle)
-                @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
+                @Html.LabelFor(m => m.TutorialPost.UrlTitle)
+                @Html.TextBoxFor(m => m.TutorialPost.UrlTitle)
+                @Html.ValidationMessageFor(m => m.TutorialPost.UrlTitle)
             </p>
             <div>
                 <div class="subject-info-box-1">
                     <select multiple="multiple" id='lstBox1' class="form-control">
-                        @if (Model.Blog?.Tags != null)
+                        @if (Model.TutorialPost?.Tags != null)
                         {
-                            foreach (var tag in Model.Blog.Tags)
+                            foreach (var tag in Model.TutorialPost.Tags)
                             {
                                 <option value="@tag.Name">@tag.Name</option>
                             }
@@ -64,9 +64,9 @@
                         @foreach (var tag in new DataService().GetTags())
                         {
                             bool exist = false;
-                            if (Model.Blog?.Tags != null)
+                            if (Model.TutorialPost?.Tags != null)
                             {
-                                exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                                exist = (Model.TutorialPost.Tags).Any(t => t.Id == tag.Id);
                             }
                             if (!exist)
                             {
@@ -122,7 +122,7 @@
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit
-            var description = document.querySelector('input[id=Blog_Body]');
+            var description = document.querySelector('input[id=TutorialPost_Body]');
             description.value = JSON.stringify(quill.getContents());
             console.log("Submitted", $(form).serialize(), $(form).serializeArray());
 

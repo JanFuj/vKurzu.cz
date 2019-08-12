@@ -1,5 +1,5 @@
 ﻿@using System.Security.AccessControl
-@model TestWebAppCoolName.Models.TutorialCategory
+@model TestWebAppCoolName.Controllers.Admin.TutorialCategoryViewModel
 
 @{
     ViewBag.Title = "Admin Tutoriály";
@@ -11,12 +11,12 @@
 
 
         <div class="admin-list-header">
-            <h1>@Model.Name </h1>
-            @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new{title = Model.UrlTitle}, new { title = Model.UrlTitle, @class = "button" })
+            <h1>@Model.TutorialCategory.Name </h1>
+            @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new{title = Model.TutorialCategory.UrlTitle}, new { title = Model.TutorialCategory.UrlTitle, @class = "button" })
         </div>
 
         <ul class="admin-list" id="sortable">
-            @foreach (var item in Model.Posts.OrderBy(c => c.Position))
+            @foreach (var item in Model.TutorialPosts)
             {
 
 

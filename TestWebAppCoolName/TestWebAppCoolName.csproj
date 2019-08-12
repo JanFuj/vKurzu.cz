@@ -196,6 +196,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TutorialsController.cs" />
+    <Compile Include="DAL\ITutorialCategoryPostsRepository.cs" />
+    <Compile Include="DAL\TutorialCategoryPostsRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

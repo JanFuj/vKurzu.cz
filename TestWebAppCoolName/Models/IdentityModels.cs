@@ -38,5 +38,9 @@ namespace TestWebAppCoolName.Models
         {
             return new ApplicationDbContext();
         }
+
+      
+
+      
     }
 }

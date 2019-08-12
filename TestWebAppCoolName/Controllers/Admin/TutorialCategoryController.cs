@@ -6,56 +6,77 @@ using System.Web.Mvc;
 using TestWebAppCoolName.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+using TestWebAppCoolName.DAL;
 
 namespace TestWebAppCoolName.Controllers.Admin
 {
+    public class TutorialCategoryViewModel
+    {
+        public TutorialCategory TutorialCategory { get; set; }
+        public List<TutorialPost> TutorialPosts { get; set; }
+        public List<Person> Persons { get; set; }
+        public TutorialPost TutorialPost { get; set; }
+        public string Tagy { get; set; }
+    }
+
+
+    //Detail kategorie - seznam clanku tvorba novych
     [Authorize]
     public class TutorialCategoryController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ITutorialCategoryPostsRepository _repo;
 
         public TutorialCategoryController()
         {
-            _context = new ApplicationDbContext();
+            _repo = new TutorialCategoryPostsRepository(new ApplicationDbContext());
+
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
 
         // GET: TutorialCategory
         [HttpGet]
         [Route("admin/tutorialCategory/{title?}")]
         public ActionResult Index(string title)
         {
+            var viewModel = new TutorialCategoryViewModel();
             //  var userId = User.Identity.GetUserId();
-            //var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
-            //    .FirstOrDefault(x => x.UrlTitle == title);
-            //if (category == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            var category = _repo.GetTutorialCategory(title);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
 
-            return View();
+            List<TutorialPost> posts;
+            if (User.IsInRole(Roles.Lector))
+            {
+                posts = _repo.GetPostsByOwner(category.UrlTitle, User.Identity.GetUserId());
+            }
+            else
+            {
+                posts = _repo.GetPosts(category.UrlTitle);
+            }
+
+            viewModel.TutorialCategory = category;
+            viewModel.TutorialPosts = posts;
+            viewModel.Persons = _repo.GetPeople();
+
+            return View(viewModel);
         }
 
         // GET: TutorialCategory/Details/5
-       
+
 
         // GET: TutorialCategory/Create
         [HttpGet]
         [Route("admin/tutorialCategory/{title?}/new")]
         public ActionResult NewPost()
         {
-            var persons = _context.Persons.ToList();
-            var viewModel = new BlogViewModel()
+            // var persons = _context.Persons.ToList();
+            var viewModel = new TutorialCategoryViewModel()
             {
-                Persons = persons,
-                Blog = new Blog(),
+                Persons = _repo.GetPeople(),
+                TutorialPost = new TutorialPost(),
 
             };
             return View("NewPost", viewModel);

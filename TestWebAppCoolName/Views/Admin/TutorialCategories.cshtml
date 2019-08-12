@@ -22,7 +22,7 @@
 
                 <li class="admin-list__item" id="@item.Id">
                     <div class="admin-list__cell admin-list__cell--info">
-                        <div class="">@Html.ActionLink(item.Name, "TutorialCategory", new { title = item.UrlTitle })</div>
+                        <div class="">@Html.ActionLink(item.Name, "Index","TutorialCategory", new {title = item.UrlTitle},null)</div>
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
                         @Html.ActionLink("Upravit", "EditTutorialCategory", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
@@ -77,7 +77,7 @@
                             success: function (data) {
                                 console.log("position changed");
                             },
-                            error: function (e) {
+                            error: functin (e) {
                                 //do something
                             }
                         });

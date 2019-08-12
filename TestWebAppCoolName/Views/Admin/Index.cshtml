@@ -193,7 +193,7 @@
         $(document).ready(function () {
             console.log("loading content ")
 
-            quill.setContents(@Html.Raw(Model.Note))
+            quill.setContents(@Html.Raw(Model?.Note))
         });
 
 
