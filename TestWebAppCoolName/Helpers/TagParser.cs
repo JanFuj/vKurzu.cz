@@ -15,7 +15,7 @@ namespace TestWebAppCoolName.Helpers
             {
                 return listTags;
             }
-            var tags = tagy.Split('#');
+            var tags = tagy.Split('&');
             foreach (var tag in tags)
             {
                 if (!string.IsNullOrEmpty(tag))

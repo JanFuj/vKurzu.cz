@@ -25,7 +25,7 @@
                         <div class="">@item.Name</div>
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
-                        @Html.ActionLink("Upravit", "EditTutorialPost", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
+                        @Html.ActionLink("Upravit", "Edit", "TutorialCategory", new { id = item.Id,title= Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
 
                         @Html.ActionLink("Smazat", "DeleteTutorialPost", "Admin", new { id = item.Id }, new { @class = "link--gradient" })
                         @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))

@@ -6,8 +6,10 @@ using System.Web.Mvc;
 using TestWebAppCoolName.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Net;
 using Microsoft.AspNet.Identity;
 using TestWebAppCoolName.DAL;
+using TestWebAppCoolName.Helpers;
 
 namespace TestWebAppCoolName.Controllers.Admin
 {
@@ -33,14 +35,13 @@ namespace TestWebAppCoolName.Controllers.Admin
 
         }
 
-
+        //show posts in category
         // GET: TutorialCategory
         [HttpGet]
         [Route("admin/tutorialCategory/{title?}")]
         public ActionResult Index(string title)
         {
             var viewModel = new TutorialCategoryViewModel();
-            //  var userId = User.Identity.GetUserId();
             var category = _repo.GetTutorialCategory(title);
             if (category == null)
             {
@@ -67,7 +68,7 @@ namespace TestWebAppCoolName.Controllers.Admin
         // GET: TutorialCategory/Details/5
 
 
-        // GET: TutorialCategory/Create
+        // GET: new post in category
         [HttpGet]
         [Route("admin/tutorialCategory/{title?}/new")]
         public ActionResult NewPost()
@@ -75,6 +76,7 @@ namespace TestWebAppCoolName.Controllers.Admin
             // var persons = _context.Persons.ToList();
             var viewModel = new TutorialCategoryViewModel()
             {
+
                 Persons = _repo.GetPeople(),
                 TutorialPost = new TutorialPost(),
 
@@ -82,22 +84,43 @@ namespace TestWebAppCoolName.Controllers.Admin
             return View("NewPost", viewModel);
         }
 
-        // POST: TutorialCategory/Create
+        // POST: new post in category
         [HttpPost]
         [Route("admin/tutorialCategory/{title?}/new")]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(TutorialCategoryViewModel vm, string title)
         {
-            try
-            {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            var tags = _repo.ParseTags(vm.Tagy);// TagParser.ParseTags(vm.Tagy, _context); // ParseTags(vm.Tagy);
+            var persons = _repo.GetPeople();
+            var viewModel = new TutorialCategoryViewModel()
             {
-                return View();
+                Persons = persons
+            };
+            if (!ModelState.IsValid)
+            {
+                viewModel.TutorialPost = vm.TutorialPost;
+                viewModel.TutorialPost.Tags = tags;
+                return View("NewPost", viewModel);
             }
+
+            var exist = _repo.GetPostByUrl(title, vm.TutorialPost.UrlTitle);
+            if (exist != null)
+            {
+                ModelState.AddModelError("tutorialPost.UrlTitle", "Zadany url titulek již existuje");
+                viewModel.TutorialPost = vm.TutorialPost;
+                viewModel.TutorialPost.Tags = tags;
+                return View("NewPost", viewModel);
+            }
+            vm.TutorialPost.OwnerId = User.Identity.GetUserId();
+            vm.TutorialPost.Created = DateTime.Now;
+            vm.TutorialPost.Changed = DateTime.Now;
+            vm.TutorialPost.Tags = tags;
+            _repo.AddPostInCategory(title, vm.TutorialPost);
+            _repo.Save();
+            return RedirectToAction("Index", new { title = title });
+
         }
+
         [Route("admin/tutorialCategory/{title}/detail/{id}")]
         public ActionResult Details(string title, int id)
         {
@@ -113,26 +136,99 @@ namespace TestWebAppCoolName.Controllers.Admin
 
             return View();
         }
+
         // GET: TutorialCategory/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        [Route("admin/tutorialCategory/{title}/edit/{id}")]
+        public ActionResult Edit(string title, int id)
         {
-            return View();
+            if (title == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var category = _repo.GetTutorialCategory(title);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            var post = category.Posts.FirstOrDefault(x => x.Id == id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new TutorialCategoryViewModel()
+            {
+
+                Persons = _repo.GetPeople(),
+                TutorialPost = post,
+
+            };
+
+            return View("EditPost", viewModel);
         }
 
         // POST: TutorialCategory/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [Route("admin/tutorialCategory/{title}/edit/{id}")]
+        public ActionResult Edit(TutorialCategoryViewModel vm, string title)
         {
+            var tags = _repo.ParseTags(vm.Tagy);
+            var persons = _repo.GetPeople();
+            var viewModel = new TutorialCategoryViewModel();
+            viewModel.Persons = persons;
+            viewModel.TutorialPost = vm.TutorialPost;
+            viewModel.TutorialPost.Tags = tags;
+            if (!ModelState.IsValid)
+            {
+                return View("EditPost", viewModel);
+            }
+            //muze editovat pouze pokud stejny url title neexistuje u jineho clanku
+            var existingPost = _repo.GetPostByUrl(title, vm.TutorialPost.UrlTitle);
+            bool sameUrlInAnotherPost = false;
+            if (existingPost != null)
+            {
+                sameUrlInAnotherPost = existingPost.Id != vm.TutorialPost.Id;
+            }
+
+            if (sameUrlInAnotherPost)
+            {
+                ModelState.AddModelError("tutorialPost.UrlTitle", "Zadany url titulek již existuje");
+                return View("EditPost", viewModel);
+            }
+
             try
             {
-                // TODO: Add update logic here
+                var postFromDb = _repo.GetPostById(title, vm.TutorialPost.Id);
+                if (postFromDb != null)
+                {
+                    if (User.IsInRole(Roles.Lector) && postFromDb.OwnerId != User.Identity.GetUserId())
+                    {
+                        return HttpNotFound();
+                    }
 
-                return RedirectToAction("Index");
+                    postFromDb.Tags = null;
+                    _repo.Save();
+                    postFromDb.Name = vm.TutorialPost.Name;
+                    postFromDb.Description = vm.TutorialPost.Description;
+                    postFromDb.Body = vm.TutorialPost.Body;
+                    postFromDb.Author_Id = vm.TutorialPost.Author_Id;
+                    postFromDb.UrlTitle = vm.TutorialPost.UrlTitle;
+                    postFromDb.Tags = tags;
+                    postFromDb.Changed = DateTime.Now;
+                    _repo.Save();
+                    return RedirectToAction("Index", new { title = title });
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return HttpNotFound();
             }
+
         }
 
         // GET: TutorialCategory/Delete/5

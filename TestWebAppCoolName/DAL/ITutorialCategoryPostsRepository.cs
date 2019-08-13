@@ -11,12 +11,15 @@ namespace TestWebAppCoolName.DAL
         TutorialCategory GetTutorialCategory(string title);
         List<TutorialPost> GetPosts(string tutorialCategoryTitle);
         List<TutorialPost> GetPostsByOwner(string tutorialCategoryTitle, string ownerId);
-        TutorialPost GetPostById(int postId);
+        TutorialPost GetPostById(string categoryTitle ,int postId);
         void NewTutorialPost(TutorialPost tutorialPost);
         void DeleteTutorialPost(int postId);
         void UpdateTutorialPost(TutorialPost tutorialPost);
         void Save();
         void Dispose();
         List<Person> GetPeople();
+        TutorialPost GetPostByUrl(string tutorialCategoryUrl, string tutorialPostUrlTitle);
+        void AddPostInCategory(string title, TutorialPost vmTutorialPost);
+        List<Tag> ParseTags(string vmTagy);
     }
 }

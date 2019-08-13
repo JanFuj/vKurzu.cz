@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName.DAL
@@ -35,10 +36,12 @@ namespace TestWebAppCoolName.DAL
             return category?.Posts.Where(x => !x.Deleted && x.OwnerId == ownerId).OrderBy(c => c.Position).ToList();
         }
 
-        public TutorialPost GetPostById(int postId)
+        public TutorialPost GetPostById(string categoryTitle, int postId)
         {
-            throw new NotImplementedException();
+            var category = GetTutorialCategory(categoryTitle);
+            return category.Posts.FirstOrDefault(x => x.Id == postId);
         }
+
 
         public TutorialPost GetBlogPostById(int postId)
         {
@@ -57,12 +60,12 @@ namespace TestWebAppCoolName.DAL
 
         public void UpdateTutorialPost(TutorialPost tutorialPost)
         {
-            throw new NotImplementedException();
+
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
 
@@ -75,6 +78,24 @@ namespace TestWebAppCoolName.DAL
         public List<Person> GetPeople()
         {
             return _context.Persons.ToList();
+        }
+
+        public TutorialPost GetPostByUrl(string tutorialCategoryUrl, string tutorialPostUrlTitle)
+        {
+            var category = GetTutorialCategory(tutorialCategoryUrl);
+            return category?.Posts.FirstOrDefault(x => x.UrlTitle == tutorialPostUrlTitle);
+        }
+
+        public void AddPostInCategory(string title, TutorialPost vmTutorialPost)
+        {
+            var category = GetTutorialCategory(title);
+            category.Posts.Add(vmTutorialPost);
+
+        }
+
+        public List<Tag> ParseTags(string vmTagy)
+        {
+            return TagParser.ParseTags(vmTagy, _context);
         }
 
         protected virtual void Dispose(bool disposing)

@@ -2,24 +2,27 @@
 @model TestWebAppCoolName.Controllers.Admin.TutorialCategoryViewModel
 
 @{
-    ViewBag.Title = "New tutorial Post";
+    ViewBag.Title = "Edit tutorial post";
 }
-<body class="body--admin">
-    <main class="main main--admin-form">
-        @using (Html.BeginForm("Create", "TutorialCategory", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
+
+<main class="main">
+    <section class="courses">
+
+        @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
         {
             @Html.AntiForgeryToken()
-            <p class="admin-form__title">
-                <h1 class="main-heading courses__heading">Vytvořit nový článek</h1>
+            <p>
+                <h1 class="main-heading courses__heading">Upravit blog</h1>
+
                 @Html.TextAreaFor(m => m.TutorialPost.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.TutorialPost.Name)
             </p>
 
-            <p class="admin-form__desc">
+            <p>
+
                 @Html.TextAreaFor(m => m.TutorialPost.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.TutorialPost.Description)
             </p>
-
             <p>
                 @Html.HiddenFor(m => m.TutorialPost.Body)
                 @Html.ValidationMessageFor(m => m.TutorialPost.Body)
@@ -28,7 +31,6 @@
                     <div id="editor"></div>
                 </div>
             </p>
-
             <p>
                 @Html.LabelFor(m => m.TutorialPost.Author_Id)
                 @Html.DropDownListFor(m => m.TutorialPost.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
@@ -40,6 +42,7 @@
                 @Html.ValidationMessageFor(m => m.TutorialPost.UrlTitle)
             </p>
             <div>
+
                 <div class="subject-info-box-1">
                     <select multiple="multiple" id='lstBox1' class="form-control">
                         @if (Model.TutorialPost?.Tags != null)
@@ -77,13 +80,16 @@
                 </div>
                 <p id="tags-output">
                     <label>tagy</label>
+
                     @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
 
                 </p>
+
             </div>
 
             <p>
-                <button type="submit" id="save">Vytvořit</button>
+                @Html.HiddenFor(m => m.TutorialPost.Id)
+                <button type="submit" id="save">Uložit</button>
                 <div id="pageloader" style="display: none;">
                     <img src="/media/30.svg" alt="processing..." />
                 </div>
@@ -95,17 +101,15 @@
             }
         }
 
-    </main>
-</body>
+    </section>
+</main>
+
 
 @section scripts {
-    <!-- Theme included stylesheets -->
-
-
-
 
 
     <script type="text/javascript">
+
 
         let quill = new Quill('#editor',
             {
@@ -116,17 +120,22 @@
                 theme: 'snow'
             });
 
+        $(document).ready(function () {
+            console.log()
 
+            quill.setContents(@Html.Raw(Model.TutorialPost.Body))
+
+        });
 
         var form = document.querySelector('form');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit
-            var description = document.querySelector('input[id=TutorialPost_Body]');
-            description.value = JSON.stringify(quill.getContents());
+            var body = document.querySelector('input[id=Blog_Body]');
+            body.value = JSON.stringify(quill.getContents());
             console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-
         };
+
     </script>
 
 }

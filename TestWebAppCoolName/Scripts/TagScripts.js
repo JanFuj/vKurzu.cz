@@ -39,7 +39,7 @@ $(document).ready(function () {
         $('#tags').val("")
         let tags = "";
         $("#lstBox1 > option").each(function () {
-            tags = tags + ("#" + $(this).val() + " ")
+            tags = tags + ("&" + $(this).val() + " ")
             $('#tags').val(tags)
             $('#tags').change()
             console.log($(this).val())
