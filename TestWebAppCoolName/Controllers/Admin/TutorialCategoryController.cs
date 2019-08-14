@@ -236,27 +236,54 @@ namespace TestWebAppCoolName.Controllers.Admin
             }
 
         }
-
-        // GET: TutorialCategory/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        [Route("admin/tutorialCategory/{title}/delete/{id}")]
+        public ActionResult Delete(string title, int id)
         {
-            return View();
+            if (title == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var category = _repo.GetTutorialCategory(title);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            var post = _repo.GetPostById(title, id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new TutorialCategoryViewModel()
+            {
+
+                Persons = _repo.GetPeople(),
+                TutorialPost = post,
+                TutorialCategory = category,
+
+            };
+            return View("DeletePost", viewModel);
         }
 
-        // POST: TutorialCategory/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [Route("admin/tutorialCategory/{title}/delete/{id}")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmDelete(string title,int id)
         {
-            try
+            var post = _repo.GetPostById(title, id);
+            if (post == null)
             {
-                // TODO: Add delete logic here
+                return HttpNotFound();
+            }
+            if (User.IsInRole(Roles.Lector) && post.OwnerId != User.Identity.GetUserId())
+            {
+                return HttpNotFound();
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            post.Deleted = true;
+            _repo.Save();
+            return RedirectToAction("Index");
         }
     }
 }

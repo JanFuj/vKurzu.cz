@@ -1,0 +1,21 @@
+﻿@model TestWebAppCoolName.Controllers.Admin.TutorialCategoryViewModel
+
+@{
+    ViewBag.Title = "Smazat Post";
+}
+<body>
+    <main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
+
+        <h1 class="" style="margin-bottom: 0;">Smazat post?</h1>
+        <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.TutorialPost.Name</h2>
+
+        @using (Html.BeginForm( "Delete","TutorialCategory"))
+        {
+            @Html.AntiForgeryToken()
+
+            <button class="button">Nenávratně smazat</button>
+        }
+        @Html.ActionLink("Ponechat", "Index", "TutorialCategory",  new { @class = "link--gradient link--border" })
+
+    </main>
+</body>
