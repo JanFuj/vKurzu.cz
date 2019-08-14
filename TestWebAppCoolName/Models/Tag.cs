@@ -14,5 +14,6 @@ namespace TestWebAppCoolName.Models
         public string Name { get; set; }
       public List<Blog> Blogs { get; set; }
         public List<Course> Courses { get; set; }
+        public List<TutorialPost> TutorialPosts { get; set; }
     }
 }

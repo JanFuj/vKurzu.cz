@@ -403,6 +403,10 @@
     <Compile Include="Migrations\201908010928581_TutorialPostsTable.Designer.cs">
       <DependentUpon>201908010928581_TutorialPostsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908140644219_TutorialPostTag.cs" />
+    <Compile Include="Migrations\201908140644219_TutorialPostTag.Designer.cs">
+      <DependentUpon>201908140644219_TutorialPostTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -798,6 +802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908010928581_TutorialPostsTable.resx">
       <DependentUpon>201908010928581_TutorialPostsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908140644219_TutorialPostTag.resx">
+      <DependentUpon>201908140644219_TutorialPostTag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

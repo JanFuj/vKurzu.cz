@@ -152,7 +152,7 @@ namespace TestWebAppCoolName.Controllers.Admin
                 return HttpNotFound();
             }
 
-            var post = category.Posts.FirstOrDefault(x => x.Id == id);
+            var post = _repo.GetPostById(title, id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -173,6 +173,12 @@ namespace TestWebAppCoolName.Controllers.Admin
         [Route("admin/tutorialCategory/{title}/edit/{id}")]
         public ActionResult Edit(TutorialCategoryViewModel vm, string title)
         {
+            var category = _repo.GetTutorialCategory(title);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
             var tags = _repo.ParseTags(vm.Tagy);
             var persons = _repo.GetPeople();
             var viewModel = new TutorialCategoryViewModel();
