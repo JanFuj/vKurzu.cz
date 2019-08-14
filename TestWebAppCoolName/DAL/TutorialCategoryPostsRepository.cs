@@ -22,7 +22,7 @@ namespace TestWebAppCoolName.DAL
 
         public TutorialCategory GetTutorialCategory(string title)
         {
-            return _context.TutorialCategory.Include(x => x.Posts.Select(y=>y.Tags)).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
+            return _context.TutorialCategory.Include(x => x.Posts.Select(y => y.Tags)).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
         }
 
         public List<TutorialPost> GetPosts(string tutorialCategoryTitle)
@@ -110,6 +110,11 @@ namespace TestWebAppCoolName.DAL
                 }
             }
             this.disposed = true;
+        }
+
+        public Person GetAuthorById(int id)
+        {
+            return _context.Persons.FirstOrDefault(x => x.Id == id);
         }
     }
 }

@@ -12,6 +12,7 @@
 
         <div class="admin-list-header">
             <h1>@Model.TutorialCategory.Name </h1>
+
             @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new{title = Model.TutorialCategory.UrlTitle}, new { title = Model.TutorialCategory.UrlTitle, @class = "button" })
         </div>
 
@@ -26,17 +27,17 @@
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
                         @Html.ActionLink("Upravit", "Edit", "TutorialCategory", new { id = item.Id,title= Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
-
+                        @Html.ActionLink("Náhled", "TutorialPost", "Tutorials", new { categoryTitle = Model.TutorialCategory.UrlTitle, postTitle = item.UrlTitle, preview = true }, new { @class = "link--gradient" })
                         @Html.ActionLink("Smazat", "Delete", "TutorialCategory", new { id = item.Id, title = Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
                         @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
                         {
                             if (item.Approved)
                             {
-                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialPost", "Admin", new { id = item.Id, approve = false }, new { @class = "link--gradient" })
+                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialPost", "TutorialCategory", new { id = item.Id, approve = false ,title = Model.TutorialCategory.UrlTitle}, new { @class = "link--gradient" })
                             }
                             else
                             {
-                                @Html.ActionLink("Publikovat", "ApproveTutorialPost", "Admin", new { id = item.Id, approve = true }, new { @class = "link--gradient" })
+                                @Html.ActionLink("Publikovat", "ApproveTutorialPost", "TutorialCategory", new { id = item.Id, approve = true, title = Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
                             }
                         }
                     </div>

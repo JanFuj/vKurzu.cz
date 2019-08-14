@@ -285,5 +285,27 @@ namespace TestWebAppCoolName.Controllers.Admin
             _repo.Save();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        [Route("admin/tutorialCategory/{title}/ApproveTutorialPost/{id}")]
+        public ActionResult ApproveTutorialPost(string title,int id, bool approve)
+        {
+            try
+            {
+                var post = _repo.GetPostById(title, id);
+                if (post == null)
+                {
+                    return HttpNotFound();
+                }
+
+                post.Approved = approve;
+                _repo.Save();
+                return RedirectToAction("Index",new{title = title});
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

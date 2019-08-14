@@ -1,0 +1,117 @@
+﻿
+@using TestWebAppCoolName.Helpers
+@model TestWebAppCoolName.Controllers.TutorialsViewModel
+@{
+    ViewBag.Title = Model.TutorialPost.Name;
+}
+<body class="body body-article">
+    <header class="header header--article" id="site-header">
+        @Html.Partial("toolbarPartialView")
+    </header>
+    <main class="main--article">
+        <article class="article">
+            <header class="article__header">
+                <div class="article__details-wrapper">
+                    <h1 class="article__title">@Model.TutorialPost.Name</h1>
+                    <div class="article__tags">
+                        @{
+                            foreach (var tag in Model.TutorialPost.Tags)
+                            {
+                                <span class="tag">@tag.Name</span>
+                            }
+                        }
+                    </div>
+                    <div class="article__details">
+                        <div class="article__author">@Model.TutorialPost.Author.FullName</div>
+                        <time class="article_release-date">@Model.TutorialPost.Created.ToString("d. M. yyyy")</time>
+                    </div>
+                </div><!--hr.article__header-hr-->
+            </header>
+            <div class="article__content">
+                <p>
+                    <div id="editor"></div>
+                </p>
+                @{
+                    if (@Model.RelatedCourse != null)
+                    {
+
+                        <aside class="related-course" data-gradient="@Model.RelatedCourse.Modificator">
+                            <h5 class="h6 related-course__heading">Související kurz</h5>
+                            <div class="course-card course-card--css-advanced course-card--related">
+                                <a class="course-card__link" href="@Url.Action("Index", "Course", new {title =Model.RelatedCourse.UrlTitle})"></a>
+                                <div class="course-card__content">
+                                    <div class="course-card__image">
+                                        <svg viewBox="0 0 128 128">
+                                            <linearGradient id="@Model.RelatedCourse.Modificator" x1="0%" y1="0%" x2="66%" y2="100%"><stop offset="0%" stop-color="var(--grad-1)" /><stop offset="100%" stop-color="var(--grad-2)" /></linearGradient>
+                                            @Html.Raw(Model.RelatedCourse.Svg.Path)
+
+                                        </svg>
+                                    </div>
+                                    <div class="course-card__info">
+                                        <h6 class="course-card__title"><a class="course-card__title-link" href="course.html">@Model.RelatedCourse.Name</a></h6>
+                                        @{
+                                            var length = 127;
+
+                                            if (Model.RelatedCourse.Description.Length < 127)
+                                            {
+                                                length = Model.RelatedCourse.Description.Length;
+                                            }
+                                            <p class="course-card__desc">@Model.RelatedCourse.Description.Substring(0, length)...</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
+                    }
+                }
+
+
+            </div>
+        </article>
+        <aside class="related-articles">
+            <hr>
+            <h2 class="related-articles__heading">Čtěte dále</h2>
+            <div class="related-articles__grid">
+                @*@{
+                    var articles = new DataService().GetRelatedArticles(Model.Blog);
+                    foreach (var article in articles.Where(a => !a.Deleted))
+                    {
+                        <article class="article-preview">
+                            <div class="article-preview__author">@article.Author.FullName</div>
+                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">@article.Name</a></h3>
+                            <p class="article-preview__text">@article.Description</p>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">Číst článek</a></div>
+                        </article>
+                    }
+                }*@
+
+            </div>
+        </aside>
+    </main>
+
+</body>
+
+
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        let quill = new Quill('#editor',
+            {
+                modules: {
+                    "toolbar": false,
+                    syntax:true
+                },
+                theme: 'snow'
+            });
+
+
+            quill.setContents(@Html.Raw(Model.TutorialPost.Body))
+
+            quill.enable(false);
+ 
+    </script>
+
+}

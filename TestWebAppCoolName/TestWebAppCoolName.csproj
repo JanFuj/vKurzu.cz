@@ -638,6 +638,7 @@
     <Content Include="Views\TutorialCategory\NewPost.cshtml" />
     <Content Include="Views\TutorialCategory\EditPost.cshtml" />
     <Content Include="Views\TutorialCategory\DeletePost.cshtml" />
+    <Content Include="Views\Tutorials\TutorialPost.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
