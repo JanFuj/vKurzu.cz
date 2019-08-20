@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TestWebAppCoolName.Models.Dto
 {
-    public class CourseOrderUpdateDto
+    public class OrderUpdateDto
     {
         public int Id { get; set; }
         public int Position { get; set; }

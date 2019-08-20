@@ -73,7 +73,7 @@
                         $.ajax({
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
-                            url: '@Url.Action("UpdateTutorialCategoryOrder", "Admin")', //This is my url put your url here and pass model as data it is an array of my items
+                            url: '@Url.Action("UpdatePostOrder", "TutorialCategory",new{title = Model.TutorialCategory.UrlTitle})', //This is my url put your url here and pass model as data it is an array of my items
                             data: JSON.stringify(model),
                             success: function (data) {
                                 console.log("position changed");

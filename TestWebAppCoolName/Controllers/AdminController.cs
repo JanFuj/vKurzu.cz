@@ -281,7 +281,7 @@ namespace TestWebAppCoolName.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCode UpdateCourseOrder(List<CourseOrderUpdateDto> orderDto)
+        public HttpStatusCode UpdateCourseOrder(List<OrderUpdateDto> orderDto)
         {
             foreach (var item in orderDto)
             {
@@ -868,7 +868,7 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult TutorialCategories()
         {
             var userId = User.Identity.GetUserId();
-            var categories = _context.TutorialCategory.Where(c=>!c.Deleted).ToList();
+            var categories = _context.TutorialCategory.Where(c => !c.Deleted).ToList();
             if (User.IsInRole(Roles.Lector))
             {
                 categories = _context.TutorialCategory.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
@@ -1038,11 +1038,27 @@ namespace TestWebAppCoolName.Controllers
             }
         }
 
+        [HttpPost]
+        public HttpStatusCode UpdateCategoryOrder(List<OrderUpdateDto> orderDto)
+        {
+            foreach (var item in orderDto)
+            {
+                var tutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.Id == item.Id);
+                if (tutorialCategory != null)
+                {
+                    tutorialCategory.Position = item.Position;
+                }
+
+                _context.SaveChanges();
+            }
+
+            return HttpStatusCode.OK;
+        }
 
         #endregion
 
         #region Tutorials
-       
+
 
 
         #endregion

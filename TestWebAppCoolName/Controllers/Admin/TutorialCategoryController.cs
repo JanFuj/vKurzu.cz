@@ -10,6 +10,7 @@ using System.Net;
 using Microsoft.AspNet.Identity;
 using TestWebAppCoolName.DAL;
 using TestWebAppCoolName.Helpers;
+using TestWebAppCoolName.Models.Dto;
 
 namespace TestWebAppCoolName.Controllers.Admin
 {
@@ -121,21 +122,6 @@ namespace TestWebAppCoolName.Controllers.Admin
 
         }
 
-        [Route("admin/tutorialCategory/{title}/detail/{id}")]
-        public ActionResult Details(string title, int id)
-        {
-
-            //var category = _context.TutorialCategory.Include(x => x.Posts).Include(x => x.Tags)
-            //    .FirstOrDefault(x => x.UrlTitle == title);
-            //var post = category?.Posts.FirstOrDefault(x => x.Id == id);
-            //if (category == null || post == null)
-            //{
-            //    return HttpNotFound();
-            //}
-
-
-            return View();
-        }
 
         // GET: TutorialCategory/Edit/5
         [HttpGet]
@@ -269,7 +255,7 @@ namespace TestWebAppCoolName.Controllers.Admin
         [Route("admin/tutorialCategory/{title}/delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult ConfirmDelete(string title,int id)
+        public ActionResult ConfirmDelete(string title, int id)
         {
             var post = _repo.GetPostById(title, id);
             if (post == null)
@@ -287,7 +273,7 @@ namespace TestWebAppCoolName.Controllers.Admin
         }
         [HttpGet]
         [Route("admin/tutorialCategory/{title}/ApproveTutorialPost/{id}")]
-        public ActionResult ApproveTutorialPost(string title,int id, bool approve)
+        public ActionResult ApproveTutorialPost(string title, int id, bool approve)
         {
             try
             {
@@ -299,7 +285,7 @@ namespace TestWebAppCoolName.Controllers.Admin
 
                 post.Approved = approve;
                 _repo.Save();
-                return RedirectToAction("Index",new{title = title});
+                return RedirectToAction("Index", new { title = title });
             }
             catch (Exception e)
             {
@@ -307,5 +293,23 @@ namespace TestWebAppCoolName.Controllers.Admin
                 throw;
             }
         }
+
+        [HttpPost]
+        public HttpStatusCode UpdatePostOrder(List<OrderUpdateDto> orderDto, string title)
+        {
+            foreach (var item in orderDto)
+            {
+                var post = _repo.GetPostById(title, item.Id);
+                if (post != null)
+                {
+                    post.Position = item.Position;
+                }
+
+                _repo.Save();
+            }
+
+            return HttpStatusCode.OK;
+        }
+
     }
 }

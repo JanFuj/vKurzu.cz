@@ -54,36 +54,36 @@
     <script>
         $(function () {
             $("#sortable").sortable({
-                axis: 'y',
-                update: function () {
-                    let order = 1;
-                    let model = [];
-                    let sortableli = 1
-                    $("#sortable li").each(function () {
-                        //building a new object and pushing in modal array
-                        //Here I am setting OrderNo property which is i am using in my db and building my object
-                        var objModel = { Id: this.id, position: order }; //This is for example to build your object and push in a modal array.
-                        model.push(objModel);
-                        order++;
-                    });
-                    console.log(model);
-                    if (model.length > 1)
-                    {
-                        $.ajax({
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8",
-                            url: '@Url.Action("UpdateTutorialCategoryOrder", "Admin")', //This is my url put your url here and pass model as data it is an array of my items
-                            data: JSON.stringify(model),
-                            success: function (data) {
-                                console.log("position changed");
-                            },
-                            error: functin (e) {
-                                //do something
-                            }
+                    axis: 'y',
+                    update: function () {
+                        let order = 1;
+                        let model = [];
+                        let sortableli = 1
+                        $("#sortable li").each(function () {
+                            //building a new object and pushing in modal array
+                            //Here I am setting OrderNo property which is i am using in my db and building my object
+                            var objModel = { Id: this.id, position: order }; //This is for example to build your object and push in a modal array.
+                            model.push(objModel);
+                            order++;
                         });
+                        console.log(model);
+                        if (model.length > 1)
+                        {
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                url: '@Url.Action("UpdateCategoryOrder", "Admin")', //This is my url put your url here and pass model as data it is an array of my items
+                                data: JSON.stringify(model),
+                                success: function (data) {
+                                    console.log("position changed");
+                                },
+                                error: function (e) {
+                                    //do something
+                                }
+                            });
+                        }
                     }
                 }
-            }
             );
             $("#sortable").disableSelection();
 

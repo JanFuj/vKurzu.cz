@@ -415,7 +415,7 @@
     <Compile Include="Models\ContactFormModel.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseContactForm.cs" />
-    <Compile Include="Models\Dto\CourseOrderUpdateDto.cs" />
+    <Compile Include="Models\Dto\OrderUpdateDto.cs" />
     <Compile Include="Models\HomeContactForm.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
