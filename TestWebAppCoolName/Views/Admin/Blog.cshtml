@@ -22,7 +22,7 @@
                 <li class="admin-list__item">
                     <div class="admin-list__cell admin-list__cell--info">
                         <div class="">@Html.DisplayFor(modelItem => item.Name)</div>
-                        <div class="">@Html.DisplayFor(modelItem => item.Author.FullName)</div>
+                        @*<div class="">@Html.DisplayFor(modelItem => item.Author.FullName)</div>*@
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
                         @Html.ActionLink("Upravit", "EditBlog", "Admin", new { id = item.Id }, new { @class = "link--gradient" }) 

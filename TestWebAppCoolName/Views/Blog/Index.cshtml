@@ -31,7 +31,7 @@
                 }
 
                 <article class="article-preview article-preview--@articleClassSuffix">
-                    <div class="article-preview__author">@Model[i].Author.FullName</div>
+                    @*<div class="article-preview__author">@Model[i].Author.FullName</div>*@
                     <h2 class="article-preview__title"><a class="link--gradient" href="@Url.Action("Index", "Blog", new {title = Model[i].UrlTitle})">@Model[i].Name</a></h2>
                     <p class="article-preview__text">@Model[i].Description</p>
                     <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index", "Blog", new {title = Model[i].UrlTitle})">Číst článek</a></div>

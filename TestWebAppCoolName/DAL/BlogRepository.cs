@@ -14,11 +14,11 @@ namespace TestWebAppCoolName.DAL
         }
         public List<Blog> GetBlogPosts()
         {
-            return _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b => b.Approved).OrderByDescending(x=>x.Created).ToList();
+            return _context.Blogs.Include(b => b.Tags).Where(b => b.Approved).OrderByDescending(x=>x.Created).ToList();
         }
         public List<Blog> GetFirst3BlogPosts()
         {
-            return _context.Blogs.Include(b => b.Author).Include(b => b.Tags).Where(b => b.Approved).OrderByDescending(x => x.Created).Take(3).ToList();
+            return _context.Blogs.Include(b => b.Tags).Where(b => b.Approved).OrderByDescending(x => x.Created).Take(3).ToList();
         }
 
         public Blog GetBlogPostById(int blogId)

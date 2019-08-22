@@ -29,11 +29,11 @@
                 </div>
             </p>
 
-            <p>
+            @*<p>
                 @Html.LabelFor(m => m.Blog.Author_Id)
                 @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Blog.Author_Id)
-            </p>
+            </p>*@
             <p>
                 @Html.LabelFor(m => m.Blog.UrlTitle)
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)

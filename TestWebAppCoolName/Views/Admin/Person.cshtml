@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestWebAppCoolName.Models.Person>
+﻿@model IEnumerable<TestWebAppCoolName.Models.ApplicationUser>
 
 @{
     ViewBag.Title = "Admin Lidi";
@@ -8,7 +8,7 @@
     <main>
         <div class="admin-list-header">
             <h1>Lidi</h1>
-            @Html.ActionLink("Vytvořit", "NewPerson", null, new { @class = "button" })
+            @Html.ActionLink("Vytvořit", "Register", null, new { @class = "button" })
         </div>
 
 
@@ -19,7 +19,7 @@
             {
                 <li class="admin-list__item">
                     <div class="admin-list__cell admin-list__cell--info">
-                        <div class="">@Html.DisplayFor(modelItem => item.Name)</div>
+                        <div class="">@Html.DisplayFor(modelItem => item.FirstName)</div>
                         <div class="">@Html.DisplayFor(modelItem => item.LastName)</div>
                     </div>
 

@@ -411,6 +411,14 @@
     <Compile Include="Migrations\201908211301242_UserNameInAspUserTable.Designer.cs">
       <DependentUpon>201908211301242_UserNameInAspUserTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908220747397_RemoveAuthorFromBlog.cs" />
+    <Compile Include="Migrations\201908220747397_RemoveAuthorFromBlog.Designer.cs">
+      <DependentUpon>201908220747397_RemoveAuthorFromBlog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908220754467_FullNameRequiredInAspUserTable.cs" />
+    <Compile Include="Migrations\201908220754467_FullNameRequiredInAspUserTable.Designer.cs">
+      <DependentUpon>201908220754467_FullNameRequiredInAspUserTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -815,6 +823,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908211301242_UserNameInAspUserTable.resx">
       <DependentUpon>201908211301242_UserNameInAspUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908220747397_RemoveAuthorFromBlog.resx">
+      <DependentUpon>201908220747397_RemoveAuthorFromBlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908220754467_FullNameRequiredInAspUserTable.resx">
+      <DependentUpon>201908220754467_FullNameRequiredInAspUserTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,4 @@
-﻿@model TestWebAppCoolName.Models.Person
+﻿@model TestWebAppCoolName.Models.ApplicationUser
 
 @{
     ViewBag.Title = "Edit person";
@@ -16,10 +16,10 @@
             @Html.HiddenFor(model => model.Id)
 
             <p >
-                @Html.LabelFor(model => model.Name)
+                @Html.LabelFor(model => model.FirstName)
 
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
 
             </p>
 

@@ -58,10 +58,10 @@ namespace TestWebAppCoolName.Controllers
                 //detail blogu
                 if (!preview)
                 {
-                    vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
                 }
                 else {
-                    vm.Blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
                 }
                 if (vm.Blog != null)
                 {

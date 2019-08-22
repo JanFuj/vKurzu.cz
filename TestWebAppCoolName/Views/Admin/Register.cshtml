@@ -15,9 +15,16 @@
             @Html.ValidationSummary("", new { @class = "text-danger" })
            
             <div>
-
                 <p class="form-item">
-                    @Html.LabelFor(m => m.Email )
+                    @Html.LabelFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Email)
                     @Html.TextBoxFor(m => m.Email)
                 </p>
                 <p class="form-item">

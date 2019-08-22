@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -17,9 +19,14 @@ namespace TestWebAppCoolName.Models
             // Add custom user claims here
             return userIdentity;
         }
-
+        [DisplayName("Jméno")]
+        [Required(ErrorMessage = "Zadejte jméno")]
         public string FirstName { get; set; }
+        [DisplayName("Přijmení")]
+        [Required(ErrorMessage = "Zadejte přijmení")]
         public string LastName { get; set; }
+
+        public string Fullname => FirstName + " " + LastName;
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

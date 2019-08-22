@@ -109,13 +109,11 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/kurz/new")]
         public ActionResult NewCourse()
         {
-            var persons = _context.Persons.ToList();
             var newCourse = new Course();
             newCourse.Svg = _context.Svgs.First();
             newCourse.Svg_id = newCourse.Svg.ID;
             var viewModel = new CourseViewModel()
             {
-                Persons = persons,
                 Svgs = _context.Svgs.ToList(),
                 Course = newCourse
 
@@ -129,11 +127,7 @@ namespace TestWebAppCoolName.Controllers
         public ActionResult NewCourse(CourseViewModel vm)
         {
             var tags = TagParser.ParseTags(vm.Tagy, _context);
-            var persons = _context.Persons.ToList();
-            var viewModel = new CourseViewModel()
-            {
-                Persons = persons,
-            };
+            var viewModel = new CourseViewModel();
 
             if (!ModelState.IsValid)
             {
@@ -185,10 +179,8 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            var persons = _context.Persons.ToList();
             var viewModel = new CourseViewModel()
             {
-                Persons = persons,
                 Course = course,
                 Svgs = _context.Svgs.ToList()
             };
@@ -205,10 +197,8 @@ namespace TestWebAppCoolName.Controllers
             if (!ModelState.IsValid)
             {
 
-                var persons = _context.Persons.ToList();
                 var viewModel = new CourseViewModel()
                 {
-                    Persons = persons,
                     Course = vm.Course
                 };
 
@@ -225,10 +215,8 @@ namespace TestWebAppCoolName.Controllers
             if (sameUrlInAnotherCourse)
             {
                 ModelState.AddModelError("course.UrlTitle", "Zadany url titulek již existuje");
-                var persons = _context.Persons.ToList();
                 var viewModel = new CourseViewModel()
                 {
-                    Persons = persons,
                     Course = vm.Course
                 };
                 return View(viewModel);
@@ -347,10 +335,10 @@ namespace TestWebAppCoolName.Controllers
 
         {
             var userId = User.Identity.GetUserId();
-            var blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted).ToList();
+            var blogs = _context.Blogs.Where(b => !b.Deleted).ToList();
             if (User.IsInRole(Roles.Lector))
             {
-                blogs = _context.Blogs.Include(b => b.Author).Where(b => !b.Deleted && b.OwnerId == userId).ToList();
+                blogs = _context.Blogs.Where(b => !b.Deleted && b.OwnerId == userId).ToList();
             }
 
             return View(blogs);
@@ -359,10 +347,8 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/blog/new")]
         public ActionResult NewBlog()
         {
-            var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
-                Persons = persons,
                 Blog = new Blog(),
 
             };
@@ -376,11 +362,9 @@ namespace TestWebAppCoolName.Controllers
         {
 
             var tags = TagParser.ParseTags(vm.Tagy, _context); // ParseTags(vm.Tagy);
-            var persons = _context.Persons.ToList();
-            var viewModel = new BlogViewModel()
-            {
-                Persons = persons
-            };
+            var viewModel = new BlogViewModel();
+
+
             if (!ModelState.IsValid)
             {
                 viewModel.Blog = vm.Blog;
@@ -416,7 +400,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Blog blog = _context.Blogs.Include(b => b.Author).Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+            Blog blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -427,10 +411,8 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();
             }
 
-            var persons = _context.Persons.ToList();
             var viewModel = new BlogViewModel()
             {
-                Persons = persons,
                 Blog = blog
 
             };
@@ -446,10 +428,8 @@ namespace TestWebAppCoolName.Controllers
             var tags = TagParser.ParseTags(vm.Tagy, _context); //ParseTags(vm.Tagy);
             if (!ModelState.IsValid)
             {
-                var persons = _context.Persons.ToList();
                 var viewModel = new BlogViewModel()
                 {
-                    Persons = persons,
                     Blog = vm.Blog
 
                 };
@@ -467,10 +447,8 @@ namespace TestWebAppCoolName.Controllers
             if (sameUrlInAnotherBlog)
             {
                 ModelState.AddModelError("blog.UrlTitle", "Zadany url titulek již existuje");
-                var persons = _context.Persons.ToList();
                 var viewModel = new BlogViewModel()
                 {
-                    Persons = persons,
                     Blog = vm.Blog
 
                 };
@@ -492,7 +470,6 @@ namespace TestWebAppCoolName.Controllers
                 blo.Name = vm.Blog.Name;
                 blo.Description = vm.Blog.Description;
                 blo.Body = vm.Blog.Body;
-                blo.Author_Id = vm.Blog.Author_Id;
                 blo.UrlTitle = vm.Blog.UrlTitle;
                 blo.Tags = tags;
                 blo.Changed = DateTime.Now;
@@ -640,106 +617,139 @@ namespace TestWebAppCoolName.Controllers
         }
         #endregion
 
-        #region People
-        [Route("admin/person")]
+
+
+
+        #region Lector Registration
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector")]
         public ActionResult Person()
         {
-            return View(_context.Persons.ToList());
+            return View(_context.Users.ToList());
         }
-        [Route("admin/person/new")]
-        public ActionResult NewPerson()
+
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/register")]
+        public ActionResult Register()
         {
             return View();
         }
-
-        // POST: People/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("admin/person/new")]
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/register")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NewPerson([Bind(Include = "Name,LastName")] Person person)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                person.FullName = person.Name + " " + person.LastName;
-                _context.Persons.Add(person);
-                _context.SaveChanges();
-                return RedirectToAction("Person");
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, EmailConfirmed = true };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, Roles.Lector);
+
+                    return RedirectToAction("Person", "Admin");
+                }
+                AddErrors(result);
             }
 
-            return View(person);
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
-        [Route("admin/person/edit/{id?}")]
-        public ActionResult EditPerson(int? id)
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/edit/{id?}")]
+        public async Task<ActionResult> EditPerson(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = _context.Persons.Find(id);
-            if (person == null)
+
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+
+            return View(user);
         }
 
         // POST: People/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("admin/person/edit/{id?}")]
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/edit/{id?}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPerson([Bind(Include = "Id,Name,LastName")] Person person)
+        public async Task<ActionResult> EditPerson(ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
-                // db.Entry(person).State = EntityState.Modified;
-                var per = _context.Persons.FirstOrDefault(p => p.Id == person.Id);
-                if (per != null)
-                {
-                    per.Name = person.Name;
-                    per.LastName = person.LastName;
-                    per.FullName = person.Name + " " + person.LastName;
-                    _context.SaveChanges();
+                var dbUser = await UserManager.FindByIdAsync(user.Id);
+                dbUser.FirstName = user.FirstName;
+                dbUser.LastName = user.LastName;
+                IdentityResult result = await UserManager.UpdateAsync(dbUser);
+                if (result.Succeeded)
                     return RedirectToAction("Person");
-                }
+
                 else
                 {
                     return HttpNotFound();
                 }
             }
-            return View(person);
+            return View(user);
         }
 
-        // GET: People/Delete/5
-        [Route("admin/person/delete")]
-        public ActionResult DeletePerson(int? id)
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/delete")]
+        public async Task<ActionResult> DeletePerson(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = _context.Persons.Find(id);
-            if (person == null)
+
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+            return View(user);
         }
 
         // POST: People/Delete/5
-        [Route("admin/person/delete")]
+        [Authorize(Roles = Roles.Admin)]
+        [Route("admin/lector/delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeletePersonConfirmed(int id)
+        public async Task<ActionResult> DeletePersonConfirmed(string id)
         {
-            Person person = _context.Persons.Find(id);
-            _context.Persons.Remove(person);
-            _context.SaveChanges();
+            var user = await UserManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("Person");
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
             return RedirectToAction("Person");
         }
+
+        #endregion
+        #region People
+
+
+
+
 
         #endregion
 
@@ -1078,43 +1088,7 @@ namespace TestWebAppCoolName.Controllers
 
         #endregion
 
-        #region Lector Registration
-        [Authorize(Roles = Roles.Admin)]
-        [Route("admin/account/register")]
-        public ActionResult Register()
-        {
-            return View();
-        }
-        [Authorize(Roles = Roles.Admin)]
-        [Route("admin/account/register")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    UserManager.AddToRole(user.Id, Roles.Lector);
 
-                    return RedirectToAction("Index", "Admin");
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-        #endregion
 
 
 
@@ -1126,6 +1100,17 @@ namespace TestWebAppCoolName.Controllers
             if (disposing)
             {
                 _context.Dispose();
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
             }
             base.Dispose(disposing);
         }
