@@ -21,7 +21,7 @@
                         }
                     </div>
                     <div class="article__details">
-                        <div class="article__author">@Model.Blog.Author.FullName</div>
+                        @*<div class="article__author">@Model.Blog.FullName</div>*@
                         <time class="article_release-date">@Model.Blog.Created.ToString("d. M. yyyy")</time>
                     </div>
                 </div><!--hr.article__header-hr-->
@@ -77,7 +77,7 @@
                     foreach (var article in articles.Where(a => !a.Deleted))
                     {
                         <article class="article-preview">
-                            <div class="article-preview__author">@article.Author.FullName</div>
+                            @*<div class="article-preview__author">@article.Author.FullName</div>*@
                             <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">@article.Name</a></h3>
                             <p class="article-preview__text">@article.Description</p>
                             <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">Číst článek</a></div>
