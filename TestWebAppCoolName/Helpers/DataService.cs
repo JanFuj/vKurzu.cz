@@ -7,7 +7,7 @@ using TestWebAppCoolName.Models;
 
 namespace TestWebAppCoolName.Helpers
 {
-    public class DataService
+    public class DataService : IDisposable
     {
         private readonly ApplicationDbContext _context;
 
@@ -27,24 +27,20 @@ namespace TestWebAppCoolName.Helpers
 
         public Course GetRelatedCourse(Blog blog)
         {
-            List<Course> relatedCourses = new List<Course>();
-            foreach (var blogTag in blog.Tags)
-            {
-                var relatedCourse = _context.Courses.Include(x => x.Svg)
-                    .FirstOrDefault(c => !c.Deleted && c.Approved && c.Tags.Any(b => b.Id == blogTag.Id));
-                if (relatedCourse != null)
-                {
-                    relatedCourses.Add(relatedCourse);
-                }
-            }
 
-            if (relatedCourses.Count > 0)
-            {
-                var randomNumber = new Random().Next(0, relatedCourses.Count - 1);
-                return relatedCourses[randomNumber];
-            }
+            return _context.Courses.Include(x => x.Svg)
+                .FirstOrDefault(c => !c.Deleted && c.Approved && c.Id == blog.RelatedCourseId);
+        }
 
-            return null;
+        public List<Course> GetAllCourses()
+        {
+            return _context.Courses.Where(c => !c.Deleted).ToList();
+        }
+
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

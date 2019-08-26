@@ -419,6 +419,10 @@
     <Compile Include="Migrations\201908220754467_FullNameRequiredInAspUserTable.Designer.cs">
       <DependentUpon>201908220754467_FullNameRequiredInAspUserTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908261029548_RelatedCourseInBlogTable.cs" />
+    <Compile Include="Migrations\201908261029548_RelatedCourseInBlogTable.Designer.cs">
+      <DependentUpon>201908261029548_RelatedCourseInBlogTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -829,6 +833,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908220754467_FullNameRequiredInAspUserTable.resx">
       <DependentUpon>201908220754467_FullNameRequiredInAspUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908261029548_RelatedCourseInBlogTable.resx">
+      <DependentUpon>201908261029548_RelatedCourseInBlogTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

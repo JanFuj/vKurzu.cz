@@ -472,6 +472,7 @@ namespace TestWebAppCoolName.Controllers
                 blo.Body = vm.Blog.Body;
                 blo.UrlTitle = vm.Blog.UrlTitle;
                 blo.Tags = tags;
+                blo.RelatedCourseId = vm.Blog.RelatedCourseId;
                 blo.Changed = DateTime.Now;
                 _context.SaveChanges();
                 return RedirectToAction("Blog");

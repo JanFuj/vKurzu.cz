@@ -31,11 +31,12 @@
                     <div id="editor"></div>
                 </div>
             </p>
-            @*<p>
-                @Html.LabelFor(m => m.Blog.Author_Id)
-                @Html.DropDownListFor(m => m.Blog.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.Blog.Author_Id)
-            </p>*@
+          
+            <p>
+                @Html.LabelFor(m => m.Blog.RelatedCourseId)
+                @Html.DropDownListFor(m => m.Blog.RelatedCourseId,  new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
+            </p>
             <p>
                 @Html.LabelFor(m => m.Blog.UrlTitle)
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)

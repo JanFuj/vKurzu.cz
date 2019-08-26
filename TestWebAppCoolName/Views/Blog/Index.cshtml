@@ -15,10 +15,12 @@
 
         @{
             var articleClassSuffix = "";
+            var titleClass = "";
             for (int i = 0; i < Model.Count; i++)
             {
                 if (i == 0)
                 {
+                    titleClass = "link--gradient";
                     articleClassSuffix = "primary";
                 }
                 if (i > 0 && i < 5)
@@ -32,7 +34,7 @@
 
                 <article class="article-preview article-preview--@articleClassSuffix">
                     @*<div class="article-preview__author">@Model[i].Author.FullName</div>*@
-                    <h2 class="article-preview__title"><a class="link--gradient" href="@Url.Action("Index", "Blog", new {title = Model[i].UrlTitle})">@Model[i].Name</a></h2>
+                    <h2 class="article-preview__title"><a class="@titleClass" href="@Url.Action("Index", "Blog", new {title = Model[i].UrlTitle})">@Model[i].Name</a></h2>
                     <p class="article-preview__text">@Model[i].Description</p>
                     <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index", "Blog", new {title = Model[i].UrlTitle})">Číst článek</a></div>
                 </article>
@@ -44,6 +46,7 @@
                 {
                     <hr class="hr-blog hr-blog--2">
                 }
+                titleClass = "link--gradient-inversed";
             }
         }
 
