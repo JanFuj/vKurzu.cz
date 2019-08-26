@@ -13,7 +13,7 @@
         <div class="admin-list-header">
             <h1>@Model.TutorialCategory.Name </h1>
 
-            @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new{title = Model.TutorialCategory.UrlTitle}, new { title = Model.TutorialCategory.UrlTitle, @class = "button" })
+            @Html.ActionLink("Vytvořit", "NewPost", "TutorialCategory", new { title = Model.TutorialCategory.UrlTitle }, new { title = Model.TutorialCategory.UrlTitle, @class = "button" })
         </div>
 
         <ul class="admin-list" id="sortable">
@@ -26,14 +26,14 @@
                         <div class="">@item.Name</div>
                     </div>
                     <div class="admin-list__cell admin-list__cell--buttons">
-                        @Html.ActionLink("Upravit", "Edit", "TutorialCategory", new { id = item.Id,title= Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
+                        @Html.ActionLink("Upravit", "Edit", "TutorialCategory", new { id = item.Id, title = Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
                         @Html.ActionLink("Náhled", "TutorialPost", "Tutorials", new { categoryTitle = Model.TutorialCategory.UrlTitle, postTitle = item.UrlTitle, preview = true }, new { @class = "link--gradient" })
                         @Html.ActionLink("Smazat", "Delete", "TutorialCategory", new { id = item.Id, title = Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
                         @if (User.IsInRole(TestWebAppCoolName.Models.Roles.Admin))
                         {
                             if (item.Approved)
                             {
-                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialPost", "TutorialCategory", new { id = item.Id, approve = false ,title = Model.TutorialCategory.UrlTitle}, new { @class = "link--gradient" })
+                                @Html.ActionLink("Od-Publikovat", "ApproveTutorialPost", "TutorialCategory", new { id = item.Id, approve = false, title = Model.TutorialCategory.UrlTitle }, new { @class = "link--gradient" })
                             }
                             else
                             {
@@ -53,41 +53,45 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
     <script>
-        $(function () {
-            $("#sortable").sortable({
-                axis: 'y',
-                update: function () {
-                    let order = 1;
-                    let model = [];
-                    let sortableli = 1
-                    $("#sortable li").each(function () {
-                        //building a new object and pushing in modal array
-                        //Here I am setting OrderNo property which is i am using in my db and building my object
-                        var objModel = { Id: this.id, position: order }; //This is for example to build your object and push in a modal array.
-                        model.push(objModel);
-                        order++;
-                    });
-                    console.log(model);
-                    if (model.length > 1)
-                    {
-                        $.ajax({
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8",
-                            url: '@Url.Action("UpdatePostOrder", "TutorialCategory",new{title = Model.TutorialCategory.UrlTitle})', //This is my url put your url here and pass model as data it is an array of my items
-                            data: JSON.stringify(model),
-                            success: function (data) {
-                                console.log("position changed");
-                            },
-                            error: function (e) {
-                                //do something
+        $(function() {
+            if ((@User.IsInRole(TestWebAppCoolName.Models.Roles.Admin).ToString().ToLower())) {
+                $("#sortable").sortable({
+                        axis: 'y',
+                        update: function() {
+                            let order = 1;
+                            let model = [];
+                            let sortableli = 1
+                            $("#sortable li").each(function() {
+                                //building a new object and pushing in modal array
+                                //Here I am setting OrderNo property which is i am using in my db and building my object
+                                var objModel = {
+                                    Id: this.id,
+                                    position: order
+                                }; //This is for example to build your object and push in a modal array.
+                                model.push(objModel);
+                                order++;
+                            });
+                            console.log(model);
+                            if (model.length > 1) {
+                                $.ajax({
+                                    type: "POST",
+                                    contentType: "application/json; charset=utf-8",
+                                    url:
+                                        '@Url.Action("UpdatePostOrder", "TutorialCategory", new {title = Model.TutorialCategory.UrlTitle})', //This is my url put your url here and pass model as data it is an array of my items
+                                    data: JSON.stringify(model),
+                                    success: function(data) {
+                                        console.log("position changed");
+                                    },
+                                    error: function(e) {
+                                        //do something
+                                    }
+                                });
                             }
-                        });
+                        }
                     }
-                }
+                );
+                $("#sortable").disableSelection();
             }
-            );
-            $("#sortable").disableSelection();
-
         });
     </script>
 

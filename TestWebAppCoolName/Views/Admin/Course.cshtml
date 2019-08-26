@@ -54,6 +54,9 @@
 
     <script>
         $(function () {
+
+            if ((@User.IsInRole(TestWebAppCoolName.Models.Roles.Admin).ToString().ToLower())) {
+
             $("#sortable").sortable({
                 axis: 'y',
                 update: function () {
@@ -69,9 +72,9 @@
                     });
                     console.log(model);
                     if (model.length > 1)
-                    {               
+                    {
                         $.ajax({
-                            type: "POST",                            
+                            type: "POST",
                             contentType: "application/json; charset=utf-8",
                             url: '@Url.Action("UpdateCourseOrder", "Admin")', //This is my url put your url here and pass model as data it is an array of my items
                             data: JSON.stringify(model),
@@ -87,6 +90,8 @@
             }
             );
             $("#sortable").disableSelection();
+
+            }
 
         });
     </script>
