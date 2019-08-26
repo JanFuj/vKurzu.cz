@@ -16,7 +16,7 @@
                         @{
                             foreach (var tag in Model.Blog.Tags)
                             {
-                                <span class="tag">@tag.Name</span>
+                        <a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Tag",new {tagName = tag.Name})">@tag.Name</a>
                             }
                         }
                     </div>

@@ -195,8 +195,10 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TutorialsController.cs" />
     <Compile Include="DAL\ITutorialCategoryPostsRepository.cs" />
+    <Compile Include="DAL\TagRepository.cs" />
     <Compile Include="DAL\TutorialCategoryPostsRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -656,6 +658,7 @@
     <Content Include="Views\TutorialCategory\DeletePost.cshtml" />
     <Content Include="Views\Tutorials\TutorialPost.cshtml" />
     <Content Include="Views\Admin\Register.cshtml" />
+    <Content Include="Views\Tag\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
