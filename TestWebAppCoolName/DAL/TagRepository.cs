@@ -19,7 +19,7 @@ namespace TestWebAppCoolName.DAL
         public List<Blog> GetArticlesByTagName(string tagName)
         {
             var tag = _context.Tags.Include(a => a.Blogs).FirstOrDefault(x => x.Name == tagName);
-            return tag?.Blogs;
+            return tag?.Blogs.Where(b => !b.Deleted && b.Approved).ToList();
         }
         public void Dispose()
         {

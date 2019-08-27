@@ -1,6 +1,7 @@
 ﻿@model List<TestWebAppCoolName.Models.Blog>
 @{
     ViewBag.Title = "vKurzu.cz - " + this.ViewContext.RouteData.GetRequiredString("tagName");
+    var tagName = this.ViewContext.RouteData.GetRequiredString("tagName");
 }
 <header class="header header--blog" id="site-header">
     @Html.Partial("toolbarPartialView")
@@ -10,7 +11,15 @@
 
     <div class="blog-grid">
         <h1 class="blog-headline">
-            <div class="blog-headline__text"><span class="blog-headline__letter">B</span><span class="blog-headline__letter">l</span><span class="blog-headline__letter">o</span><span class="blog-headline__letter">g</span></div>
+            <div class="blog-headline__text">
+                @{
+                    foreach (var letter in tagName)
+                    {
+                        <span class="blog-headline__letter">@letter</span>
+                    }
+                }
+
+            </div>
         </h1>
 
         @{
