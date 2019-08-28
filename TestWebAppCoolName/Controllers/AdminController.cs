@@ -15,7 +15,7 @@ using TestWebAppCoolName.Models.Dto;
 
 namespace TestWebAppCoolName.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Lector)]
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;

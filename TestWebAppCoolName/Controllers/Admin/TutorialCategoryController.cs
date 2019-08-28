@@ -25,7 +25,7 @@ namespace TestWebAppCoolName.Controllers.Admin
 
 
     //Detail kategorie - seznam clanku tvorba novych
-    [Authorize]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Lector)]
     public class TutorialCategoryController : Controller
     {
         private readonly ITutorialCategoryPostsRepository _repo;

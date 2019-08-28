@@ -25,32 +25,26 @@ namespace TestWebAppCoolName.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
+        public ApplicationSignInManager SignInManager {
+            get {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set {
+                _signInManager = value;
             }
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
+        public ApplicationUserManager UserManager {
+            get {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
-            private set
-            {
+            private set {
                 _userManager = value;
             }
         }
@@ -58,7 +52,7 @@ namespace TestWebAppCoolName.Controllers
         //
 
         // GET: /Account/Login
-       
+
         public ActionResult Admin()
         {
             return View();
@@ -68,26 +62,6 @@ namespace TestWebAppCoolName.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            //TODO resolve app inicialzer
-            //if (!_context.Roles.Any(r => r.Name == "Admin"))
-            //{
-            //    var store = new RoleStore<IdentityRole>(_context);
-            //    var manager = new RoleManager<IdentityRole>(store);
-            //    var role = new IdentityRole { Name = "Admin" };
-
-            //    manager.Create(role);
-            //}
-
-            //if (!_context.Users.Any(u => u.UserName == "Admin@seznam.cz"))
-            //{
-            //    var store = new UserStore<ApplicationUser>(_context);
-            //    var manager = new UserManager<ApplicationUser>(store);
-            //    var user = new ApplicationUser { Email = "Admin@seznam.cz", EmailConfirmed = true, UserName = "Admin@seznam.cz" };
-
-            //    manager.Create(user, "Aaaa1111@");
-            //    manager.AddToRole(user.Id, "Admin");
-            //}
-
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -103,22 +77,42 @@ namespace TestWebAppCoolName.Controllers
             {
                 return View(model);
             }
-
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    ModelState.AddModelError("", "Nemáte potvrzený e-mail");
+                    return View(model);
+                }
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index","Admin");
-                   // return RedirectToLocal(returnUrl);
+                    if (user != null)
+                    {
+                        if (UserManager.IsInRole(user.Id, Roles.Admin) || UserManager.IsInRole(user.Id, Roles.Lector))
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+
+                        if (UserManager.IsInRole(user.Id, Roles.User))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    return RedirectToAction("Index", "Home");
+                // return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Přihlášení se nezdařilo");
                     return View(model);
             }
         }
@@ -152,7 +146,7 @@ namespace TestWebAppCoolName.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -183,17 +177,18 @@ namespace TestWebAppCoolName.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    UserManager.AddToRole(user.Id, Roles.User);
+                    //   await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Potvrzení účtu", "Potvrďte svou registraci kliknutím <a href=\"" + callbackUrl + "\">zde</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -459,10 +454,8 @@ namespace TestWebAppCoolName.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
+        private IAuthenticationManager AuthenticationManager {
+            get {
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
