@@ -22,7 +22,7 @@ namespace TestWebAppCoolName
             // Plug in your email service here to send an email.
 
             var emailSender = new EmailSender();
-            var sent = await emailSender.SendEmailConfirmation("Potvrzení registrace", message.Body,message.Destination);
+            var sent = await emailSender.SendEmailConfirmation(message.Subject, message.Body,message.Destination);
             if (!sent)
             {
                 Console.WriteLine("sending email error");

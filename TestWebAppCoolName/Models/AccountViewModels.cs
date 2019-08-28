@@ -91,17 +91,17 @@ namespace TestWebAppCoolName.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} musí mít minimálně {2} znaků.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Heslo")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Potvrdit heslo")]
         [Compare("Password", ErrorMessage = "Hesla nejsou stejná.")]
         public string ConfirmPassword { get; set; }
 
@@ -112,7 +112,7 @@ namespace TestWebAppCoolName.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 }

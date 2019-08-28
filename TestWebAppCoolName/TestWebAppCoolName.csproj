@@ -659,6 +659,7 @@
     <Content Include="Views\Tutorials\TutorialPost.cshtml" />
     <Content Include="Views\Admin\Register.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
+    <Content Include="Views\Shared\_adminLoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

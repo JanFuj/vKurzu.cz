@@ -626,7 +626,29 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/lector")]
         public ActionResult Person()
         {
-            return View(_context.Users.ToList());
+            var admins = new List<ApplicationUser>();
+            var lectors = new List<ApplicationUser>();
+            var users = new List<ApplicationUser>();
+            var allUsers = new List<ApplicationUser>();
+            foreach (var user in _context.Users)
+            {
+                if (UserManager.IsInRole(user.Id,Roles.Admin)) {
+                    admins.Add(user);
+                }
+                if (UserManager.IsInRole(user.Id, Roles.Lector))
+                {
+                    lectors.Add(user);
+                }
+                if (UserManager.IsInRole(user.Id, Roles.User))
+                {
+                    users.Add(user);
+                }
+            }
+            allUsers.AddRange(admins);
+            allUsers.AddRange(lectors);
+            allUsers.AddRange(users);
+
+            return View(allUsers);
         }
 
         [Authorize(Roles = Roles.Admin)]

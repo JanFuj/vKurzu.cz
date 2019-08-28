@@ -1,32 +1,64 @@
-﻿@model IEnumerable<TestWebAppCoolName.Models.ApplicationUser>
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using Roles = TestWebAppCoolName.Models.Roles
+@model IEnumerable<TestWebAppCoolName.Models.ApplicationUser>
 
 @{
     ViewBag.Title = "Admin Lidi";
+    var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+    bool adminLabelVisible = false;
+    bool lectorLabelVisible = false;
+    bool userLabelVisible = false;
 }
 <body class="body--admin">
     @Html.Partial("_LoginPartial")
     <main>
         <div class="admin-list-header">
             <h1>Lidi</h1>
-            @Html.ActionLink("Vytvořit", "Register", null, new { @class = "button" })
+            @Html.ActionLink("Vytvořit lektora", "Register", null, new { @class = "button" })
         </div>
 
 
 
         <ul class="admin-list">
 
-            @foreach (var item in Model)
+            @foreach (var user in Model)
             {
+                if (userManager.IsInRole(user.Id, Roles.Admin))
+                {
+                    if (!adminLabelVisible)
+                    {
+                        adminLabelVisible = true;
+                        <h3>Admin</h3>
+                    }
+                }
+                if (userManager.IsInRole(user.Id, Roles.Lector))
+                {
+                    if (!lectorLabelVisible)
+                    {
+                        lectorLabelVisible = true;
+                        <h3>Lektor</h3>
+
+                    }
+                }
+                if (userManager.IsInRole(user.Id, Roles.User))
+                {
+                    if (!userLabelVisible)
+                    {
+                        userLabelVisible = true;
+                        <h3>Uživatel</h3>
+                    }
+                }
                 <li class="admin-list__item">
                     <div class="admin-list__cell admin-list__cell--info">
-                        <div class="">@Html.DisplayFor(modelItem => item.Fullname)</div>
-                        <div class="">@Html.DisplayFor(modelItem => item.Email)</div>
+                        <div class="">@Html.DisplayFor(modelItem => user.Fullname)</div>
+                        <div class="">@Html.DisplayFor(modelItem => user.Email)</div>
                     </div>
 
-                <div class="admin-list__cell admin-list__cell--buttons">
-                    @Html.ActionLink("Upravit", "EditPerson", new { id = item.Id }, new { @class = "link--gradient" })
-                    @Html.ActionLink("Smazat", "DeletePerson", new { id = item.Id }, new { @class = "link--gradient" })
-                </div>
+                    <div class="admin-list__cell admin-list__cell--buttons">
+                        @Html.ActionLink("Upravit", "EditPerson", new { id = user.Id }, new { @class = "link--gradient" })
+                        @Html.ActionLink("Smazat", "DeletePerson", new { id = user.Id }, new { @class = "link--gradient" })
+                    </div>
                 </li>
 
             }
