@@ -1,47 +1,58 @@
-﻿@using TestWebAppCoolName.Models
+﻿@using Microsoft.AspNet.Identity
+@using TestWebAppCoolName.Models
 @model LoginViewModel
 @{
     ViewBag.Title = "Přihlášení";
 }
 <body>
-    <main class="main" style="justify-items: center; align-content: center; margin: 0; min-height: 100vh;">
+<header class="header header--index" id="site-header">
+    @Html.Partial("toolbarPartialView")
+</header>
+<main class="main" style="justify-items: center; align-content: center; margin: 0; min-height: 100vh;">
 
 
-        <div class="card">
-            <div class="card__content" style="padding: var(--card-padding)">
-                <div class="card__header">
-                    <h2 style="margin-top: 0">Přihlášení</h2>
-                </div>
-                <section id="loginForm" class="card__body">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                        <p class="form-item">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-
-                        </p>
-                        <p class="form-item">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-
-                        </p>
-                        <p class="form-item" style="margin-bottom: 0;">
-                            <button type="submit">Přihlásit</button>
-                        </p>
-
-                    }
-                </section>
+    <div class="card">
+        <div class="card__content" style="padding: var(--card-padding)">
+            <div class="card__header">
+                <h1 style="margin-top: 0">Přihlášení</h1>
             </div>
+            <section id="loginForm" class="card__body">
+                @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"})) {
+                    @Html.AntiForgeryToken()
 
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                    <p class="form-item">
+                        @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+                        @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+
+                    </p>
+                    <p class="form-item">
+                        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+                        @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+
+                    </p>
+                    <p class="form-item" style="margin-bottom: 0;">
+                        <button type="submit">Přihlásit</button>
+                    </p>
+                    <br>
+                    <p>
+                        @Html.ActionLink("Registrovat", "Register", "Account", routeValues: null, htmlAttributes: new {@class = "nav__link link--gradient link--border"})
+                    </p>
+                    <p>
+                        @Html.ActionLink("Zapomenuté heslo", "ForgotPassword", "Account", routeValues: null, htmlAttributes: new {@class = "nav__link link--gradient link--border"})
+                    </p>
+
+
+                }
+            </section>
         </div>
 
-    </main>
+    </div>
+
+</main>
 </body>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

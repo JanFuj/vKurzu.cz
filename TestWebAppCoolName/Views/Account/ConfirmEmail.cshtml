@@ -1,12 +1,17 @@
 ﻿@{
     ViewBag.Title = "Ověření účtu";
 }
+<body class="body body--admin">
 
-<main class="main">
-    <h2>@ViewBag.Title.</h2>
-    <div>
-        <p>
-            Váš účet je ověřen. Prosím @Html.ActionLink("klikněte zde pro přihlášení", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        </p>
-    </div>
-</main>
+    <header class="header header--index" id="site-header">
+        @Html.Partial("toolbarPartialView")
+    </header>
+    <main class="main">
+        <h2>@ViewBag.Title.</h2>
+        <div>
+            <p>
+                Váš účet je ověřen. Prosím @Html.ActionLink("klikněte zde pro přihlášení", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+        </div>
+    </main>
+</body>

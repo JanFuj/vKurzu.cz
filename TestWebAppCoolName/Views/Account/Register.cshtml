@@ -2,44 +2,49 @@
 @{
     ViewBag.Title = "Registrace";
 }
-<main class="main">
 
-    <h3>@ViewBag.Title.</h3>
+<body class="body--admin">
+    <header class="header header--index" id="site-header">
+        @Html.Partial("toolbarPartialView")
+    </header>
+    <main class="main">
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div>
-            <p class="form-item">
-                @Html.LabelFor(m => m.FirstName)
-                @Html.TextBoxFor(m => m.FirstName)
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.LastName)
-                @Html.TextBoxFor(m => m.LastName)
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </p>
-            <p>
-                <button type="submit" id="save">Registrovat</button>
+        <h1>@ViewBag.Title</h1>
 
-            </p>
-        </div>
-    }
-</main>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword)
+                </p>
+                <p>
+                    <button type="submit" id="save">Registrovat</button>
 
+                </p>
+            </div>
+        }
+    </main>
+</body>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
