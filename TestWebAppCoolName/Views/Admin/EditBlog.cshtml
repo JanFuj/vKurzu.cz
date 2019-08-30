@@ -31,10 +31,10 @@
                     <div id="editor"></div>
                 </div>
             </p>
-          
+
             <p>
                 @Html.LabelFor(m => m.Blog.RelatedCourseId)
-                @Html.DropDownListFor(m => m.Blog.RelatedCourseId,  new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
+                @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
             </p>
             <p>
@@ -44,11 +44,17 @@
             </p>
             <p>
                 @Html.LabelFor(m => m.Thumbnail)
-                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file",id = "SocialThumbnailImage" })
+                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", id = "SocialThumbnailImage" })
                 @Html.ValidationMessageFor(m => m.Thumbnail)
             </p>
             <p>
-                <img id="SocialThumbnailImagePlaceHolder" src="/@Model.Blog.Thumbnail.Path" />
+                @{
+                    var path = Model.Blog.Thumbnail?.Path;
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
+                    }
+                }
             </p>
             <div>
 
@@ -118,8 +124,8 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-      
-  
+
+
         let quill = new Quill('#editor',
             {
                 modules: {

@@ -566,6 +566,8 @@
     <Content Include="Content\Highlight\xcode.css" />
     <Content Include="Content\Highlight\xt256.css" />
     <Content Include="Content\Highlight\zenburn.css" />
+    <Content Include="Content\Images\1-radegast.jpg" />
+    <Content Include="Content\Images\icon-instagram-icon-instagram-d2530f-1024.png" />
     <Content Include="Content\main.css" />
     <Content Include="Content\main.min.css" />
     <Content Include="error.html" />
@@ -693,7 +695,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="media\Sql\" />
     <Folder Include="Uploads\" />
   </ItemGroup>

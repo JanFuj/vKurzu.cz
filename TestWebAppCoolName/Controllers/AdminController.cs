@@ -491,7 +491,7 @@ namespace TestWebAppCoolName.Controllers
                     if (existingImage == null)
                     {
                         vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                        var thumbnail = new ImageFile() { Path = $"Content/Images/{vm.Thumbnail.FileName}" };
+                        var thumbnail = new ImageFile() { Path = path };
                         _context.ImageFiles.Add(thumbnail);
                         _context.SaveChanges();
                         blo.Thumbnail = thumbnail;
