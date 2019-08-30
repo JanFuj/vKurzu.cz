@@ -22,6 +22,10 @@ namespace TestWebAppCoolName.Controllers
         public Blog Blog { get; set; }
         public Course RelatedCourse { get; set; }
         public string Tagy { get; set; }
+        [Display(Name = "Obrázek pro sdílení na sociálech")]
+     //   [Required(ErrorMessage = "Nahrajte obrzázek")]
+       // [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Pouze png, jpg, gif")]
+        public HttpPostedFileBase Thumbnail { get; set; }
     }
 
     public class BlogController : Controller
@@ -58,14 +62,16 @@ namespace TestWebAppCoolName.Controllers
                 //detail blogu
                 if (!preview)
                 {
-                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).Include(b=>b.Thumbnail).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
                 }
                 else {
-                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).Include(b => b.Thumbnail).FirstOrDefault(b => b.UrlTitle == title);
                 }
                 if (vm.Blog != null)
                 {
                     vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
+                    ViewBag.Thumbnail = vm.Blog.Thumbnail?.Path;
+                    ViewBag.Description = vm.Blog.Description;
                     return View("Article", vm);
                 }
 

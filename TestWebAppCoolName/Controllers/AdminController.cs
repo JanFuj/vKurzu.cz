@@ -308,6 +308,7 @@ namespace TestWebAppCoolName.Controllers
         #endregion
 
         #region Blog
+
         public ActionResult ApproveBlog(int id, bool approve)
         {
             try
@@ -381,6 +382,14 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
+            if (vm.Thumbnail != null)
+            {
+                vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                var thumbnail = new ImageFile() { Path = $"/Content/Images/{vm.Thumbnail.FileName}" };
+                _context.ImageFiles.Add(thumbnail);
+                _context.SaveChanges();
+                vm.Blog.Thumbnail = thumbnail;
+            }
             vm.Blog.OwnerId = User.Identity.GetUserId();
             vm.Blog.Created = DateTime.Now;
             vm.Blog.Changed = DateTime.Now;
@@ -400,7 +409,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Blog blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
+            Blog blog = _context.Blogs.Include(b => b.Tags).Include(b=>b.Thumbnail).FirstOrDefault(b => b.Id == id);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -413,8 +422,7 @@ namespace TestWebAppCoolName.Controllers
 
             var viewModel = new BlogViewModel()
             {
-                Blog = blog
-
+                Blog = blog,
             };
             return View(viewModel);
         }
@@ -454,7 +462,7 @@ namespace TestWebAppCoolName.Controllers
                 };
                 return View(viewModel);
             }
-
+       
             var blo = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == vm.Blog.Id);
             if (blo != null)
             {
@@ -465,7 +473,14 @@ namespace TestWebAppCoolName.Controllers
 
                 blo.Tags = null;
                 _context.SaveChanges();
-
+                if (vm.Thumbnail != null)
+                {
+                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                    var thumbnail = new ImageFile() { Path = $"/Content/Images/{vm.Thumbnail.FileName}" };
+                    _context.ImageFiles.Add(thumbnail);
+                    _context.SaveChanges();
+                    blo.Thumbnail = thumbnail;
+                }
 
                 blo.Name = vm.Blog.Name;
                 blo.Description = vm.Blog.Description;
@@ -632,7 +647,8 @@ namespace TestWebAppCoolName.Controllers
             var allUsers = new List<ApplicationUser>();
             foreach (var user in _context.Users)
             {
-                if (UserManager.IsInRole(user.Id,Roles.Admin)) {
+                if (UserManager.IsInRole(user.Id, Roles.Admin))
+                {
                     admins.Add(user);
                 }
                 if (UserManager.IsInRole(user.Id, Roles.Lector))

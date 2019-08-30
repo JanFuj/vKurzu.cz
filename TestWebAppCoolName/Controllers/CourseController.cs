@@ -61,6 +61,7 @@ namespace TestWebAppCoolName.Controllers
 
                 if (viewModel.Course != null)
                 {
+                    ViewBag.Description = viewModel.Course.Description;
                     viewModel.Section = section;
                     return View("Detail", viewModel);
                 }

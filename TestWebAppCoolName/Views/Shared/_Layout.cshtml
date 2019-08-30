@@ -1,15 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@using TestWebAppCoolName.Helpers
+<!DOCTYPE html>
 <html>
 <head>
-    <meta property="og:image" content="http://www.vkurzu.cz/media/web-thumbnail.png" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://www.vkurzu.cz" />
-    <meta property="og:title" content="vKurzu.cz" />
-    <meta property="og:description" content="Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací." />
-    <link rel="icon" type="image/png" href="/content/favicon.png" />
-    <link rel="icon" type="image/png" href="/content/favicon-2x.png" />
-    <link rel="icon" type="image/png" href="/content/favicon-6x.png" />
-    <meta charset="utf-8" />
+    @{
+        if (ViewBag.Description == null) {
+            ViewBag.Description = "Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.";
+        }
+
+        if (ViewBag.Thumbnail == null)
+        {
+            ViewBag.Thumbnail = "media/web-thumbnail.png";
+        }
+    }
+
+    <meta property="og:image" content="http://www.vkurzu.cz/@ViewBag.Thumbnail"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="@Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@ViewBag.Title"/>
+    <meta property="og:description" content="@ViewBag.Description"/>
+    @*<meta property="og:description" content="Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací." />*@
+    <link rel="icon" type="image/png" href="/content/favicon.png"/>
+    <link rel="icon" type="image/png" href="/content/favicon-2x.png"/>
+    <link rel="icon" type="image/png" href="/content/favicon-6x.png"/>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <script src="/scripts/highlight.js"></script>
@@ -21,17 +34,27 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/script.js")
     @Scripts.Render("~/Scripts/TagScripts.js")
+    @Scripts.Render("~/Scripts/ThumbnailJs.js")
     @Scripts.Render("~/bundles/QuillScript")
     <!-- Facebook Thumbnail sharing -->
     <!-- Facebook Pixel Code -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
+        !function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window,
+            document,
+            'script',
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '549385278923811');
         fbq('track', 'PageView');
@@ -40,14 +63,16 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146457992-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() { dataLayer.push(arguments); }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-146457992-1');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1"
-              /></noscript>
+    <noscript>
+        <img height="1" width="1" style="display: none"
+             src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1"/></noscript>
     <!-- End Facebook Pixel Code -->
 
 

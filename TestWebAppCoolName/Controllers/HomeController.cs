@@ -46,7 +46,7 @@ namespace TestWebAppCoolName.Controllers
         }
         public ActionResult Index()
         {
-
+            
             _viewModel.Courses = _context.Courses.Include(c => c.Svg).Where(c => !c.Deleted).OrderBy(c => c.Position).ToList();
             _viewModel.Blogs = _blogRepo.GetFirst3BlogPosts();
             _viewModel.ShowAlert = !string.IsNullOrEmpty(TempData["EmailSent"]?.ToString());

@@ -6,11 +6,11 @@
 }
 <body class="body--admin">
     <main class="main main--admin-form">
-        @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
+        @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <p class="admin-form__title">
-        <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
+                <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
                 @Html.TextAreaFor(m => m.Blog.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.Blog.Name)
             </p>
@@ -28,16 +28,24 @@
                     <div id="editor"></div>
                 </div>
             </p>
-            
+
             <p>
                 @Html.LabelFor(m => m.Blog.RelatedCourseId)
-                @Html.DropDownListFor(m => m.Blog.RelatedCourseId,  new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
+                @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
             </p>
             <p>
                 @Html.LabelFor(m => m.Blog.UrlTitle)
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
+            </p>
+            <p>
+                @Html.LabelFor(m => m.Thumbnail)
+                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file",id = "SocialThumbnailImage" })
+                @Html.ValidationMessageFor(m => m.Thumbnail)
+            </p>
+            <p>
+                <img id="SocialThumbnailImagePlaceHolder" />
             </p>
             <div>
                 <div class="subject-info-box-1">
@@ -84,9 +92,7 @@
 
             <p>
                 <button type="submit" id="save">Vytvořit</button>
-                <div id="pageloader" style="display: none;">
-                    <img src="/media/30.svg" alt="processing..." />
-                </div>
+
             </p>
             <span>@ViewBag.Message</span>
             if (ViewData["Saved"] != null)
@@ -104,14 +110,15 @@
 
 
 
-
+    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+      
 
         let quill = new Quill('#editor',
             {
                 modules: {
                     toolbar: toolbarOptions,
-                    syntax:true
+                    syntax: true
                 },
                 theme: 'snow'
             });
