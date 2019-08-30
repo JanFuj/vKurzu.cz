@@ -441,6 +441,10 @@
     <Compile Include="Migrations\201908300809565_ImageFileInBlogTable.Designer.cs">
       <DependentUpon>201908300809565_ImageFileInBlogTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908300946578_FileNameAddToImageFileTAble.cs" />
+    <Compile Include="Migrations\201908300946578_FileNameAddToImageFileTAble.Designer.cs">
+      <DependentUpon>201908300946578_FileNameAddToImageFileTAble.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -872,6 +876,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908300809565_ImageFileInBlogTable.resx">
       <DependentUpon>201908300809565_ImageFileInBlogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908300946578_FileNameAddToImageFileTAble.resx">
+      <DependentUpon>201908300946578_FileNameAddToImageFileTAble.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

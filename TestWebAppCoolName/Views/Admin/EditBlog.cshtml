@@ -8,7 +8,7 @@
 <main class="main">
     <section class="courses">
 
-        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog" }))
+        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <p>

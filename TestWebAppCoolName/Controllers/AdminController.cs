@@ -384,11 +384,21 @@ namespace TestWebAppCoolName.Controllers
 
             if (vm.Thumbnail != null)
             {
-                vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                var thumbnail = new ImageFile() { Path = $"/Content/Images/{vm.Thumbnail.FileName}" };
-                _context.ImageFiles.Add(thumbnail);
-                _context.SaveChanges();
-                vm.Blog.Thumbnail = thumbnail;
+                var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                var existingImage =
+                    _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                if (existingImage == null)
+                {
+                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
+                    _context.ImageFiles.Add(thumbnail);
+                    _context.SaveChanges();
+                    vm.Blog.Thumbnail = thumbnail;
+                }
+                else
+                {
+                    vm.Blog.Thumbnail = existingImage;
+                }
             }
             vm.Blog.OwnerId = User.Identity.GetUserId();
             vm.Blog.Created = DateTime.Now;
@@ -409,7 +419,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Blog blog = _context.Blogs.Include(b => b.Tags).Include(b=>b.Thumbnail).FirstOrDefault(b => b.Id == id);
+            Blog blog = _context.Blogs.Include(b => b.Tags).Include(b => b.Thumbnail).FirstOrDefault(b => b.Id == id);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -462,7 +472,7 @@ namespace TestWebAppCoolName.Controllers
                 };
                 return View(viewModel);
             }
-       
+
             var blo = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == vm.Blog.Id);
             if (blo != null)
             {
@@ -475,11 +485,21 @@ namespace TestWebAppCoolName.Controllers
                 _context.SaveChanges();
                 if (vm.Thumbnail != null)
                 {
-                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                    var thumbnail = new ImageFile() { Path = $"/Content/Images/{vm.Thumbnail.FileName}" };
-                    _context.ImageFiles.Add(thumbnail);
-                    _context.SaveChanges();
-                    blo.Thumbnail = thumbnail;
+                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                    var existingImage =
+                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                    if (existingImage == null)
+                    {
+                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                        var thumbnail = new ImageFile() { Path = $"Content/Images/{vm.Thumbnail.FileName}" };
+                        _context.ImageFiles.Add(thumbnail);
+                        _context.SaveChanges();
+                        blo.Thumbnail = thumbnail;
+                    }
+                    else
+                    {
+                        blo.Thumbnail = existingImage;
+                    }
                 }
 
                 blo.Name = vm.Blog.Name;
