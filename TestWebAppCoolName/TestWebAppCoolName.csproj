@@ -197,6 +197,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TutorialsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\ITutorialCategoryPostsRepository.cs" />
     <Compile Include="DAL\TagRepository.cs" />
     <Compile Include="DAL\TutorialCategoryPostsRepository.cs" />
@@ -685,6 +686,7 @@
     <Content Include="Views\Admin\Register.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Shared\_adminLoginPartial.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

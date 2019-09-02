@@ -5,17 +5,17 @@
 }
 
 <body>
-    <main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
+@Html.Partial("_adminLoginPartial")
+<main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
 
-        <h1 class="" style="margin-bottom: 0;">Smazat tag?</h1>
-        <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.Name</h2>
+    <h1 class="" style="margin-bottom: 0;">Smazat tag?</h1>
+    <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.Name</h2>
 
-        @using (Html.BeginForm(new { @class = "dialog-buttons" }))
-        {
-            @Html.AntiForgeryToken()
+    @using (Html.BeginForm(new {@class = "dialog-buttons"})) {
+        @Html.AntiForgeryToken()
 
-            <button class="button">Nenávratně smazat</button>
-        }
-        <a class="link--gradient link--border" href="/admin/tag">Ponechat</a>
-    </main>
+        <button class="button">Nenávratně smazat</button>
+    }
+    <a class="link--gradient link--border" href="/admin/tag">Ponechat</a>
+</main>
 </body>

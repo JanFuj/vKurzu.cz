@@ -5,103 +5,99 @@
     ViewBag.Title = "New Blog";
 }
 <body class="body--admin">
-    <main class="main main--admin-form">
-        @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <p class="admin-form__title">
-                <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
-                @Html.TextAreaFor(m => m.Blog.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
-                @Html.ValidationMessageFor(m => m.Blog.Name)
-            </p>
+@Html.Partial("_adminLoginPartial")
+<main class="main main--admin-form">
+    @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new {id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data"})) {
+        @Html.AntiForgeryToken()
+        <p class="admin-form__title">
+            <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
+            @Html.TextAreaFor(m => m.Blog.Name, new {placeholder = "Nadpis", @class = "h3 admin-form__textarea"})
+            @Html.ValidationMessageFor(m => m.Blog.Name)
+        </p>
 
-            <p class="admin-form__desc">
-                @Html.TextAreaFor(m => m.Blog.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
-                @Html.ValidationMessageFor(m => m.Blog.Description)
-            </p>
+        <p class="admin-form__desc">
+            @Html.TextAreaFor(m => m.Blog.Description, new {placeholder = "Popis", @class = "admin-form__textarea"})
+            @Html.ValidationMessageFor(m => m.Blog.Description)
+        </p>
 
-            <p>
-                @Html.HiddenFor(m => m.Blog.Body)
-                @Html.ValidationMessageFor(m => m.Blog.Body)
-                <div class="quill-wrapper">
-                    <div id="toolbar"></div>
-                    <div id="editor"></div>
-                </div>
-            </p>
+        <p>
+            @Html.HiddenFor(m => m.Blog.Body)
+            @Html.ValidationMessageFor(m => m.Blog.Body)
+            <div class="quill-wrapper">
+                <div id="toolbar"></div>
+                <div id="editor"></div>
+            </div>
+        </p>
 
-            <p>
-                @Html.LabelFor(m => m.Blog.RelatedCourseId)
-                @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
-            </p>
-            <p>
-                @Html.LabelFor(m => m.Blog.UrlTitle)
-                @Html.TextBoxFor(m => m.Blog.UrlTitle)
-                @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
-            </p>
-            <p>
-                @Html.LabelFor(m => m.Thumbnail)
-                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file",id = "SocialThumbnailImage" })
-                @Html.ValidationMessageFor(m => m.Thumbnail)
-            </p>
-            <p>
-                <img id="SocialThumbnailImagePlaceHolder" />
-            </p>
-            <div>
-                <div class="subject-info-box-1">
-                    <select multiple="multiple" id='lstBox1' class="form-control">
-                        @if (Model.Blog?.Tags != null)
-                        {
-                            foreach (var tag in Model.Blog.Tags)
-                            {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
+        <p>
+            @Html.LabelFor(m => m.Blog.RelatedCourseId)
+            @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
+            @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Blog.UrlTitle)
+            @Html.TextBoxFor(m => m.Blog.UrlTitle)
+            @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Thumbnail)
+            @Html.TextBoxFor(m => m.Thumbnail, new {type = "file", id = "SocialThumbnailImage"})
+            @Html.ValidationMessageFor(m => m.Thumbnail)
+        </p>
+        <p>
+            <img id="SocialThumbnailImagePlaceHolder"/>
+        </p>
+        <div>
+            <div class="subject-info-box-1">
+                <select multiple="multiple" id='lstBox1' class="form-control">
+                    @if (Model.Blog?.Tags != null) {
+                        foreach (var tag in Model.Blog.Tags) {
+                            <option value="@tag.Name">@tag.Name</option>
                         }
-                    </select>
-                </div>
-
-                <div class="subject-info-arrows text-center">
-                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" /><br />
-                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" /><br />
-                </div>
-
-
-
-                <div class="subject-info-box-2">
-                    <select multiple="multiple" id='lstBox2' class="form-control">
-                        @foreach (var tag in new DataService().GetTags())
-                        {
-                            bool exist = false;
-                            if (Model.Blog?.Tags != null)
-                            {
-                                exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
-                            }
-                            if (!exist)
-                            {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <p id="tags-output">
-                    <label>tagy</label>
-                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
-
-                </p>
+                    }
+                </select>
             </div>
 
-            <p>
-                <button type="submit" id="save">Vytvořit</button>
+            <div class="subject-info-arrows text-center">
+                <input type='button' id='btnRight' value=&gt; class="btn btn-default"/>
+                <br/>
+                <input type='button' id='btnLeft' value=&lt; class="btn btn-default"/>
+                <br/>
+            </div>
+
+
+
+            <div class="subject-info-box-2">
+                <select multiple="multiple" id='lstBox2' class="form-control">
+                    @foreach (var tag in new DataService().GetTags()) {
+                        bool exist = false;
+                        if (Model.Blog?.Tags != null) {
+                            exist = (Model.Blog.Tags).Any(t => t.Id == tag.Id);
+                        }
+                        if (!exist) {
+                            <option value="@tag.Name">@tag.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <p id="tags-output">
+                <label>tagy</label>
+                @Html.TextBoxFor(m => m.Tagy, "...", new {id = "tags", name = "Tagy", @readonly = "readonly"})
 
             </p>
-            <span>@ViewBag.Message</span>
-            if (ViewData["Saved"] != null)
-            {
-                @Html.Label(ViewData["Saved"].ToString())
-            }
-        }
+        </div>
 
-    </main>
+        <p>
+            <button type="submit" id="save">Vytvořit</button>
+
+        </p>
+        <span>@ViewBag.Message</span>
+        if (ViewData["Saved"] != null) {
+            @Html.Label(ViewData["Saved"].ToString())
+        }
+    }
+
+</main>
 </body>
 
 @section scripts {

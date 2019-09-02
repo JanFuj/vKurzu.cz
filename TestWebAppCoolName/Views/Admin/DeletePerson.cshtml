@@ -4,17 +4,17 @@
     ViewBag.Title = "Delete lector";
 }
 <body>
+@Html.Partial("_adminLoginPartial")
 <main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
 
 
     <h1 class="" style="margin-bottom: 0;">Smazat osobu?</h1>
     <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.Fullname</h2>
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
 
-                <button class="button">Nenávratně smazat</button>
-            }
+        <button class="button">Nenávratně smazat</button>
+    }
     <a class="link--gradient link--border" href="/admin/lector">Ponechat</a>
-    </main>
+</main>
 </body>

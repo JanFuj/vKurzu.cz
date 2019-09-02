@@ -101,7 +101,7 @@ namespace TestWebAppCoolName.Controllers
 
                         if (UserManager.IsInRole(user.Id, Roles.User))
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "User");
                         }
                     }
                     return RedirectToAction("Index", "Home");
