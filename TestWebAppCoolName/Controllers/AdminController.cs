@@ -148,6 +148,26 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
+
+            if (vm.Thumbnail != null)
+            {
+                var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                var existingImage =
+                    _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                if (existingImage == null)
+                {
+                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
+                    _context.ImageFiles.Add(thumbnail);
+                    _context.SaveChanges();
+                    vm.Course.Thumbnail = thumbnail;
+                }
+                else
+                {
+                    vm.Course.Thumbnail = existingImage;
+                }
+            }
+
             vm.Course.OwnerId = User.Identity.GetUserId();
             vm.Course.Created = DateTime.Now;
             vm.Course.Changed = DateTime.Now;
@@ -168,7 +188,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Tags).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Tags).Include(c=>c.Thumbnail).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -222,13 +242,33 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            var cour = _context.Courses.Include(c => c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
+            var cour = _context.Courses.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.Course.Id);
             if (User.IsInRole(Roles.Lector) && cour?.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             if (cour != null)
             {
+
+                if (vm.Thumbnail != null)
+                {
+                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                    var existingImage =
+                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                    if (existingImage == null)
+                    {
+                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                        var thumbnail = new ImageFile() { Path = path };
+                        _context.ImageFiles.Add(thumbnail);
+                        _context.SaveChanges();
+                        cour.Thumbnail = thumbnail;
+                    }
+                    else
+                    {
+                        cour.Thumbnail = existingImage;
+                    }
+                }
+
                 cour.Name = vm.Course.Name;
                 cour.Description = vm.Course.Description;
                 cour.WillLearn = vm.Course.WillLearn;

@@ -10,7 +10,7 @@
     <main class="main">
         <section class="courses">
             <h1 class="">Upravit kurz</h1>
-            @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "admin-form", id = "mySubmitForm" }))
+            @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "admin-form", id = "mySubmitForm", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 <p class="form-item">
