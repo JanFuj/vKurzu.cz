@@ -21,5 +21,8 @@ namespace TestWebAppCoolName.DAL
         TutorialPost GetPostByUrl(string tutorialCategoryUrl, string tutorialPostUrlTitle);
         void AddPostInCategory(string title, TutorialPost vmTutorialPost);
         List<Tag> ParseTags(string vmTagy);
+
+        ImageFile GetImageByPath(string path);
+        void CreateImage(ImageFile image);
     }
 }

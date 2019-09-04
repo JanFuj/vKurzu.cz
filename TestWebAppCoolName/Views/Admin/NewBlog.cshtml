@@ -7,7 +7,7 @@
 <body class="body--admin">
 @Html.Partial("_adminLoginPartial")
 <main class="main main--admin-form">
-    @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new {id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data"})) {
+    @using (Html.BeginForm("NewBlog", "Admin", FormMethod.Post, new {id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data"})) {
         @Html.AntiForgeryToken()
         <p class="admin-form__title">
             <h1 class="main-heading courses__heading">Vytvořit nový blog</h1>
@@ -21,7 +21,7 @@
         </p>
 
         <p>
-            @Html.HiddenFor(m => m.Blog.Body)
+            @Html.HiddenFor(m => m.Blog.Body  )
             @Html.ValidationMessageFor(m => m.Blog.Body)
             <div class="quill-wrapper">
                 <div id="toolbar"></div>
@@ -29,17 +29,17 @@
             </div>
         </p>
 
-        <p>
+        <p class="form-item">
             @Html.LabelFor(m => m.Blog.RelatedCourseId)
             @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
             @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
         </p>
-        <p>
+        <p class="form-item">
             @Html.LabelFor(m => m.Blog.UrlTitle)
             @Html.TextBoxFor(m => m.Blog.UrlTitle)
             @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
         </p>
-        <p>
+        <p class="form-item">
             @Html.LabelFor(m => m.Thumbnail)
             @Html.TextBoxFor(m => m.Thumbnail, new {type = "file", id = "SocialThumbnailImage"})
             @Html.ValidationMessageFor(m => m.Thumbnail)
@@ -105,7 +105,6 @@
 
 
 
-
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
       
@@ -121,7 +120,7 @@
 
 
 
-        var form = document.querySelector('form');
+        var form = document.querySelector('#mySubmitForm');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit
@@ -131,5 +130,6 @@
 
         };
     </script>
+
 
 }

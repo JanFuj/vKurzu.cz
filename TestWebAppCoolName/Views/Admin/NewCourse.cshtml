@@ -9,7 +9,7 @@
 <main class="main">
 
     <h1 class="">Vytvořit nový kurz</h1>
-    @using (Html.BeginForm("NewCourse", "Admin", FormMethod.Post, new {@class = "admin-form"})) {
+    @using (Html.BeginForm("NewCourse", "Admin", FormMethod.Post, new {@class = "admin-form", enctype = "multipart/form-data", id="mySubmitForm" })) {
         @Html.AntiForgeryToken()
         <p class="form-item">
             @Html.LabelFor(m => m.Course.Name)
@@ -22,7 +22,7 @@
             @Html.TextAreaFor(m => m.Course.Description)
             @Html.ValidationMessageFor(m => m.Course.Description)
         </p>
-        <p>
+        <p class="form-item">
             @Html.LabelFor(m => m.Course.WillLearn)
             @Html.HiddenFor(m => m.Course.WillLearn)
             @Html.ValidationMessageFor(m => m.Course.WillLearn)
@@ -32,7 +32,7 @@
                 <div id="editorWillLearn"></div>
             </div>
         </p>
-        <p>
+        <p class="form-item">
             @Html.LabelFor(m => m.Course.Body)
             @Html.HiddenFor(m => m.Course.Body)
             @Html.ValidationMessageFor(m => m.Course.Body)
@@ -47,7 +47,14 @@
             @Html.TextBoxFor(m => m.Course.UrlTitle)
             @Html.ValidationMessageFor(m => m.Course.UrlTitle)
         </p>
-
+        <p class="form-item">
+            @Html.LabelFor(m => m.Thumbnail)
+            @Html.TextBoxFor(m => m.Thumbnail, new {type = "file", id = "SocialThumbnailImage"})
+            @Html.ValidationMessageFor(m => m.Thumbnail)
+        </p>
+        <p>
+            <img id="SocialThumbnailImagePlaceHolder"/>
+        </p>
         <p>
             <label for="">Ikona</label>
         </p>
@@ -235,7 +242,7 @@
 
 
 
-        var form = document.querySelector('form');
+        var form = document.querySelector('#mySubmitForm');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit

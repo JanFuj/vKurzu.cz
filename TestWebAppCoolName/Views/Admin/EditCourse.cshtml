@@ -6,184 +6,203 @@
 }
 
 <body>
-@Html.Partial("_adminLoginPartial")
-<main class="main">
-    <section class="courses">
-        <h1 class="">Upravit kurz</h1>
-        @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new {@class = "admin-form"})) {
-            @Html.AntiForgeryToken()
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.Name)
-                @Html.TextBoxFor(m => m.Course.Name)
-                @Html.ValidationMessageFor(m => m.Course.Name)
-            </p>
+    @Html.Partial("_adminLoginPartial")
+    <main class="main">
+        <section class="courses">
+            <h1 class="">Upravit kurz</h1>
+            @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { @class = "admin-form", id = "mySubmitForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Course.Name)
+                    @Html.TextBoxFor(m => m.Course.Name)
+                    @Html.ValidationMessageFor(m => m.Course.Name)
+                </p>
 
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.Description)
-                @Html.TextAreaFor(m => m.Course.Description)
-                @Html.ValidationMessageFor(m => m.Course.Description)
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.WillLearn)
-                @Html.HiddenFor(m => m.Course.WillLearn)
-                @Html.ValidationMessageFor(m => m.Course.WillLearn)
-                <div class="quill--will-learn">
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Course.Description)
+                    @Html.TextAreaFor(m => m.Course.Description)
+                    @Html.ValidationMessageFor(m => m.Course.Description)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Course.WillLearn)
+                    @Html.HiddenFor(m => m.Course.WillLearn)
+                    @Html.ValidationMessageFor(m => m.Course.WillLearn)
+                    <div class="quill--will-learn">
 
-                    <div id="toolbarWillLearn"></div>
-                    <div id="editorWillLearn"></div>
-                </div>
-            </p>
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.Body)
-                @Html.HiddenFor(m => m.Course.Body)
-                @Html.ValidationMessageFor(m => m.Course.Body)
-                <div>
-                    <div id="toolbarBody"></div>
-                    <div id="editorBody"></div>
-                </div>
-            </p>
+                        <div id="toolbarWillLearn"></div>
+                        <div id="editorWillLearn"></div>
+                    </div>
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Course.Body)
+                    @Html.HiddenFor(m => m.Course.Body)
+                    @Html.ValidationMessageFor(m => m.Course.Body)
+                    <div>
+                        <div id="toolbarBody"></div>
+                        <div id="editorBody"></div>
+                    </div>
+                </p>
 
-            <p class="form-item">
-                @Html.LabelFor(m => m.Course.UrlTitle)
-                @Html.TextBoxFor(m => m.Course.UrlTitle)
-                @Html.ValidationMessageFor(m => m.Course.UrlTitle)
-            </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Course.UrlTitle)
+                    @Html.TextBoxFor(m => m.Course.UrlTitle)
+                    @Html.ValidationMessageFor(m => m.Course.UrlTitle)
+                </p>
+                <p class="form-item">
+                    @Html.LabelFor(m => m.Thumbnail)
+                    @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", id = "SocialThumbnailImage" })
+                    @Html.ValidationMessageFor(m => m.Thumbnail)
+                </p>
+                <p class="form-item">
+                    @{
+                        var path = Model.Course.Thumbnail?.Path;
 
-            <p>
-                <label for="">Ikona</label>
-            </p>
-
-            <div class="svg-picker">
-
-                @{
-                    foreach (var svg in Model.Svgs) {
-                        <div class="svg-picker__item">
-                            @Html.RadioButtonFor(m => m.Course.Svg_id, svg.ID, new {id = svg.ID})
-                            <label for="@svg.ID"></label>
-                            <svg viewBox="0 0 128 128">
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
-                                    <stop offset="0%" stop-color="var(--grad-1)"></stop>
-                                    <stop offset="100%" stop-color="var(--grad-2)"></stop>
-                                </linearGradient>
-                                @Html.Raw(svg.Path);
-                            </svg>
-                        </div>
+                        <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
                     }
+                </p>
+                <p>
+                    <label for="">Ikona</label>
+                </p>
+
+                <div class="svg-picker">
+
+                    @{
+                        foreach (var svg in Model.Svgs)
+                        {
+                            <div class="svg-picker__item">
+                                @Html.RadioButtonFor(m => m.Course.Svg_id, svg.ID, new { id = svg.ID })
+                                <label for="@svg.ID"></label>
+                                <svg viewBox="0 0 128 128">
+                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="66%" y2="100%">
+                                        <stop offset="0%" stop-color="var(--grad-1)"></stop>
+                                        <stop offset="100%" stop-color="var(--grad-2)"></stop>
+                                    </linearGradient>
+                                    @Html.Raw(svg.Path);
+                                </svg>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+
+                <p>
+                    <label for="">Barva</label>
+                </p>
+                <div class="form-item gradient-picker">
+                    <div class="gradient-picker__color" data-gradient="gradient-1">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-1", new { id = "gradient-1" })
+                        <label for="gradient-1"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-2">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-2", new { id = "gradient-2" })
+                        <label for="gradient-2"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-3">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-3", new { id = "gradient-3" })
+                        <label for="gradient-3"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-4">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-4", new { id = "gradient-4" })
+                        <label for="gradient-4"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-5">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-5", new { id = "gradient-5" })
+                        <label for="gradient-5"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-6">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-6", new { id = "gradient-6" })
+                        <label for="gradient-6"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-7">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-7", new { id = "gradient-7" })
+                        <label for="gradient-7"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-8">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-8", new { id = "gradient-8" })
+                        <label for="gradient-8"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-9">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-9", new { id = "gradient-9" })
+                        <label for="gradient-9"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-10">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-10", new { id = "gradient-10" })
+                        <label for="gradient-10"></label>
+                    </div>
+                    <div class="gradient-picker__color" data-gradient="gradient-11">
+                        @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-11", new { id = "gradient-11" })
+                        <label for="gradient-11"></label>
+                    </div>
+                </div>
+
+
+
+
+                <div style="display: inline-block; width: 100%;">
+
+                    <div class="subject-info-box-1">
+                        <select multiple="multiple" id='lstBox1' class="form-control">
+                            @if (Model.Course?.Tags != null)
+                            {
+                                foreach (var tag in Model.Course.Tags)
+                                {
+                                    <option value="@tag.Name">@tag.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="subject-info-arrows text-center">
+                        <input type='button' id='btnRight' value=&gt; class="btn btn-default" />
+                        <br />
+                        <input type='button' id='btnLeft' value=&lt; class="btn btn-default" />
+                        <br />
+                    </div>
+
+
+
+                    <div class="subject-info-box-2">
+                        <select multiple="multiple" id='lstBox2' class="form-control">
+                            @foreach (var tag in new DataService().GetTags())
+                            {
+                                bool exist = false;
+                                if (Model.Course?.Tags != null)
+                                {
+                                    exist = (Model.Course.Tags).Any(t => t.Id == tag.Id);
+                                }
+                                if (!exist)
+                                {
+                                    <option value="@tag.Name">@tag.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div id="tags-output">
+                        <label>tagy</label>
+                        @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
+
+                    </div>
+
+                </div>
+
+                <p>
+                    @Html.HiddenFor(m => m.Course.Id)
+                    <button type="submit" id="save">Uložit</button>
+                    <div id="pageloader" style="display: none;">
+                        <img src="/media/30.svg" alt="processing..." />
+                    </div>
+                </p>
+                <span>@ViewBag.Message</span>
+                if (ViewData["Saved"] != null)
+                {
+                    @Html.Label(ViewData["Saved"].ToString())
                 }
-
-            </div>
-
-
-            <p>
-                <label for="">Barva</label>
-            </p>
-            <div class="form-item gradient-picker">
-                <div class="gradient-picker__color" data-gradient="gradient-1">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-1", new {id = "gradient-1"})
-                    <label for="gradient-1"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-2">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-2", new {id = "gradient-2"})
-                    <label for="gradient-2"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-3">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-3", new {id = "gradient-3"})
-                    <label for="gradient-3"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-4">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-4", new {id = "gradient-4"})
-                    <label for="gradient-4"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-5">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-5", new {id = "gradient-5"})
-                    <label for="gradient-5"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-6">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-6", new {id = "gradient-6"})
-                    <label for="gradient-6"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-7">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-7", new {id = "gradient-7"})
-                    <label for="gradient-7"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-8">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-8", new {id = "gradient-8"})
-                    <label for="gradient-8"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-9">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-9", new {id = "gradient-9"})
-                    <label for="gradient-9"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-10">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-10", new {id = "gradient-10"})
-                    <label for="gradient-10"></label>
-                </div>
-                <div class="gradient-picker__color" data-gradient="gradient-11">
-                    @Html.RadioButtonFor(m => m.Course.Modificator, "gradient-11", new {id = "gradient-11"})
-                    <label for="gradient-11"></label>
-                </div>
-            </div>
-
-
-
-
-            <div style="display: inline-block; width: 100%;">
-
-                <div class="subject-info-box-1">
-                    <select multiple="multiple" id='lstBox1' class="form-control">
-                        @if (Model.Course?.Tags != null) {
-                            foreach (var tag in Model.Course.Tags) {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-
-                <div class="subject-info-arrows text-center">
-                    <input type='button' id='btnRight' value=&gt; class="btn btn-default"/>
-                    <br/>
-                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default"/>
-                    <br/>
-                </div>
-
-
-
-                <div class="subject-info-box-2">
-                    <select multiple="multiple" id='lstBox2' class="form-control">
-                        @foreach (var tag in new DataService().GetTags()) {
-                            bool exist = false;
-                            if (Model.Course?.Tags != null) {
-                                exist = (Model.Course.Tags).Any(t => t.Id == tag.Id);
-                            }
-                            if (!exist) {
-                                <option value="@tag.Name">@tag.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div id="tags-output">
-                    <label>tagy</label>
-                    @Html.TextBoxFor(m => m.Tagy, "...", new {id = "tags", name = "Tagy", @readonly = "readonly"})
-
-                </div>
-
-            </div>
-
-            <p>
-                @Html.HiddenFor(m => m.Course.Id)
-                <button type="submit" id="save">Uložit</button>
-                <div id="pageloader" style="display: none;">
-                    <img src="/media/30.svg" alt="processing..."/>
-                </div>
-            </p>
-            <span>@ViewBag.Message</span>
-            if (ViewData["Saved"] != null) {
-                @Html.Label(ViewData["Saved"].ToString())
             }
-        }
 
-    </section>
-</main>
+        </section>
+    </main>
 </body>
 
 @section scripts {
@@ -247,7 +266,7 @@
         });
 
 
-        var form = document.querySelector('form');
+        var form = document.querySelector('#mySubmitForm');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit

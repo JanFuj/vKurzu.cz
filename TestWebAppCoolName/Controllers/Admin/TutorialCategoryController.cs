@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TestWebAppCoolName.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
@@ -21,6 +22,8 @@ namespace TestWebAppCoolName.Controllers.Admin
         public List<Person> Persons { get; set; }
         public TutorialPost TutorialPost { get; set; }
         public string Tagy { get; set; }
+        [Display(Name = "Obrázek pro sdílení na sociálech")]
+        public HttpPostedFileBase Thumbnail { get; set; }
     }
 
 
@@ -77,10 +80,7 @@ namespace TestWebAppCoolName.Controllers.Admin
             // var persons = _context.Persons.ToList();
             var viewModel = new TutorialCategoryViewModel()
             {
-
-                Persons = _repo.GetPeople(),
                 TutorialPost = new TutorialPost(),
-
             };
             return View("NewPost", viewModel);
         }
@@ -112,6 +112,24 @@ namespace TestWebAppCoolName.Controllers.Admin
                 viewModel.TutorialPost.Tags = tags;
                 return View("NewPost", viewModel);
             }
+            if (vm.Thumbnail != null)
+            {
+                var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                var existingImage = _repo.GetImageByPath(path);
+                if (existingImage == null)
+                {
+                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
+                    _repo.CreateImage(thumbnail);
+                    _repo.Save();
+                    vm.TutorialPost.Thumbnail = thumbnail;
+                }
+                else
+                {
+                    vm.TutorialPost.Thumbnail = existingImage;
+                }
+            }
+
             vm.TutorialPost.OwnerId = User.Identity.GetUserId();
             vm.TutorialPost.Created = DateTime.Now;
             vm.TutorialPost.Changed = DateTime.Now;
@@ -201,10 +219,30 @@ namespace TestWebAppCoolName.Controllers.Admin
 
                     postFromDb.Tags = null;
                     _repo.Save();
+
+                    if (vm.Thumbnail != null)
+                    {
+                        var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                        var existingImage = _repo.GetImageByPath(path);
+                        if (existingImage == null)
+                        {
+                            vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                            var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
+                            _repo.CreateImage(thumbnail);
+                            _repo.Save();
+                            postFromDb.Thumbnail = thumbnail;
+                        }
+                        else
+                        {
+                            postFromDb.Thumbnail = existingImage;
+                        }
+                    }
+
+
                     postFromDb.Name = vm.TutorialPost.Name;
                     postFromDb.Description = vm.TutorialPost.Description;
                     postFromDb.Body = vm.TutorialPost.Body;
-                  //  postFromDb.Author_Id = vm.TutorialPost.Author_Id;
+                    postFromDb.RelatedCourseId = vm.TutorialPost.RelatedCourseId;
                     postFromDb.UrlTitle = vm.TutorialPost.UrlTitle;
                     postFromDb.Tags = tags;
                     postFromDb.Changed = DateTime.Now;
@@ -244,7 +282,6 @@ namespace TestWebAppCoolName.Controllers.Admin
             var viewModel = new TutorialCategoryViewModel()
             {
 
-                Persons = _repo.GetPeople(),
                 TutorialPost = post,
                 TutorialCategory = category,
 

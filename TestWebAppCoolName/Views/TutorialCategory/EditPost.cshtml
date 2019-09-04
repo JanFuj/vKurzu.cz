@@ -9,7 +9,7 @@
     @Html.Partial("_adminLoginPartial")
     <section class="courses">
 
-        @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new {id = "form", @class = "admin-form admin-form--blog"})) {
+        @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new {id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" })) {
             @Html.AntiForgeryToken()
             <p>
                 <h1 class="main-heading courses__heading">Upravit blog</h1>
@@ -31,15 +31,28 @@
                     <div id="editor"></div>
                 </div>
             </p>
-            <p>
-                @Html.LabelFor(m => m.TutorialPost.Author_Id)
-                @Html.DropDownListFor(m => m.TutorialPost.Author_Id, new SelectList(Model.Persons, "Id", "Name"))
-                @Html.ValidationMessageFor(m => m.TutorialPost.Author_Id)
+         
+            <p class="form-item">
+                @Html.LabelFor(m => m.TutorialPost.RelatedCourseId)
+                @Html.DropDownListFor(m => m.TutorialPost.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
+                @Html.ValidationMessageFor(m => m.TutorialPost.RelatedCourseId)
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.TutorialPost.UrlTitle)
                 @Html.TextBoxFor(m => m.TutorialPost.UrlTitle)
                 @Html.ValidationMessageFor(m => m.TutorialPost.UrlTitle)
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.Thumbnail)
+                @Html.TextBoxFor(m => m.Thumbnail, new {type = "file", id = "SocialThumbnailImage"})
+                @Html.ValidationMessageFor(m => m.Thumbnail)
+            </p>
+            <p class="form-item">
+                @{
+                    var path = Model.TutorialPost.Thumbnail?.Path;
+                    <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
+
+                }
             </p>
             <div>
 
@@ -102,7 +115,7 @@
 
 
 @section scripts {
-
+    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 
@@ -123,11 +136,11 @@
 
         });
 
-        var form = document.querySelector('form');
+        var form = document.querySelector('#mySubmitForm');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit
-            var body = document.querySelector('input[id=Blog_Body]');
+            var body = document.querySelector('input[id=TutorialPost_Body]');
             body.value = JSON.stringify(quill.getContents());
             console.log("Submitted", $(form).serialize(), $(form).serializeArray());
         };

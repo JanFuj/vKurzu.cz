@@ -22,7 +22,7 @@ namespace TestWebAppCoolName.DAL
 
         public TutorialCategory GetTutorialCategory(string title)
         {
-            return _context.TutorialCategory.Include(x => x.Posts.Select(y => y.Tags)).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
+            return _context.TutorialCategory.Include(x => x.Posts.Select(y => y.Tags)).Include(x=>x.Posts.Select(y=>y.Thumbnail)).Include(x=>x.Thumbnail).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
         }
 
         public List<TutorialPost> GetPosts(string tutorialCategoryTitle)
@@ -98,6 +98,16 @@ namespace TestWebAppCoolName.DAL
         public List<Tag> ParseTags(string vmTagy)
         {
             return TagParser.ParseTags(vmTagy, _context);
+        }
+
+        public ImageFile GetImageByPath(string path)
+        {
+            return _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+        }
+
+        public void CreateImage(ImageFile image)
+        {
+            _context.ImageFiles.Add(image);
         }
 
         protected virtual void Dispose(bool disposing)

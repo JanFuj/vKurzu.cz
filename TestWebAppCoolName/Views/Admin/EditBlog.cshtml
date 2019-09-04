@@ -8,7 +8,7 @@
 <main class="main">
     <section class="courses">
 
-        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "form", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("EditBlog", "Admin", FormMethod.Post, new { id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <p>
@@ -32,28 +32,26 @@
                 </div>
             </p>
 
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Blog.RelatedCourseId)
                 @Html.DropDownListFor(m => m.Blog.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
                 @Html.ValidationMessageFor(m => m.Blog.RelatedCourseId)
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Blog.UrlTitle)
                 @Html.TextBoxFor(m => m.Blog.UrlTitle)
                 @Html.ValidationMessageFor(m => m.Blog.UrlTitle)
             </p>
-            <p>
+            <p class="form-item">
                 @Html.LabelFor(m => m.Thumbnail)
                 @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", id = "SocialThumbnailImage" })
                 @Html.ValidationMessageFor(m => m.Thumbnail)
             </p>
-            <p>
+            <p class="form-item">
                 @{
                     var path = Model.Blog.Thumbnail?.Path;
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
-                    }
+                    <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
+
                 }
             </p>
             <div>
@@ -142,7 +140,7 @@
 
         });
 
-        var form = document.querySelector('form');
+        var form = document.querySelector('#mySubmitForm');
         form.onsubmit = function () {
             console.log("submitted")
             // Populate hidden form on submit

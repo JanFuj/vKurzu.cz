@@ -33,12 +33,7 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte modifikator")]
         public string Modificator { get; set; }
 
-        //[Display(Name = "Lektor")]
-        //[Required(ErrorMessage = "Vyberte lektora")]
-        //[ForeignKey("Lector")]
-     //   public int Lector_Id { get; set; }
-
-      //  public Person Lector { get; set; }
+      
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }
@@ -47,6 +42,8 @@ namespace TestWebAppCoolName.Models
         public string OwnerId { get; set; }
      
         public int Position { get; set; }
+        [Display(Name = "Obrázek pro sdílení na sociálech")]
+        public ImageFile Thumbnail { get; set; }
         public List<Tag> Tags { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }

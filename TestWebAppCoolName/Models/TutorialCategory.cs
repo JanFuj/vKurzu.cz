@@ -15,6 +15,8 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Url")]
         [Required(ErrorMessage = "Zadejte url")]
         public string UrlTitle { get; set; }
+        [Display(Name = "Obrázek pro sdílení na sociálech")]
+        public ImageFile Thumbnail { get; set; }
         public List<Tag> Tags { get; set; }
         public List<TutorialPost> Posts { get; set; }
 

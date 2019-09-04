@@ -28,6 +28,8 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }
+        [Display(Name = "Souviející kurz")]
+        public int RelatedCourseId { get; set; }
         public List<Tag> Tags { get; set; }
     }
 }

@@ -454,6 +454,18 @@
     <Compile Include="Migrations\201909021231545_ThumbNailInTutorialPost.Designer.cs">
       <DependentUpon>201909021231545_ThumbNailInTutorialPost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909040705565_ThumbnailImageInCourseTable.cs" />
+    <Compile Include="Migrations\201909040705565_ThumbnailImageInCourseTable.Designer.cs">
+      <DependentUpon>201909040705565_ThumbnailImageInCourseTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909040706524_ThumbnailImageInTutorialCategoryTable.cs" />
+    <Compile Include="Migrations\201909040706524_ThumbnailImageInTutorialCategoryTable.Designer.cs">
+      <DependentUpon>201909040706524_ThumbnailImageInTutorialCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909040745125_RelatedCourseInTutorialPostTable.cs" />
+    <Compile Include="Migrations\201909040745125_RelatedCourseInTutorialPostTable.Designer.cs">
+      <DependentUpon>201909040745125_RelatedCourseInTutorialPostTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -897,6 +909,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909021231545_ThumbNailInTutorialPost.resx">
       <DependentUpon>201909021231545_ThumbNailInTutorialPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909040705565_ThumbnailImageInCourseTable.resx">
+      <DependentUpon>201909040705565_ThumbnailImageInCourseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909040706524_ThumbnailImageInTutorialCategoryTable.resx">
+      <DependentUpon>201909040706524_ThumbnailImageInTutorialCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909040745125_RelatedCourseInTutorialPostTable.resx">
+      <DependentUpon>201909040745125_RelatedCourseInTutorialPostTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
