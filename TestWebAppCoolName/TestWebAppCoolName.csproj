@@ -446,6 +446,14 @@
     <Compile Include="Migrations\201908300946578_FileNameAddToImageFileTAble.Designer.cs">
       <DependentUpon>201908300946578_FileNameAddToImageFileTAble.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909021230545_AuthorRemovedFromTutorialPost.cs" />
+    <Compile Include="Migrations\201909021230545_AuthorRemovedFromTutorialPost.Designer.cs">
+      <DependentUpon>201909021230545_AuthorRemovedFromTutorialPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909021231545_ThumbNailInTutorialPost.cs" />
+    <Compile Include="Migrations\201909021231545_ThumbNailInTutorialPost.Designer.cs">
+      <DependentUpon>201909021231545_ThumbNailInTutorialPost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -611,6 +619,7 @@
     <Content Include="Scripts\quill.js" />
     <Content Include="Scripts\quill.min.js" />
     <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\TagScripts.js" />
     <Content Include="Scripts\ThumbnailJs.js" />
     <Content Include="Web.config">
@@ -882,6 +891,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908300946578_FileNameAddToImageFileTAble.resx">
       <DependentUpon>201908300946578_FileNameAddToImageFileTAble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909021230545_AuthorRemovedFromTutorialPost.resx">
+      <DependentUpon>201909021230545_AuthorRemovedFromTutorialPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909021231545_ThumbNailInTutorialPost.resx">
+      <DependentUpon>201909021231545_ThumbNailInTutorialPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

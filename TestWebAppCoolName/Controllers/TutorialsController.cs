@@ -62,7 +62,7 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();
             }
 
-            post.Author = _repo.GetAuthorById(post.Author_Id);
+          //  post.Author = _repo.GetAuthorById(post.Author_Id);
             var vm = new TutorialsViewModel {TutorialPost = post};
 
             return View("TutorialPost", vm);

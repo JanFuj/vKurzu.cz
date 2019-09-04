@@ -204,7 +204,7 @@ namespace TestWebAppCoolName.Controllers.Admin
                     postFromDb.Name = vm.TutorialPost.Name;
                     postFromDb.Description = vm.TutorialPost.Description;
                     postFromDb.Body = vm.TutorialPost.Body;
-                    postFromDb.Author_Id = vm.TutorialPost.Author_Id;
+                  //  postFromDb.Author_Id = vm.TutorialPost.Author_Id;
                     postFromDb.UrlTitle = vm.TutorialPost.UrlTitle;
                     postFromDb.Tags = tags;
                     postFromDb.Changed = DateTime.Now;

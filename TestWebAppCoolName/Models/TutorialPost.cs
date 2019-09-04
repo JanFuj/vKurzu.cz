@@ -23,11 +23,8 @@ namespace TestWebAppCoolName.Models
         [AllowHtml]
         public string Body { get; set; }
 
-        [Display(Name = "Autor")]
-        [Required(ErrorMessage = "Zadejte autora")]
-        [ForeignKey("Author")]
-        public int Author_Id { get; set; }
-        public Person Author { get; set; }
+        [Display(Name = "Obrázek pro sdílení na sociálech")]
+        public ImageFile Thumbnail { get; set; }
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }
