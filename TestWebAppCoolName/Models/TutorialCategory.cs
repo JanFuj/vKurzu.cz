@@ -12,6 +12,9 @@ namespace TestWebAppCoolName.Models
         [Required(ErrorMessage = "Zadejte název tutoriálu")]
         [Display(Name = "Název")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Zadejte popis kurzu")]
+        [Display(Name = "Popis")]
+        public string Description { get; set; }
         [Display(Name = "Url")]
         [Required(ErrorMessage = "Zadejte url")]
         public string UrlTitle { get; set; }

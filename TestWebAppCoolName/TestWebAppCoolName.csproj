@@ -466,6 +466,10 @@
     <Compile Include="Migrations\201909040745125_RelatedCourseInTutorialPostTable.Designer.cs">
       <DependentUpon>201909040745125_RelatedCourseInTutorialPostTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909041056046_DescriptionInTutorialCategoryTable.cs" />
+    <Compile Include="Migrations\201909041056046_DescriptionInTutorialCategoryTable.Designer.cs">
+      <DependentUpon>201909041056046_DescriptionInTutorialCategoryTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -918,6 +922,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909040745125_RelatedCourseInTutorialPostTable.resx">
       <DependentUpon>201909040745125_RelatedCourseInTutorialPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041056046_DescriptionInTutorialCategoryTable.resx">
+      <DependentUpon>201909041056046_DescriptionInTutorialCategoryTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

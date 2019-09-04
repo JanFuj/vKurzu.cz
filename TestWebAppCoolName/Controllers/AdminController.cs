@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using TestWebAppCoolName.Controllers.Admin;
 using TestWebAppCoolName.Helpers;
 using TestWebAppCoolName.Models;
 using TestWebAppCoolName.Models.Dto;
@@ -188,7 +189,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Tags).Include(c=>c.Thumbnail).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Tags).Include(c => c.Thumbnail).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -242,7 +243,7 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            var cour = _context.Courses.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.Course.Id);
+            var cour = _context.Courses.Include(c => c.Tags).Include(c => c.Thumbnail).FirstOrDefault(c => c.Id == vm.Course.Id);
             if (User.IsInRole(Roles.Lector) && cour?.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
@@ -1008,7 +1009,11 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/tutorialCategories/new")]
         public ActionResult NewTutorialCategory()
         {
-            return View();
+            var viewModel = new TutorialCategoryViewModel()
+            {
+                TutorialCategory = new TutorialCategory(),
+            };
+            return View(viewModel);
         }
         // POST: Tags/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -1016,25 +1021,46 @@ namespace TestWebAppCoolName.Controllers
         [Route("admin/tutorialCategories/new")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> NewTutorialCategory([Bind(Include = "Id,Name,UrlTitle")] TutorialCategory tutorialCategory)
+        public async Task<ActionResult> NewTutorialCategory(TutorialCategoryViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var existingCategory = _context.TutorialCategory.FirstOrDefault(b => b.UrlTitle == tutorialCategory.UrlTitle);
+                var existingCategory = _context.TutorialCategory.FirstOrDefault(b => b.UrlTitle == vm.TutorialCategory.UrlTitle);
                 if (existingCategory != null)
                 {
-                    ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
-                    return View(tutorialCategory);
+                    ModelState.AddModelError("tutorialCategory.UrlTitle", "Zadany url titulek již existuje");
+                    return View(vm);
                 }
-                tutorialCategory.Created = DateTime.Now;
-                tutorialCategory.Changed = DateTime.Now;
-                tutorialCategory.OwnerId = User.Identity.GetUserId();
-                _context.TutorialCategory.Add(tutorialCategory);
+
+                if (vm.Thumbnail != null)
+                {
+                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                    var existingImage =
+                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                    if (existingImage == null)
+                    {
+                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                        var thumbnail = new ImageFile() { Path = path };
+                        _context.ImageFiles.Add(thumbnail);
+                        _context.SaveChanges();
+                        vm.TutorialCategory.Thumbnail = thumbnail;
+                    }
+                    else
+                    {
+                        vm.TutorialCategory.Thumbnail = existingImage;
+                    }
+                }
+
+
+                vm.TutorialCategory.Created = DateTime.Now;
+                vm.TutorialCategory.Changed = DateTime.Now;
+                vm.TutorialCategory.OwnerId = User.Identity.GetUserId();
+                _context.TutorialCategory.Add(vm.TutorialCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("TutorialCategories");
             }
 
-            return View(tutorialCategory);
+            return View(vm);
         }
 
 
@@ -1046,55 +1072,78 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var tutorialCategory = _context.TutorialCategory.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
-            if (tutorialCategory == null)
+            var tutorialCategoryFromDb = _context.TutorialCategory.Include(b => b.Tags).Include(c => c.Thumbnail).FirstOrDefault(b => b.Id == id);
+            if (tutorialCategoryFromDb == null)
             {
                 return HttpNotFound();
             }
 
-            if (User.IsInRole(Roles.Lector) && tutorialCategory.OwnerId != User.Identity.GetUserId())
+            if (User.IsInRole(Roles.Lector) && tutorialCategoryFromDb.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }
+            var viewModel = new TutorialCategoryViewModel()
+            {
+                TutorialCategory = tutorialCategoryFromDb
+            };
 
-
-            return View(tutorialCategory);
+            return View(viewModel);
         }
 
         [Route("admin/tutorialCategory/edit/{id?}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditTutorialCategory(TutorialCategory tutorialCategory)
+        public ActionResult EditTutorialCategory(TutorialCategoryViewModel vm)
         {
 
             if (!ModelState.IsValid)
             {
-                return View(tutorialCategory);
+                return View(vm);
             }
 
-            var existingTutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.UrlTitle == tutorialCategory.UrlTitle);
+            var existingTutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.UrlTitle == vm.TutorialCategory.UrlTitle);
             bool sameUrlInAnotherTutorialCategory = false;
             if (existingTutorialCategory != null)
             {
-                sameUrlInAnotherTutorialCategory = existingTutorialCategory?.Id != tutorialCategory.Id;
+                sameUrlInAnotherTutorialCategory = existingTutorialCategory?.Id != vm.TutorialCategory.Id;
             }
 
             if (sameUrlInAnotherTutorialCategory)
             {
                 ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
 
-                return View(tutorialCategory);
+                return View(vm);
             }
 
-            var tutor = _context.TutorialCategory.Include(c => c.Tags).FirstOrDefault(c => c.Id == tutorialCategory.Id);
+            var tutor = _context.TutorialCategory.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.TutorialCategory.Id);
             if (User.IsInRole(Roles.Lector) && tutor?.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             if (tutor != null)
             {
-                tutor.Name = tutorialCategory.Name;
-                tutor.UrlTitle = tutorialCategory.UrlTitle;
+                if (vm.Thumbnail != null)
+                {
+                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
+                    var existingImage =
+                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
+                    if (existingImage == null)
+                    {
+                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
+                        var thumbnail = new ImageFile() { Path = path };
+                        _context.ImageFiles.Add(thumbnail);
+                        _context.SaveChanges();
+                        tutor.Thumbnail = thumbnail;
+                    }
+                    else
+                    {
+                        tutor.Thumbnail = existingImage;
+                    }
+                }
+
+                tutor.Name = vm.TutorialCategory.Name;
+                tutor.Description = vm.TutorialCategory.Description;
+                tutor.UrlTitle = vm.TutorialCategory.UrlTitle;
                 tutor.Changed = DateTime.Now;
                 _context.SaveChanges();
                 return RedirectToAction("TutorialCategories");

@@ -1,4 +1,4 @@
-﻿@model TestWebAppCoolName.Models.TutorialCategory
+﻿@model TestWebAppCoolName.Controllers.Admin.TutorialCategoryViewModel
 
 @{
     ViewBag.Title = "New Tutorial Category";
@@ -8,23 +8,35 @@
 
 
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("NewTutorialCategory", "Admin", FormMethod.Post, new { @class = "admin-form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        <h3>Vytvořit novou kategorii tutorialu</h3>
+        <h3>Vytvořit novou kategorii tutorialu </h3>
         <div>
 
             <p class="form-item">
-                @Html.LabelFor(model => model.Name)
-
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-
+                @Html.LabelFor(model => model.TutorialCategory.Name)
+                @Html.EditorFor(model => model.TutorialCategory.Name)
+                @Html.ValidationMessageFor(model => model.TutorialCategory.Name)
             </p>
             <p class="form-item">
-                @Html.LabelFor(m => m.UrlTitle)
-                @Html.TextBoxFor(m => m.UrlTitle)
-                @Html.ValidationMessageFor(model => model.UrlTitle)
+                @Html.LabelFor(model => model.TutorialCategory.Description)
+                @Html.TextAreaFor(m => m.TutorialCategory.Description)
+                @Html.ValidationMessageFor(m => m.TutorialCategory.Description)
+            </p>
+
+            <p class="form-item">
+                @Html.LabelFor(m => m.TutorialCategory.UrlTitle)
+                @Html.TextBoxFor(m => m.TutorialCategory.UrlTitle)
+                @Html.ValidationMessageFor(model => model.TutorialCategory.UrlTitle)
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.Thumbnail)
+                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", id = "SocialThumbnailImage" })
+                @Html.ValidationMessageFor(m => m.Thumbnail)
+            </p>
+            <p>
+                <img id="SocialThumbnailImagePlaceHolder" />
             </p>
             <p>
                 <button type="submit" id="save">Vytvořit</button>
@@ -35,3 +47,7 @@
 
 
 </main>
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
