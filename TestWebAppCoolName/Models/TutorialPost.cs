@@ -31,5 +31,8 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Souviející kurz")]
         public int RelatedCourseId { get; set; }
         public List<Tag> Tags { get; set; }
+        [ForeignKey("Category")]
+        public int TutorialCategory_Id { get; set; }
+        public TutorialCategory Category { get; set; }
     }
 }

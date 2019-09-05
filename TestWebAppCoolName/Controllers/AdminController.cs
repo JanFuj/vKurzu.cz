@@ -1028,7 +1028,7 @@ namespace TestWebAppCoolName.Controllers
                 var existingCategory = _context.TutorialCategory.FirstOrDefault(b => b.UrlTitle == vm.TutorialCategory.UrlTitle);
                 if (existingCategory != null)
                 {
-                    ModelState.AddModelError("tutorialCategory.UrlTitle", "Zadany url titulek již existuje");
+                    ModelState.AddModelError("TutorialCategory.UrlTitle", "Zadany url titulek již existuje");
                     return View(vm);
                 }
 
@@ -1101,7 +1101,8 @@ namespace TestWebAppCoolName.Controllers
                 return View(vm);
             }
 
-            var existingTutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.UrlTitle == vm.TutorialCategory.UrlTitle);
+            var existingTutorialCategory = _context.TutorialCategory.Include(t=>t.Thumbnail).FirstOrDefault(c => c.UrlTitle == vm.TutorialCategory.UrlTitle);
+            var tutor = _context.TutorialCategory.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.TutorialCategory.Id);
             bool sameUrlInAnotherTutorialCategory = false;
             if (existingTutorialCategory != null)
             {
@@ -1110,12 +1111,11 @@ namespace TestWebAppCoolName.Controllers
 
             if (sameUrlInAnotherTutorialCategory)
             {
-                ModelState.AddModelError("UrlTitle", "Zadany url titulek již existuje");
-
+                ModelState.AddModelError("TutorialCategory.UrlTitle", "Zadany url titulek již existuje");
+                vm.TutorialCategory.Thumbnail = tutor?.Thumbnail;
                 return View(vm);
             }
 
-            var tutor = _context.TutorialCategory.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.TutorialCategory.Id);
             if (User.IsInRole(Roles.Lector) && tutor?.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

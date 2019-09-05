@@ -3,7 +3,8 @@
 <html>
 <head>
     @{
-        if (ViewBag.Description == null) {
+        if (ViewBag.Description == null)
+        {
             ViewBag.Description = "Za léta praxe jsme nasáli tuny zkušeností a vědomostí, které bychom rádi pustili do světa. Najměte nás a naučíme vás moderní způsoby vývoje nativních a webových aplikací.";
         }
 
@@ -12,17 +13,17 @@
             ViewBag.Thumbnail = "media/web-thumbnail.png";
         }
     }
-
-    <meta property="og:image" content="http://www.vkurzu.cz/@ViewBag.Thumbnail"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="@Request.Url.AbsoluteUri"/>
-    <meta property="og:title" content="@ViewBag.Title"/>
-    <meta property="og:description" content="@ViewBag.Description"/>
-    <link rel="icon" type="image/png" href="/content/favicon.png"/>
-    <link rel="icon" type="image/png" href="/content/favicon-2x.png"/>
-    <link rel="icon" type="image/png" href="/content/favicon-6x.png"/>
-    <meta charset="utf-8"/>
+    <meta property="og:image" content="http://www.vkurzu.cz/@ViewBag.Thumbnail" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@Request.Url.AbsoluteUri" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <link rel="icon" type="image/png" href="/content/favicon.png" />
+    <link rel="icon" type="image/png" href="/content/favicon-2x.png" />
+    <link rel="icon" type="image/png" href="/content/favicon-6x.png" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@ViewBag.Description" />
     <title>@ViewBag.Title</title>
     <script src="/scripts/highlight.js"></script>
     <script src="/Scripts/sweetalert2.min.js"></script>
@@ -38,9 +39,9 @@
     <!-- Facebook Thumbnail sharing -->
     <!-- Facebook Pixel Code -->
     <script>
-        !function(f, b, e, v, n, t, s) {
+        !function (f, b, e, v, n, t, s) {
             if (f.fbq) return;
-            n = f.fbq = function() { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+            n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
             if (!f._fbq) f._fbq = n;
             n.push = n;
             n.loaded = !0;
@@ -71,7 +72,8 @@
     </script>
     <noscript>
         <img height="1" width="1" style="display: none"
-             src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1"/></noscript>
+             src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1" />
+    </noscript>
     <!-- End Facebook Pixel Code -->
 
 

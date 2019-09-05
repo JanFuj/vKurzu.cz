@@ -5,14 +5,14 @@
     ViewBag.Title = "Edit tutorial post";
 }
 
-<main class="main">
     @Html.Partial("_adminLoginPartial")
+<main class="main">
     <section class="courses">
 
         @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new {id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" })) {
             @Html.AntiForgeryToken()
             <p>
-                <h1 class="main-heading courses__heading">Upravit blog</h1>
+                <h1 class="main-heading courses__heading">Upravit post</h1>
 
                 @Html.TextAreaFor(m => m.TutorialPost.Name, new {placeholder = "Nadpis", @class = "h3 admin-form__textarea"})
                 @Html.ValidationMessageFor(m => m.TutorialPost.Name)

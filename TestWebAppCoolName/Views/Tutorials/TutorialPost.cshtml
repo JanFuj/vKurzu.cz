@@ -73,18 +73,28 @@
             <hr>
             <h2 class="related-articles__heading">Čtěte dále</h2>
             <div class="related-articles__grid">
-                @*@{
-                    var articles = new DataService().GetRelatedArticles(Model.Blog);
-                    foreach (var article in articles.Where(a => !a.Deleted))
-                    {
+                @{
+                    var articles = new DataService().GetRelatedArticles(Model.TutorialPost);
+
+                    if (articles.Item1 != null) {
                         <article class="article-preview">
-                            <div class="article-preview__author">@article.Author.FullName</div>
-                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">@article.Name</a></h3>
-                            <p class="article-preview__text">@article.Description</p>
-                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("Index","Blog",new{title =article.UrlTitle})">Číst článek</a></div>
+                            @*<div class="article-preview__author">@article.Author.FullName</div>*@
+                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item1.Category.UrlTitle ,postTitle =articles.Item1.UrlTitle})">@articles.Item1.Name</a></h3>
+                            <p class="article-preview__text">@articles.Item1.Description</p>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item1.Category.UrlTitle,postTitle =articles.Item1.UrlTitle})">Předchozí článek</a></div>
                         </article>
                     }
-                }*@
+
+                    if (articles.Item2 != null) {
+                        <article class="article-preview">
+                            @*<div class="article-preview__author">@article.Author.FullName</div>*@
+                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item2.Category.UrlTitle,postTitle =articles.Item2.UrlTitle})">@articles.Item2.Name</a></h3>
+                            <p class="article-preview__text">@articles.Item2.Description</p>
+                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item2.Category.UrlTitle,postTitle =articles.Item2.UrlTitle})">Další článek</a></div>
+                        </article>
+                    }
+                   
+                }
 
             </div>
         </aside>

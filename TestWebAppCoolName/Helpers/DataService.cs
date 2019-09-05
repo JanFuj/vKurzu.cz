@@ -18,7 +18,15 @@ namespace TestWebAppCoolName.Helpers
         public List<Blog> GetRelatedArticles(Blog blog)
         {
             //TODO some logic to pick up 3 related articles
-            return _context.Blogs.Where(b => b.UrlTitle != blog.UrlTitle && b.Approved).Take(3).ToList();
+            return _context.Blogs.Where(b => b.UrlTitle != blog.UrlTitle && b.Approved && !b.Deleted).Take(3).ToList();
+        }
+        public Tuple<TutorialPost, TutorialPost> GetRelatedArticles(TutorialPost tutorialPost)
+        {
+            //  tutorialPost
+            var allCategoryPosts = tutorialPost.Category.Posts;
+            var postBefore = allCategoryPosts.FirstOrDefault(p =>!p.Deleted && p.Position == (tutorialPost.Position - 1));
+            var postAfter = allCategoryPosts.FirstOrDefault(p => !p.Deleted && p.Position == (tutorialPost.Position + 1));
+            return new Tuple<TutorialPost, TutorialPost>(postBefore, postAfter);
         }
         public List<Tag> GetTags()
         {

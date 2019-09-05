@@ -195,6 +195,7 @@ namespace TestWebAppCoolName.Controllers.Admin
             }
             //muze editovat pouze pokud stejny url title neexistuje u jineho clanku
             var existingPost = _repo.GetPostByUrl(title, vm.TutorialPost.UrlTitle);
+            var postFromDb = _repo.GetPostById(title, vm.TutorialPost.Id);
             bool sameUrlInAnotherPost = false;
             if (existingPost != null)
             {
@@ -204,12 +205,13 @@ namespace TestWebAppCoolName.Controllers.Admin
             if (sameUrlInAnotherPost)
             {
                 ModelState.AddModelError("tutorialPost.UrlTitle", "Zadany url titulek již existuje");
+                viewModel.TutorialPost.Thumbnail = postFromDb?.Thumbnail;
                 return View("EditPost", viewModel);
             }
 
             try
             {
-                var postFromDb = _repo.GetPostById(title, vm.TutorialPost.Id);
+
                 if (postFromDb != null)
                 {
                     if (User.IsInRole(Roles.Lector) && postFromDb.OwnerId != User.Identity.GetUserId())

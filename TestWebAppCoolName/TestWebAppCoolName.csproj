@@ -470,6 +470,10 @@
     <Compile Include="Migrations\201909041056046_DescriptionInTutorialCategoryTable.Designer.cs">
       <DependentUpon>201909041056046_DescriptionInTutorialCategoryTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909050838194_TutorialCategoryIdInPostTable.cs" />
+    <Compile Include="Migrations\201909050838194_TutorialCategoryIdInPostTable.Designer.cs">
+      <DependentUpon>201909050838194_TutorialCategoryIdInPostTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -925,6 +929,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909041056046_DescriptionInTutorialCategoryTable.resx">
       <DependentUpon>201909041056046_DescriptionInTutorialCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909050838194_TutorialCategoryIdInPostTable.resx">
+      <DependentUpon>201909050838194_TutorialCategoryIdInPostTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

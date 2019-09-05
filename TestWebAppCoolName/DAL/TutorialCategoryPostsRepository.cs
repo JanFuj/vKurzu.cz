@@ -41,7 +41,7 @@ namespace TestWebAppCoolName.DAL
             var category = GetTutorialCategory(categoryTitle);
 
             var post = category.Posts.FirstOrDefault(x => x.Id == postId);
-            return category.Posts.FirstOrDefault(x => x.Id == postId);
+            return post;
         }
 
 
