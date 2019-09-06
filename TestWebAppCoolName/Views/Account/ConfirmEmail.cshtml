@@ -10,7 +10,7 @@
         <h2>@ViewBag.Title.</h2>
         <div>
             <p>
-                Váš účet je ověřen. Prosím @Html.ActionLink("klikněte zde pro přihlášení", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                Váš účet je ověřen.@Html.ActionLink("Přihlásit", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink",@class= "nav__link link--gradient link--border-hover" })
             </p>
         </div>
     </main>

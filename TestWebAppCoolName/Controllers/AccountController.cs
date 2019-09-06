@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TestWebAppCoolName.Models;
+using TestWebAppCoolName.Templates;
 
 namespace TestWebAppCoolName.Controllers
 {
@@ -19,10 +20,12 @@ namespace TestWebAppCoolName.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationDbContext _context;
+        private TemplateReader _templateReader;
 
         public AccountController()
         {
             _context = new ApplicationDbContext();
+            _templateReader = new TemplateReader();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -188,7 +191,13 @@ namespace TestWebAppCoolName.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Potvrzení účtu", "Potvrďte svou registraci kliknutím <a href=\"" + callbackUrl + "\">zde</a>");
+                    var emailModel = new
+                    {
+                        Url = callbackUrl
+                    };
+                    var path = Server.MapPath("~/Templates/RegistrationTemplate.html");
+                    var text = await _templateReader.ReadProcessedAsync(path, emailModel);
+                    await UserManager.SendEmailAsync(user.Id, "Potvrzení účtu", text);
 
                     return RedirectToAction("Index", "Home");
                 }

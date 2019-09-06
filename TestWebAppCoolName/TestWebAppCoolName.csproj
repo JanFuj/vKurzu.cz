@@ -497,6 +497,8 @@
     <Compile Include="DAL\BlogRepository.cs" />
     <Compile Include="DAL\IBlogRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Templates\TemplateProcessor.cs" />
+    <Compile Include="Templates\TemplateReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
@@ -642,6 +644,7 @@
     <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\TagScripts.js" />
     <Content Include="Scripts\ThumbnailJs.js" />
+    <Content Include="Templates\RegistrationTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
