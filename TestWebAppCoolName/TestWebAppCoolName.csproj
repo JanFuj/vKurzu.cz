@@ -719,6 +719,7 @@
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Shared\_adminLoginPartial.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Tutorials\TutorialCategoryPosts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

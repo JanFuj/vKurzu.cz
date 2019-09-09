@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,8 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Person> Persons { get; set; }
         public TutorialPost TutorialPost { get; set; }
+        public List<TutorialPost> Posts { get; set; }
+        public TutorialCategory TutorialCategory { get; set; }
         public Course RelatedCourse { get; set; }
         public string Tagy { get; set; }
     }
@@ -36,20 +39,39 @@ namespace TestWebAppCoolName.Controllers
             base.Dispose(disposing);
         }
         // GET: Tutorials
+        [HttpGet]
+        [Route("tutorialy")]
         public ActionResult Index()
         {
             //seznam kategorií
 
-            var userId = User.Identity.GetUserId();
-            var categories = _context.TutorialCategory.Where(c => !c.Deleted).ToList();
-            if (User.IsInRole(Roles.Lector))
-            {
-                categories = _context.TutorialCategory.Where(c => !c.Deleted && c.OwnerId == userId).ToList();
-            }
-            return View(categories.OrderBy(c => c.Position));
+            var categories = _context.TutorialCategory.Where(c => !c.Deleted && c.Approved).OrderBy(c => c.Position).ToList();
+
+            return View(categories);
         }
         [HttpGet]
-        [Route("tutorialCategory/{categoryTitle}/{postTitle}")]
+        [Route("tutorialy/{categoryTitle}")]
+        public ActionResult TutorialCategoryPosts(string categoryTitle)
+        {
+            //seznam kategorií
+
+            var category = _repo.GetTutorialCategory(categoryTitle);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            var posts = category.Posts.Where(p => p.Approved && !p.Deleted).OrderBy(p=>p.Position).ToList();
+
+            var viewModel = new TutorialsViewModel()
+            {
+                TutorialCategory = category,
+                Posts = posts
+            };
+            return View(viewModel);
+        }
+        [HttpGet]
+        [Route("tutorialy/{categoryTitle}/{postTitle}")]
         public ActionResult TutorialPost(string categoryTitle, string postTitle, bool preview = false)
         {
             var post = _repo.GetPostByUrl(categoryTitle, postTitle);
@@ -62,8 +84,7 @@ namespace TestWebAppCoolName.Controllers
                 return HttpNotFound();
             }
 
-          //  post.Author = _repo.GetAuthorById(post.Author_Id);
-            var vm = new TutorialsViewModel {TutorialPost = post};
+            var vm = new TutorialsViewModel { TutorialPost = post };
 
             return View("TutorialPost", vm);
         }

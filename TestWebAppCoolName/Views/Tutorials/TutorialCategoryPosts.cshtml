@@ -1,0 +1,56 @@
+﻿@model TestWebAppCoolName.Controllers.TutorialsViewModel
+    @{
+        ViewBag.Title = Model.TutorialCategory.Name + " | vKurzu.cz";
+    }
+    <header class="header header--blog" id="site-header">
+        @Html.Partial("toolbarPartialView")
+    </header>
+
+    <main class="main--blog">
+
+        <div class="blog-grid">
+            <h1 class="blog-headline">
+                <div class="blog-headline__text"><span class="blog-headline__letter">B</span><span class="blog-headline__letter">l</span><span class="blog-headline__letter">o</span><span class="blog-headline__letter">g</span></div>
+            </h1>
+
+            @{
+                var articleClassSuffix = "";
+                var titleClass = "";
+                for (int i = 0; i < Model.Posts?.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        titleClass = "link--gradient";
+                        articleClassSuffix = "primary";
+                    }
+                    if (i > 0 && i < 5)
+                    {
+                        articleClassSuffix = $"secondary article-preview--secondary-{i}";
+                    }
+                    if (i >= 5)
+                    {
+                        articleClassSuffix = "other";
+                    }
+
+                    <article class="article-preview article-preview--@articleClassSuffix">
+                        @*<div class="article-preview__author">@Model[i].Author.FullName</div>*@
+                        <h2 class="article-preview__title"><a class="@titleClass" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = Model.Posts[i].UrlTitle})">@Model.Posts[i].Name</a></h2>
+                        <p class="article-preview__text">@Model.Posts[i].Description</p>
+                        <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = Model.Posts[i].UrlTitle})">Zobrazit článek</a></div>
+                    </article>
+                    if (i == 0)
+                    {
+                        <hr class="hr-blog hr-blog--1">
+                    }
+                    if (i == 4)
+                    {
+                        <hr class="hr-blog hr-blog--2">
+                    }
+                    titleClass = "link--gradient-inversed";
+                }
+            }
+
+
+        </div>
+    </main>
+
