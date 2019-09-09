@@ -95,8 +95,8 @@ namespace TestWebAppCoolName.Controllers
         {
             IEnumerable<Blog> blogs = _context.Blogs.Where(b => b.Approved);
             var feed =
-                new SyndicationFeed("CoolName", "Coolname",
-                    new Uri("http://coolname.aspfree.cz/"),
+                new SyndicationFeed("vKurzu.cz", "Blog",
+                    new Uri("http://www.vkurzu.cz/"),
                     Guid.NewGuid().ToString(),
                     DateTime.Now);
             var items = new List<SyndicationItem>();
