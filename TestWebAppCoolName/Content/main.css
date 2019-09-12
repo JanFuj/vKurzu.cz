@@ -388,7 +388,8 @@ html {
 
 body {
   min-height: 100%;
-  font-family: var(--font-stack); }
+  font-family: var(--font-stack);
+  display: grid; }
 
 body > header,
 body > main,
@@ -706,8 +707,13 @@ select {
     border-color: var(--text-primary); }
     select:focus option:checked {
       background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2)); }
-  select option:not(:checked):hover {
+  select option {
     background: var(--clr-shade-2); }
+  select option:checked {
+    background: linear-gradient(0.4turn, var(--grad-1), var(--grad-1) 20%, var(--grad-2));
+    color: var(--text-primary-black); }
+  select option:not(:checked):hover {
+    background: var(--clr-shade-3); }
 
 a:link {
   color: var(--clr-primary); }
@@ -3691,6 +3697,15 @@ header,
     margin: 0; }
   .nav__link {
     white-space: nowrap; }
+    .nav__link--facebook {
+      --grad-1: var(--clr-azure);
+      --grad-2: var(--clr-blue); }
+    .nav__link--linkedin {
+      --grad-1: var(--clr-cyan);
+      --grad-2: var(--clr-azure); }
+    .nav__link--rss {
+      --grad-1: var(--clr-yellow);
+      --grad-2: var(--clr-tomato); }
 
 .footer {
   background: var(--bottom-grad);
@@ -4759,6 +4774,8 @@ header,
 
 .form-item {
   display: grid; }
+  .form-item > img {
+    max-width: 100%; }
 
 .dialog-buttons {
   display: grid;
