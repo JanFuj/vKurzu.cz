@@ -71,8 +71,8 @@
         gtag('config', 'UA-146457992-1');
     </script>
 
-        <img height="1" width="1" style="display: none" alt="facebookPixel"
-             src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1" />
+    <img height="1" width="1" style="display: none" alt="facebookPixel"
+         src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1" />
 
     <!-- End Facebook Pixel Code -->
 
@@ -93,27 +93,40 @@
     <hr>
     <nav class="nav" role="navigation">
         <ul class="nav__list">
-            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog",new{title = "index"})">Blog</a></li><li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
-        </ul></nav>
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#courses">Kurzy</a></li>
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Blog",new{title = "index"})">Blog</a></li>
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover" href="@Url.Action("Index","Home")#contact">Kontakt</a></li>
+        </ul>
+    </nav>
+    <div class="nav">
+        <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover nav__link--facebook" href="#">Facebook</a></li>
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover nav__link--linkedin" href="#">LinkedIn</a></li>
+            <li class="nav__item"><a class="nav__link link--gradient link--border-hover nav__link--rss" href="#">RSS</a></li>
+        </ul>
+    </div>
     <p>
-        <small>&copy;
-            <span id="copyright-year">2019</span> vKurzu.cz</small></p>
+        <small>
+            &copy;
+            <span id="copyright-year">2019</span> vKurzu.cz
+        </small>
+    </p>
 </footer>
 
-    <script type="text/javascript">
-        jQuery(document).keydown(function(event) {
-                // If Control or Command key is pressed and the S key is pressed
-                // run save function. 83 is the key code for S.
-                if ((event.ctrlKey || event.metaKey) && event.which == 83) {
-                    // Save Function
-                    console.log("save")
-                    $('#save').click()
-                    event.preventDefault();
-                    return false;
-                }
-            }
-        );
-    </script>
+<script type="text/javascript">
+    jQuery(document).keydown(function (event) {
+        // If Control or Command key is pressed and the S key is pressed
+        // run save function. 83 is the key code for S.
+        if ((event.ctrlKey || event.metaKey) && event.which == 83) {
+            // Save Function
+            console.log("save")
+            $('#save').click()
+            event.preventDefault();
+            return false;
+        }
+    }
+    );
+</script>
 
 
 </html>

@@ -349,6 +349,22 @@ namespace TestWebAppCoolName.Controllers
         #endregion
 
         #region Blog
+        [HttpPost]
+        public HttpStatusCode UpdateBlogOrder(List<OrderUpdateDto> orderDto)
+        {
+            foreach (var item in orderDto)
+            {
+                var blog = _context.Blogs.FirstOrDefault(x => x.Id == item.Id);
+                if (blog != null)
+                {
+                    blog.Position = item.Position;
+                }
+
+                _context.SaveChanges();
+            }
+
+            return HttpStatusCode.OK;
+        }
 
         public ActionResult ApproveBlog(int id, bool approve)
         {
@@ -377,10 +393,10 @@ namespace TestWebAppCoolName.Controllers
 
         {
             var userId = User.Identity.GetUserId();
-            var blogs = _context.Blogs.Where(b => !b.Deleted).ToList();
+            var blogs = _context.Blogs.Where(b => !b.Deleted).OrderBy(b => b.Position).ToList();
             if (User.IsInRole(Roles.Lector))
             {
-                blogs = _context.Blogs.Where(b => !b.Deleted && b.OwnerId == userId).ToList();
+                blogs = _context.Blogs.Where(b => !b.Deleted && b.OwnerId == userId).OrderBy(b => b.Position).ToList();
             }
 
             return View(blogs);
