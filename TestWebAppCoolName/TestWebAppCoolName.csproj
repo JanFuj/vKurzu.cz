@@ -628,6 +628,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\highlight.js" />
     <Content Include="Scripts\JavaScript.js" />
+    <Content Include="Scripts\outdated-browser-rework.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -644,6 +645,7 @@
     <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\TagScripts.js" />
     <Content Include="Scripts\ThumbnailJs.js" />
+    <Content Include="sorry.html" />
     <Content Include="Templates\RegistrationTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

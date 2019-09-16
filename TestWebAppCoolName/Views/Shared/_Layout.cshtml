@@ -2,6 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="/Scripts/outdated-browser-rework.js"></script>
+    <script>
+        outdatedBrowserRework({
+            browserSupport: {
+                'Chrome': 58,
+                'Edge': false,
+                'Safari': 10.1,
+                'Mobile Safari': 10.3,
+                'Firefox': 54,
+                'Opera': 44,
+                'IE': false
+            },
+            isUnknownBrowserOK: true
+        });
+    </script>
     @{
         if (ViewBag.Description == null)
         {
@@ -38,6 +53,7 @@
     @Scripts.Render("~/bundles/QuillScript")
     <!-- Facebook Thumbnail sharing -->
     <!-- Facebook Pixel Code -->
+  
     <script>
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return;
@@ -59,7 +75,9 @@
         fbq('init', '549385278923811');
         fbq('track', 'PageView');
     </script>
+   
     <!-- Global site tag (gtag.js) - Google Analytics -->
+  
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146457992-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -73,8 +91,9 @@
 
     <img height="1" width="1" style="display: none" alt="facebookPixel"
          src="https://www.facebook.com/tr?id=549385278923811&ev=PageView&noscript=1" />
-
+  
     <!-- End Facebook Pixel Code -->
+
 
 
 </head>
