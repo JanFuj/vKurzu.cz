@@ -1,56 +1,54 @@
 ﻿@model TestWebAppCoolName.Controllers.TutorialsViewModel
-    @{
-        ViewBag.Title = Model.TutorialCategory.Name + " | vKurzu.cz";
-    }
-    <header class="header header--blog" id="site-header">
-        @Html.Partial("toolbarPartialView")
-    </header>
+@{
+    ViewBag.Title = Model.TutorialCategory.Name + " | vKurzu.cz";
+    var latestPost = Model.Posts.Last();
+}
+<header class="header" id="site-header">
+    @Html.Partial("toolbarPartialView")
+</header>
 
-    <main class="main--blog">
+<main class="main">
 
-        <div class="blog-grid">
-            <h1 class="blog-headline">
-                <div class="blog-headline__text"><span class="blog-headline__letter">B</span><span class="blog-headline__letter">l</span><span class="blog-headline__letter">o</span><span class="blog-headline__letter">g</span></div>
-            </h1>
-
-            @{
-                var articleClassSuffix = "";
-                var titleClass = "";
-                for (int i = 0; i < Model.Posts?.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        titleClass = "link--gradient";
-                        articleClassSuffix = "primary";
-                    }
-                    if (i > 0 && i < 5)
-                    {
-                        articleClassSuffix = $"secondary article-preview--secondary-{i}";
-                    }
-                    if (i >= 5)
-                    {
-                        articleClassSuffix = "other";
-                    }
-
-                    <article class="article-preview article-preview--@articleClassSuffix">
-                        @*<div class="article-preview__author">@Model[i].Author.FullName</div>*@
-                        <h2 class="article-preview__title"><a class="@titleClass" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = Model.Posts[i].UrlTitle})">@Model.Posts[i].Name</a></h2>
-                        <p class="article-preview__text">@Model.Posts[i].Description</p>
-                        <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = Model.Posts[i].UrlTitle})">Zobrazit článek</a></div>
-                    </article>
-                    if (i == 0)
-                    {
-                        <hr class="hr-blog hr-blog--1">
-                    }
-                    if (i == 4)
-                    {
-                        <hr class="hr-blog hr-blog--2">
-                    }
-                    titleClass = "link--gradient-inversed";
-                }
-            }
-
-
+    <div class="intro intro--tutorial">
+        <div class="tutorial-intro-texts">
+            <h1 class="tutorial-intro-title">@Model.TutorialCategory.Name</h1>
+            <p class="tutorial-intro-desc h5">@Model.TutorialCategory.Description</p>
         </div>
-    </main>
+    </div>
+
+    <h2 class="h5">Nejnovější</h2>
+    <article class="tutorial-latest-preview">
+        <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = latestPost.UrlTitle})"></a>
+        <div class="tutorial-preview__left">
+            <img class="tutorial-preview__image" src="/@latestPost.Thumbnail.Path" alt="Popis, co je na obrázku">
+        </div>
+        <div class="tutorial-preview__right">
+            <h1 class="tutorial-preview__title h2"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = latestPost.UrlTitle})">@latestPost.Name</a></h1>
+            <p class="tutorial-preview__desc">@latestPost.Description</p>
+            <div class="tutorial-preview__bottom-link"><a class="link--gradient-inversed link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = latestPost.UrlTitle})">Číst dále</a></div>
+        </div>
+    </article>
+    <h2 class="h5">Všechny díly</h2>
+    <ol class="tutorials-list">
+        @{
+            foreach (var post in Model.Posts)
+            {
+                <li class="tutorials-list__item">
+                    <article class="tutorial-preview">
+                        <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = post.UrlTitle})"></a>
+                        <div class="tutorial-preview__left">
+                            <img class="tutorial-preview__image" src="/@post.Thumbnail.Path" alt="Popis, co je na obrázku">
+                        </div>
+                        <div class="tutorial-preview__right">
+                            <h1 class="tutorial-preview__title h3"><a class="link--gradient-inversed" href="">@post.Name</a></h1>
+                            <p class="tutorial-preview__desc">@post.Description</p>
+                            <div class="tutorial-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle =Model.TutorialCategory.UrlTitle , postTitle = post.UrlTitle})">Číst dále</a></div>
+                        </div>
+                    </article>
+                </li>
+            }
+        }
+
+    </ol>
+</main>
 

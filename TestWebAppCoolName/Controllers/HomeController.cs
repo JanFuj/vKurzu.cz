@@ -17,6 +17,7 @@ namespace TestWebAppCoolName.Controllers
     {
         public List<Course> Courses { get; set; }
         public List<Blog> Blogs { get; set; }
+        public List<TutorialCategory> TutorialCategories { get; set; }
         public HomeContactForm FormModel { get; set; } = new HomeContactForm();
         public bool ShowAlert { get; set; } = false;
     }
@@ -46,10 +47,11 @@ namespace TestWebAppCoolName.Controllers
         }
         public ActionResult Index()
         {
-            
+
             _viewModel.Courses = _context.Courses.Include(c => c.Svg).Where(c => !c.Deleted).OrderBy(c => c.Position).ToList();
+            _viewModel.TutorialCategories = _context.TutorialCategory.Include(c => c.Thumbnail).Where(c => c.Approved && !c.Deleted).OrderBy(c => c.Position).ToList();
             _viewModel.Blogs = _blogRepo.GetFirst3BlogPosts();
-            _viewModel.ShowAlert = !string.IsNullOrEmpty(TempData["EmailSent"]?.ToString());
+          //  _viewModel.ShowAlert = !string.IsNullOrEmpty(TempData["EmailSent"]?.ToString());
             return View(_viewModel);
         }
 

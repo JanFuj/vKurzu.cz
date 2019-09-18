@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TestWebAppCoolName.Models.ImageFile>
+@Html.Partial("_adminLoginPartial")
+<main class="main">
+    <div class="admin-list-header">
+        <h1>Obrázky</h1>
+        @Html.ActionLink("Přidat obrázek", "", null, new { @class = "button" })
+    </div>
+
+    <ul class="admin-list">
+        @foreach (var item in Model)
+        {
+            <li class="admin-list__item">
+
+                <div class="admin-list__cell admin-list__cell--info">
+                    <div class="">@Html.DisplayFor(modelItem => item.FileName)</div>
+                    <div class="">@Html.DisplayFor(modelItem => item.Description)</div>
+                </div>
+          
+              
+                <div class="svg-picker">
+                    
+                        <img src="/@item.Path" style="width: 200px;" />
+                    
+                </div>
+                <div class="admin-list__cell admin-list__cell--buttons">
+                    @Html.ActionLink("Upravit", "Edit", new { id = item.Id }, new { @class = "link--gradient" })
+                    @Html.ActionLink("Smazat", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
+                </div>
+            </li>
+
+
+        }
+
+    </ul>
+
+</main>

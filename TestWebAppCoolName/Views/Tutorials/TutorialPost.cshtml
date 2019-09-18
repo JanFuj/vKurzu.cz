@@ -69,34 +69,71 @@
 
             </div>
         </article>
-        <aside class="related-articles">
+        <aside class="next-tutorials">
             <hr>
-            <h2 class="related-articles__heading">Čtěte dále</h2>
-            <div class="related-articles__grid">
-                @{
-                    var articles = new DataService().GetRelatedArticles(Model.TutorialPost);
+            @{
+                var articles = new DataService().GetRelatedArticles(Model.TutorialPost);
+                if (articles.Item1 != null)
+                {
 
-                    if (articles.Item1 != null) {
-                        <article class="article-preview">
-                            @*<div class="article-preview__author">@article.Author.FullName</div>*@
-                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item1.Category.UrlTitle ,postTitle =articles.Item1.UrlTitle})">@articles.Item1.Name</a></h3>
-                            <p class="article-preview__text">@articles.Item1.Description</p>
-                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item1.Category.UrlTitle,postTitle =articles.Item1.UrlTitle})">Předchozí článek</a></div>
-                        </article>
-                    }
 
-                    if (articles.Item2 != null) {
-                        <article class="article-preview">
-                            @*<div class="article-preview__author">@article.Author.FullName</div>*@
-                            <h3 class="h4 article-preview__title"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item2.Category.UrlTitle,postTitle =articles.Item2.UrlTitle})">@articles.Item2.Name</a></h3>
-                            <p class="article-preview__text">@articles.Item2.Description</p>
-                            <div class="article-preview__bottom-link"><a class="link--gradient link--border" href="@Url.Action("TutorialPost","Tutorials",new{categoryTitle = articles.Item2.Category.UrlTitle,postTitle =articles.Item2.UrlTitle})">Další článek</a></div>
-                        </article>
-                    }
-                   
+
+                    <h2 class="next-tutorials__heading h6">Předchozí</h2>
+                    <article class="tutorial-preview tutorial-preview--prev">
+                        <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item1.Category.UrlTitle, postTitle = articles.Item1.UrlTitle})"></a>
+                        <div class="tutorial-preview__left">
+                            <img class="tutorial-preview__image"
+                                 src="/@articles.Item1.Thumbnail.Path"
+                                 alt="@articles.Item1.Thumbnail.Description">
+                        </div>
+                        <div class="tutorial-preview__right">
+                            <h1 class="tutorial-preview__title h3"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item1.Category.UrlTitle, postTitle = articles.Item1.UrlTitle})">@articles.Item1.Name</a></h1>
+                            <p class="tutorial-preview__desc">@articles.Item1.Description</p>
+                            <div class="tutorial-preview__bottom-link">
+                                <a class="link--gradient link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item1.Category.UrlTitle, postTitle = articles.Item1.UrlTitle})">
+                                    Číst
+                                    dále
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+
                 }
 
-            </div>
+                if (articles.Item2 != null)
+                {
+                    <h2 class="next-tutorials__heading h6">Další</h2>
+
+                    <article class="tutorial-preview tutorial-preview--next">
+                        <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item2.Category.UrlTitle, postTitle = articles.Item2.UrlTitle})"></a>
+                        <div class="tutorial-preview__left">
+                            <img class="tutorial-preview__image"
+                                 src="/@articles.Item2.Thumbnail.Path"
+                                 alt="@articles.Item2.Thumbnail.Description">
+                        </div>
+                        <div class="tutorial-preview__right">
+                            <h1 class="tutorial-preview__title h3">
+                                <a class="link--gradient-inversed" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item2.Category.UrlTitle, postTitle = articles.Item2.UrlTitle})">
+                                    @articles.Item2.Name
+                                </a>
+                            </h1>
+                            <p class="tutorial-preview__desc">
+                                @articles.Item2.Description
+                            </p>
+                            <div class="tutorial-preview__bottom-link">
+                                <a class="link--gradient link--border" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item2.Category.UrlTitle, postTitle = articles.Item2.UrlTitle})">
+                                    Číst
+                                    dále
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                }
+
+            }
+
+
         </aside>
     </main>
 
@@ -121,7 +158,7 @@
             quill.setContents(@Html.Raw(Model.TutorialPost.Body))
 
             quill.enable(false);
- 
+
     </script>
 
 }

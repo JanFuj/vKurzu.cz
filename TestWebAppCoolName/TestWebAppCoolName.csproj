@@ -190,6 +190,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Admin\ImageController.cs" />
     <Compile Include="Controllers\Admin\TutorialCategoryController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TutorialsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\ImageRepository.cs" />
     <Compile Include="DAL\ITutorialCategoryPostsRepository.cs" />
     <Compile Include="DAL\TagRepository.cs" />
     <Compile Include="DAL\TutorialCategoryPostsRepository.cs" />
@@ -474,6 +476,10 @@
     <Compile Include="Migrations\201909050838194_TutorialCategoryIdInPostTable.Designer.cs">
       <DependentUpon>201909050838194_TutorialCategoryIdInPostTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909180722064_DescriptionInImageTable.cs" />
+    <Compile Include="Migrations\201909180722064_DescriptionInImageTable.Designer.cs">
+      <DependentUpon>201909180722064_DescriptionInImageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -722,6 +728,7 @@
     <Content Include="Views\Shared\_adminLoginPartial.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Tutorials\TutorialCategoryPosts.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -938,6 +945,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909050838194_TutorialCategoryIdInPostTable.resx">
       <DependentUpon>201909050838194_TutorialCategoryIdInPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909180722064_DescriptionInImageTable.resx">
+      <DependentUpon>201909180722064_DescriptionInImageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
