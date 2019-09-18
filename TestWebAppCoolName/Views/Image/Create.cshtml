@@ -1,0 +1,59 @@
+﻿@model TestWebAppCoolName.Controllers.Admin.ImageViewModel
+
+@{
+    ViewBag.Title = "Nový obrázek";
+}
+<main class="main">
+    <h1 class="">Nahrát nový obrázek</h1>
+    @using (Html.BeginForm("Create", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <hr />
+            <p class="form-item">
+                @Html.LabelFor(m => m.Thumbnails)
+                @Html.TextBoxFor(m => m.Thumbnails, new { type = "file", multiple = "multiple", id = "SocialThumbnailImageCreate" })
+                @Html.ValidationMessageFor(m => m.Thumbnails)
+
+            </p>
+            <p class="form-item">
+                <div class="gallery"></div>
+            </p>
+            <p>
+
+                <button type="submit" id="save">Vytvořit</button>
+
+            </p>
+        </div>
+    }
+</main>
+
+@section scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).attr("style","width:200px;padding:20px").appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        document.getElementById("SocialThumbnailImageCreate").onchange = function () {
+            console.log("element changed")
+            imagesPreview(this, 'div.gallery');
+        };
+    </script>
+}

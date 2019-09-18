@@ -1,0 +1,30 @@
+﻿@model TestWebAppCoolName.Models.ImageFile
+
+@{
+    ViewBag.Title = "Edit Image";
+}
+@Html.Partial("_adminLoginPartial")
+<main class="main">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <h3>Upravit obrázek</h3>
+        <div class="form-horizontal">
+
+            <hr />
+            <p class="form-item">
+                <img src="/@Model.Path" style="width: 200px;" />
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(model => model.Description)
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+            </p>
+            <p>
+                <button type="submit" id="save">Uložit</button>
+            </p>
+        </div>
+    }
+</main>

@@ -3,30 +3,32 @@
 <main class="main">
     <div class="admin-list-header">
         <h1>Obrázky</h1>
-        @Html.ActionLink("Přidat obrázek", "", null, new { @class = "button" })
+        @Html.ActionLink("Přidat obrázek", "Create", null, new { @class = "button" })
     </div>
 
     <ul class="admin-list">
-        @foreach (var item in Model)
-        {
-            <li class="admin-list__item">
+        @foreach (var item in Model) {
+            var fullpath = Server.MapPath($"~/{item.Path}");
 
-                <div class="admin-list__cell admin-list__cell--info">
-                    <div class="">@Html.DisplayFor(modelItem => item.FileName)</div>
-                    <div class="">@Html.DisplayFor(modelItem => item.Description)</div>
-                </div>
-          
-              
-                <div class="svg-picker">
-                    
-                        <img src="/@item.Path" style="width: 200px;" />
-                    
-                </div>
-                <div class="admin-list__cell admin-list__cell--buttons">
-                    @Html.ActionLink("Upravit", "Edit", new { id = item.Id }, new { @class = "link--gradient" })
-                    @Html.ActionLink("Smazat", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
-                </div>
-            </li>
+        <li class="admin-list__item">
+
+            <div class="admin-list__cell admin-list__cell--info">
+                <div class="">@Html.DisplayFor(modelItem => item.FileName)</div>
+                <div class="">@Html.DisplayFor(modelItem => item.Description)</div>
+            </div>
+
+
+            <div class="svg-picker">
+                <img id="@item.Id" src="/@item.Path" style="width: 200px;" />
+            </div>
+
+            <button class="link--gradient" onclick="myFunction(@item.Id)">Kopírovat url</button>
+            <input style="visibility: hidden" type="text" value="@fullpath" id="input_@item.Id">
+            <div class="admin-list__cell admin-list__cell--buttons">
+                @Html.ActionLink("Upravit", "Edit", new { id = item.Id }, new { @class = "link--gradient" })
+                @Html.ActionLink("Smazat", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
+            </div>
+        </li>
 
 
         }
@@ -34,3 +36,24 @@
     </ul>
 
 </main>
+
+@section scripts {
+    <script>
+
+        function myFunction(id) {
+
+            console.log(id);
+            /* Get the text field */
+            var copyText = document.getElementById("input_"+id);
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
+
+            /* Alert the copied text */
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
+}

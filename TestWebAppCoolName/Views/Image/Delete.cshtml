@@ -1,0 +1,21 @@
+﻿@model TestWebAppCoolName.Models.ImageFile
+
+    @{
+        ViewBag.Title = "Smazat obrázek";
+    }
+    @Html.Partial("_adminLoginPartial")
+    <main style="justify-items: center; align-content: center; margin: 0; min-height: 100vh; text-align: center; grid-gap: var(--base);">
+
+
+        <h1 class="" style="margin-bottom: 0;">Smazat obrázek?</h1>
+        <h2 class="h4" style="color: var(--text-secondary); margin-top: 0;">@Model.FileName</h2>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <img tutorial-preview__image src="/@Model.Path" style="width: 300px;" />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <button class="button">Nenávratně smazat</button>
+        }
+        <a class="link--gradient link--border" href="@Url.Action("Index")">Ponechat</a>
+    </main>

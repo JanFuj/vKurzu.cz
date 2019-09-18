@@ -729,6 +729,9 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Tutorials\TutorialCategoryPosts.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Image\Delete.cshtml" />
+    <Content Include="Views\Image\Edit.cshtml" />
+    <Content Include="Views\Image\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
