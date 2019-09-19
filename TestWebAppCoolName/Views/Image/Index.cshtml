@@ -23,7 +23,7 @@
             </div>
 
             <button class="link--gradient" onclick="myFunction(@item.Id)">Kopírovat url</button>
-            <input style="visibility: hidden" type="text" value="@fullpath" id="input_@item.Id">
+            <input  readonly type="text" value="@fullpath" id="input_@item.Id">
             <div class="admin-list__cell admin-list__cell--buttons">
                 @Html.ActionLink("Upravit", "Edit", new { id = item.Id }, new { @class = "link--gradient" })
                 @Html.ActionLink("Smazat", "Delete", new { id = item.Id }, new { @class = "link--gradient" })
@@ -53,7 +53,7 @@
             document.execCommand("copy");
 
             /* Alert the copied text */
-            alert("Copied the text: " + copyText.value);
+          //   alert("Copied the text: " + copyText.value);
         }
     </script>
 }

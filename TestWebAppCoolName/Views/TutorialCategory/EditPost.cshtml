@@ -123,8 +123,13 @@
         let quill = new Quill('#editor',
             {
                 modules: {
-                    toolbar: toolbarOptions,
-                    syntax:true
+                    toolbar: {
+                        container: toolbarOptions,
+                        handlers: {
+                            image: imageHandler
+                        },
+                        syntax: true
+                    }
                 },
                 theme: 'snow'
             });

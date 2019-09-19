@@ -8,13 +8,78 @@ var toolbarOptions = [
     [{ 'indent': '-1' }, { 'indent': '+1' }],
     [{ 'direction': 'rtl' }],
     [{ 'size': ['small', false, 'large', 'huge'] }],
-    ['link', 'image', 'video', 'formula'],
+    ['link', 'video', 'formula'],
     [ { 'background': [] }],
     [{ 'font': [] }],
-    [{ 'align': [] }]
+    [{ 'align': [] }],
+    ['image']
 ];
 
+var swallform = async function () {
+
+    const { value: formValues } = await Swal.fire({
+        title: 'Zadej url a popis obrázku',
+        html:
+            '<input id="swal-input1" class="swal2-input">' +
+                '<input id="swal-input2" class="swal2-input">',
+        focusConfirm: false,
+        preConfirm: () => {
+            var obj = new Object();
+            obj.url = document.getElementById('swal-input1').value;
+            obj.description = document.getElementById('swal-input2').value;
+            return obj
+        }
+    })
+    if (formValues) {
+        let json = JSON.stringify(formValues);
+        console.log("FormValues " + json)
+        return formValues
+    }
+}
+
+async function imageHandler() {
+    let range = this.quill.getSelection();
+    let formValues = await swallform();
+    console.log("Forma data aync" + formValues)
+
+    if (formValues) {
+        this.quill.insertEmbed(range.index, 'image', {
+            url: formValues.url,
+            alt: formValues.description,
+            className: "QuillImage"
+        })
+        console.log(JSON.stringify(this.quill.getContents()))
+    }
+};
+
 $(document).ready(function () {
+
+ 
+
+    let BlockEmbed = Quill.import('blots/block/embed');
+    class ImageBlot extends BlockEmbed {
+        static create(value) {
+            let node = super.create();
+            node.setAttribute('alt', value.alt);
+            node.setAttribute('src', value.url);
+            node.setAttribute('class', value.className);
+            return node;
+        }
+
+        static value(node) {
+            return {
+                alt: node.getAttribute('alt'),
+                url: node.getAttribute('src'),
+                class: node.getAttribute('class')
+            };
+        }
+    }
+    ImageBlot.blotName = 'image';
+    ImageBlot.tagName = 'img';
+    Quill.register(ImageBlot);
+
+
+
     
     // Hide Header on on scroll down
     var didScroll;

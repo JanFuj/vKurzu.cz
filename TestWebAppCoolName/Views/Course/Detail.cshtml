@@ -81,15 +81,15 @@
 
         });
 
-    //$(document).ready(function () {
+    $(document).ready(function () {
         console.log()
 
-        quill.setContents(@Html.Raw(Model.Course.WillLearn))
+        quill.setContents(@Html.Raw(@Model.Course.WillLearn))
         quill.enable(false);
 
         quillBody.setContents(@Html.Raw(Model.Course.Body))
         quillBody.enable(false);
-    //});
+    });
 
     @{
             if (TempData["EmailSent"] != null){

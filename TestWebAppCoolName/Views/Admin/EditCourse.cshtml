@@ -244,16 +244,26 @@
         let quill = new Quill('#editorBody',
             {
                 modules: {
-                    toolbar: toolbarOptions,
-                    syntax:true
+                    toolbar: {
+                        container: toolbarOptions,
+                        handlers: {
+                            image: imageHandler
+                        },
+                        syntax: true
+                    }
                 },
                 theme: 'snow'
             });
         let quillWillLearn = new Quill('#editorWillLearn',
             {
                 modules: {
-                    toolbar: toolbarOptions,
-                    syntax:true
+                    toolbar: {
+                        container: toolbarOptions,
+                        handlers: {
+                            image: imageHandler
+                        },
+                        syntax: true
+                    }
                 },
                 theme: 'snow'
             });
