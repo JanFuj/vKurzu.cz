@@ -48,7 +48,7 @@
             </div>
         </article>
         @{
-            if (Model.TutorialCategories != null)
+            if (Model.TutorialCategories != null && Model.TutorialCategories?.Count != 0)
             {
                 <article class="tutorials">
                     <hr>
@@ -106,7 +106,7 @@
             <p>Vešteré dotazy ohledně kurzů, blogu, čehokoliv, vesmíru s klidným svědomím vepište níže, od toho kontaktní formuláře existují.</p>
             <form class="contact-form" action="@Url.Action("SendEmail","Home")" method="post">
                 @Html.TextBoxFor(m => m.FormModel.Email, new { placeholder = "E-mail", type = "email", @required = "required" })
-                @Html.TextAreaFor(m => m.FormModel.Email, new { rows = "10", placeholder = "Co máte na srdci?", @required = "required" })
+                @Html.TextAreaFor(m => m.FormModel.Message, new { rows = "10", placeholder = "Co máte na srdci?", @required = "required" })
                 <button class="contact-form__button" type="submit">Odeslat</button>
                 @Html.AntiForgeryToken()
             </form>

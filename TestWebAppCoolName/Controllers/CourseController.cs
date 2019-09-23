@@ -88,7 +88,7 @@ namespace TestWebAppCoolName.Controllers
             viewModel.Course = course;
 
             var emailSender = new EmailSender();
-            var sent = await emailSender.SendEmail(viewModel.FormModel.Email, $"Kurz: {course.Name}", $"{viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email}");
+            var sent = await emailSender.SendEmail(viewModel.FormModel.Email, $"Kurz: {course.Name}", $"Tento uživatel má zájem o kurz: {course.Name} \n {viewModel.FormModel.Name} {viewModel.FormModel.Surname} \n {viewModel.FormModel.Email}");
             if (!sent)
             {
                 Console.WriteLine("sending email error");

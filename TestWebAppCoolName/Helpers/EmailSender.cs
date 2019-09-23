@@ -9,8 +9,8 @@ using System.Web;
 
 namespace TestWebAppCoolName.Helpers
 {
-    public class EmailSender
-    {
+    public class EmailSender {
+        private const string SenderAdress = "neodpovidat@vkurzu.cz";
 
         public async Task<bool> SendEmail(string from, string subject, string body)
         {
@@ -21,14 +21,15 @@ namespace TestWebAppCoolName.Helpers
             try
             {
 
-                var client = new SmtpClient("smtp.gmail.com", 587) //465
+                var client = new SmtpClient("smtp.forpsi.com", 587) //465
                 {
                     EnableSsl = true,
-                    Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111"),
+                    Credentials = new NetworkCredential(SenderAdress, "Aaaa1111@"),
 
                 };
                 // odeslání emailu (od koho, komu, předmět, zpráva)
-                await client.SendMailAsync("bracketstest111@gmail.com", "janfujdiar@seznam.cz", subject, body);
+                await client.SendMailAsync(SenderAdress, "janfujdiar@seznam.cz, daniel.hruska@me.com", subject, body);
+               
                 return true;
             }
             catch (Exception e)
@@ -39,18 +40,17 @@ namespace TestWebAppCoolName.Helpers
         }
         public async Task<bool> SendEmailConfirmation(string subject, string body, string recipient)
         {
-
             try
             {
 
-                using (var client = new SmtpClient("smtp.gmail.com", 587)
-                { EnableSsl = true, Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111") })
+                using (var client = new SmtpClient("smtp.forpsi.com", 587)
+                { EnableSsl = true, Credentials = new NetworkCredential(SenderAdress, "Aaaa1111@") })
                 {
 
                     // odeslání emailu (od koho, komu, předmět, zpráva)
                     await client.SendMailAsync(new MailMessage()
                     {
-                        From = new MailAddress("bracketstest111@gmail.com"),
+                        From = new MailAddress(SenderAdress),
                         Subject = subject,
                         To = { recipient },
                         Body = body,
@@ -58,7 +58,7 @@ namespace TestWebAppCoolName.Helpers
                         IsBodyHtml = true,
 
                     });
-                   // await client.SendMailAsync("bracketstest111@gmail.com", recipient, subject, body);
+                    // await client.SendMailAsync("bracketstest111@gmail.com", recipient, subject, body);
                     return true;
                 }
             }
@@ -67,6 +67,34 @@ namespace TestWebAppCoolName.Helpers
                 Console.WriteLine(e);
                 return false;
             }
+
+            //try
+            //{
+
+            //    using (var client = new SmtpClient("smtp.gmail.com", 587)
+            //    { EnableSsl = true, Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111") })
+            //    {
+
+            //        // odeslání emailu (od koho, komu, předmět, zpráva)
+            //        await client.SendMailAsync(new MailMessage()
+            //        {
+            //            From = new MailAddress("bracketstest111@gmail.com"),
+            //            Subject = subject,
+            //            To = { recipient },
+            //            Body = body,
+            //            BodyEncoding = Encoding.UTF8,
+            //            IsBodyHtml = true,
+
+            //        });
+            //       // await client.SendMailAsync("bracketstest111@gmail.com", recipient, subject, body);
+            //        return true;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    return false;
+            //}
         }
     }
 }
