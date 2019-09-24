@@ -28,7 +28,7 @@ namespace TestWebAppCoolName.Helpers
 
                 };
                 // odeslání emailu (od koho, komu, předmět, zpráva)
-                await client.SendMailAsync(SenderAdress, "janfujdiar@seznam.cz, daniel.hruska@me.com", subject, body);
+                await client.SendMailAsync(SenderAdress, "janfujdiar@seznam.cz, daniel.hruska@me.com, podpora@vkurzu.cz", subject, body);
                
                 return true;
             }
@@ -68,33 +68,6 @@ namespace TestWebAppCoolName.Helpers
                 return false;
             }
 
-            //try
-            //{
-
-            //    using (var client = new SmtpClient("smtp.gmail.com", 587)
-            //    { EnableSsl = true, Credentials = new NetworkCredential("bracketstest111@gmail.com", "Aaaa1111") })
-            //    {
-
-            //        // odeslání emailu (od koho, komu, předmět, zpráva)
-            //        await client.SendMailAsync(new MailMessage()
-            //        {
-            //            From = new MailAddress("bracketstest111@gmail.com"),
-            //            Subject = subject,
-            //            To = { recipient },
-            //            Body = body,
-            //            BodyEncoding = Encoding.UTF8,
-            //            IsBodyHtml = true,
-
-            //        });
-            //       // await client.SendMailAsync("bracketstest111@gmail.com", recipient, subject, body);
-            //        return true;
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    return false;
-            //}
         }
     }
 }
