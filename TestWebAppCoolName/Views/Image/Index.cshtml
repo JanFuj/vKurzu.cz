@@ -22,7 +22,7 @@
                 <img id="@item.Id" src="/@item.Path" style="width: 200px;" />
             </div>
 
-            <button class="link--gradient" onclick="myFunction(@item.Id)">Kopírovat url</button>
+            <a class="link--gradient" onclick="myFunction(@item.Id)">Kopírovat url</a>
             <input  readonly type="text" value="@fullpath" id="input_@item.Id">
             <div class="admin-list__cell admin-list__cell--buttons">
                 @Html.ActionLink("Upravit", "Edit", new { id = item.Id }, new { @class = "link--gradient" })
