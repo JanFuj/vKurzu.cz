@@ -148,26 +148,7 @@ namespace TestWebAppCoolName.Controllers
                 viewModel.Svgs = _context.Svgs.ToList();
                 return View(viewModel);
             }
-
-
-            if (vm.Thumbnail != null)
-            {
-                var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                var existingImage =
-                    _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                if (existingImage == null)
-                {
-                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
-                    _context.ImageFiles.Add(thumbnail);
-                    _context.SaveChanges();
-                    vm.Course.Thumbnail = thumbnail;
-                }
-                else
-                {
-                    vm.Course.Thumbnail = existingImage;
-                }
-            }
+          
 
             vm.Course.OwnerId = User.Identity.GetUserId();
             vm.Course.Created = DateTime.Now;
@@ -189,7 +170,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _context.Courses.Include(b => b.Tags).Include(c => c.Thumbnail).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
+            var course = _context.Courses.Include(b => b.Tags).Include(s => s.Svg).FirstOrDefault(b => b.Id == id);
 
             if (course == null)
             {
@@ -243,33 +224,13 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            var cour = _context.Courses.Include(c => c.Tags).Include(c => c.Thumbnail).FirstOrDefault(c => c.Id == vm.Course.Id);
+            var cour = _context.Courses.Include(c => c.Tags).FirstOrDefault(c => c.Id == vm.Course.Id);
             if (User.IsInRole(Roles.Lector) && cour?.OwnerId != User.Identity.GetUserId())
             {
                 return HttpNotFound();// return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             if (cour != null)
             {
-
-                if (vm.Thumbnail != null)
-                {
-                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                    var existingImage =
-                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                    if (existingImage == null)
-                    {
-                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                        var thumbnail = new ImageFile() { Path = path };
-                        _context.ImageFiles.Add(thumbnail);
-                        _context.SaveChanges();
-                        cour.Thumbnail = thumbnail;
-                    }
-                    else
-                    {
-                        cour.Thumbnail = existingImage;
-                    }
-                }
-
                 cour.Name = vm.Course.Name;
                 cour.Description = vm.Course.Description;
                 cour.WillLearn = vm.Course.WillLearn;
@@ -279,6 +240,7 @@ namespace TestWebAppCoolName.Controllers
                 cour.UrlTitle = vm.Course.UrlTitle;
                 cour.Tags = tags;
                 cour.Changed = DateTime.Now;
+                cour.SocialSharingImage = vm.Course.SocialSharingImage;
                 cour.Svg = _context.Svgs.First(s => s.ID == vm.Course.Svg_id);
                 _context.SaveChanges();
                 return RedirectToAction("Course");
@@ -439,24 +401,6 @@ namespace TestWebAppCoolName.Controllers
                 return View(viewModel);
             }
 
-            if (vm.Thumbnail != null)
-            {
-                var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                var existingImage =
-                    _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                if (existingImage == null)
-                {
-                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
-                    _context.ImageFiles.Add(thumbnail);
-                    _context.SaveChanges();
-                    vm.Blog.Thumbnail = thumbnail;
-                }
-                else
-                {
-                    vm.Blog.Thumbnail = existingImage;
-                }
-            }
             vm.Blog.OwnerId = User.Identity.GetUserId();
             vm.Blog.Created = DateTime.Now;
             vm.Blog.Changed = DateTime.Now;
@@ -476,7 +420,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Blog blog = _context.Blogs.Include(b => b.Tags).Include(b => b.Thumbnail).FirstOrDefault(b => b.Id == id);
+            Blog blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (blog == null)
             {
                 return HttpNotFound();
@@ -540,24 +484,6 @@ namespace TestWebAppCoolName.Controllers
 
                 blo.Tags = null;
                 _context.SaveChanges();
-                if (vm.Thumbnail != null)
-                {
-                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                    var existingImage =
-                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                    if (existingImage == null)
-                    {
-                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                        var thumbnail = new ImageFile() { Path = path };
-                        _context.ImageFiles.Add(thumbnail);
-                        _context.SaveChanges();
-                        blo.Thumbnail = thumbnail;
-                    }
-                    else
-                    {
-                        blo.Thumbnail = existingImage;
-                    }
-                }
 
                 blo.Name = vm.Blog.Name;
                 blo.Description = vm.Blog.Description;
@@ -1048,26 +974,6 @@ namespace TestWebAppCoolName.Controllers
                     return View(vm);
                 }
 
-                if (vm.Thumbnail != null)
-                {
-                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                    var existingImage =
-                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                    if (existingImage == null)
-                    {
-                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                        var thumbnail = new ImageFile() { Path = path };
-                        _context.ImageFiles.Add(thumbnail);
-                        _context.SaveChanges();
-                        vm.TutorialCategory.Thumbnail = thumbnail;
-                    }
-                    else
-                    {
-                        vm.TutorialCategory.Thumbnail = existingImage;
-                    }
-                }
-
-
                 vm.TutorialCategory.Created = DateTime.Now;
                 vm.TutorialCategory.Changed = DateTime.Now;
                 vm.TutorialCategory.OwnerId = User.Identity.GetUserId();
@@ -1088,7 +994,7 @@ namespace TestWebAppCoolName.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var tutorialCategoryFromDb = _context.TutorialCategory.Include(b => b.Tags).Include(c => c.Thumbnail).FirstOrDefault(b => b.Id == id);
+            var tutorialCategoryFromDb = _context.TutorialCategory.Include(b => b.Tags).FirstOrDefault(b => b.Id == id);
             if (tutorialCategoryFromDb == null)
             {
                 return HttpNotFound();
@@ -1117,8 +1023,8 @@ namespace TestWebAppCoolName.Controllers
                 return View(vm);
             }
 
-            var existingTutorialCategory = _context.TutorialCategory.Include(t=>t.Thumbnail).FirstOrDefault(c => c.UrlTitle == vm.TutorialCategory.UrlTitle);
-            var tutor = _context.TutorialCategory.Include(c => c.Tags).Include(c=>c.Thumbnail).FirstOrDefault(c => c.Id == vm.TutorialCategory.Id);
+            var existingTutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.UrlTitle == vm.TutorialCategory.UrlTitle);
+            var tutor = _context.TutorialCategory.Include(c => c.Tags).FirstOrDefault(c => c.Id == vm.TutorialCategory.Id);
             bool sameUrlInAnotherTutorialCategory = false;
             if (existingTutorialCategory != null)
             {
@@ -1128,7 +1034,6 @@ namespace TestWebAppCoolName.Controllers
             if (sameUrlInAnotherTutorialCategory)
             {
                 ModelState.AddModelError("TutorialCategory.UrlTitle", "Zadany url titulek již existuje");
-                vm.TutorialCategory.Thumbnail = tutor?.Thumbnail;
                 return View(vm);
             }
 
@@ -1138,25 +1043,6 @@ namespace TestWebAppCoolName.Controllers
             }
             if (tutor != null)
             {
-                if (vm.Thumbnail != null)
-                {
-                    var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                    var existingImage =
-                        _context.ImageFiles.FirstOrDefault(x => x.Path == path);
-                    if (existingImage == null)
-                    {
-                        vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                        var thumbnail = new ImageFile() { Path = path };
-                        _context.ImageFiles.Add(thumbnail);
-                        _context.SaveChanges();
-                        tutor.Thumbnail = thumbnail;
-                    }
-                    else
-                    {
-                        tutor.Thumbnail = existingImage;
-                    }
-                }
-
                 tutor.Name = vm.TutorialCategory.Name;
                 tutor.Description = vm.TutorialCategory.Description;
                 tutor.UrlTitle = vm.TutorialCategory.UrlTitle;
@@ -1215,7 +1101,6 @@ namespace TestWebAppCoolName.Controllers
         {
             try
             {
-
                 var tutorialCategory = _context.TutorialCategory.FirstOrDefault(c => c.Id == id);
                 if (tutorialCategory == null)
                 {

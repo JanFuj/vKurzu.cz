@@ -62,15 +62,14 @@ namespace TestWebAppCoolName.Controllers
                 //detail blogu
                 if (!preview)
                 {
-                    vm.Blog = _context.Blogs.Include(b => b.Tags).Include(b=>b.Thumbnail).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title && b.Approved);
                 }
                 else {
-                    vm.Blog = _context.Blogs.Include(b => b.Tags).Include(b => b.Thumbnail).FirstOrDefault(b => b.UrlTitle == title);
+                    vm.Blog = _context.Blogs.Include(b => b.Tags).FirstOrDefault(b => b.UrlTitle == title);
                 }
                 if (vm.Blog != null)
                 {
                     vm.RelatedCourse = new DataService().GetRelatedCourse(vm.Blog);
-                    ViewBag.Thumbnail = vm.Blog.Thumbnail?.Path;
                     ViewBag.Description = vm.Blog.Description;
                     return View("Article", vm);
                 }

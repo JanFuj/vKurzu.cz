@@ -94,7 +94,7 @@ namespace TestWebAppCoolName.DAL
             else
             {
                 //file already exists on server
-                //  throw new Exception("file already exists on server");
+                throw new InvalidOperationException("File already exists on server");
             }
         }
     }

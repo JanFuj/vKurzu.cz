@@ -26,7 +26,7 @@ namespace TestWebAppCoolName.DAL
             {
                 return null;
             }
-            return _context.TutorialCategory.Include(x => x.Posts.Select(y => y.Tags)).Include(x => x.Posts.Select(y => y.Thumbnail)).Include(x => x.Thumbnail).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
+            return _context.TutorialCategory.Include(x => x.Posts.Select(y => y.Tags)).Include(x => x.Posts).Include(x => x.Tags).FirstOrDefault(x => x.UrlTitle == title);
         }
 
         public List<TutorialPost> GetPosts(string tutorialCategoryTitle)

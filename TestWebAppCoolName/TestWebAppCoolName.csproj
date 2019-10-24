@@ -480,6 +480,10 @@
     <Compile Include="Migrations\201909180722064_DescriptionInImageTable.Designer.cs">
       <DependentUpon>201909180722064_DescriptionInImageTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910240500179_BlogCourseImagesAsUrlString.cs" />
+    <Compile Include="Migrations\201910240500179_BlogCourseImagesAsUrlString.Designer.cs">
+      <DependentUpon>201910240500179_BlogCourseImagesAsUrlString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminNote.cs" />
@@ -950,6 +954,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909180722064_DescriptionInImageTable.resx">
       <DependentUpon>201909180722064_DescriptionInImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910240500179_BlogCourseImagesAsUrlString.resx">
+      <DependentUpon>201910240500179_BlogCourseImagesAsUrlString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

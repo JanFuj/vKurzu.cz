@@ -42,8 +42,10 @@ namespace TestWebAppCoolName.Models
         public string OwnerId { get; set; }
      
         public int Position { get; set; }
-        [Display(Name = "Obrázek pro sdílení na sociálech")]
-        public ImageFile Thumbnail { get; set; }
+        [Display(Name = "Url obrazku v hlavnim lazoutu")]
+        public string HeaderImage { get; set; }
+        [Display(Name = "Url obrazku pro sdílení na socíalech")]
+        public string SocialSharingImage { get; set; }
         public List<Tag> Tags { get; set; }
         public DateTime Created { get; set; }
         public DateTime Changed { get; set; }

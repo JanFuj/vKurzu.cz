@@ -19,7 +19,7 @@
 
 
             <div class="svg-picker">
-                <img id="@item.Id" src="/@item.Path" style="width: 200px;" />
+                <img id="@item.Id" src="/@item.Path.Replace("http://","")" style="width: 200px;" />
             </div>
 
             <a class="link--gradient" onclick="myFunction(@item.Id)">Kopírovat url</a>

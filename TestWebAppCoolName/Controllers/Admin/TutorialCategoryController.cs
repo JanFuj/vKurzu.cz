@@ -112,24 +112,6 @@ namespace TestWebAppCoolName.Controllers.Admin
                 viewModel.TutorialPost.Tags = tags;
                 return View("NewPost", viewModel);
             }
-            if (vm.Thumbnail != null)
-            {
-                var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                var existingImage = _repo.GetImageByPath(path);
-                if (existingImage == null)
-                {
-                    vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                    var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
-                    _repo.CreateImage(thumbnail);
-                    _repo.Save();
-                    vm.TutorialPost.Thumbnail = thumbnail;
-                }
-                else
-                {
-                    vm.TutorialPost.Thumbnail = existingImage;
-                }
-            }
-
             vm.TutorialPost.OwnerId = User.Identity.GetUserId();
             vm.TutorialPost.Created = DateTime.Now;
             vm.TutorialPost.Changed = DateTime.Now;
@@ -205,7 +187,6 @@ namespace TestWebAppCoolName.Controllers.Admin
             if (sameUrlInAnotherPost)
             {
                 ModelState.AddModelError("tutorialPost.UrlTitle", "Zadany url titulek již existuje");
-                viewModel.TutorialPost.Thumbnail = postFromDb?.Thumbnail;
                 return View("EditPost", viewModel);
             }
 
@@ -221,26 +202,6 @@ namespace TestWebAppCoolName.Controllers.Admin
 
                     postFromDb.Tags = null;
                     _repo.Save();
-
-                    if (vm.Thumbnail != null)
-                    {
-                        var path = $"Content/Images/{vm.Thumbnail.FileName}";
-                        var existingImage = _repo.GetImageByPath(path);
-                        if (existingImage == null)
-                        {
-                            vm.Thumbnail.SaveAs(Server.MapPath("~/Content/Images/" + vm.Thumbnail.FileName));
-                            var thumbnail = new ImageFile() { Path = path, FileName = vm.Thumbnail.FileName };
-                            _repo.CreateImage(thumbnail);
-                            _repo.Save();
-                            postFromDb.Thumbnail = thumbnail;
-                        }
-                        else
-                        {
-                            postFromDb.Thumbnail = existingImage;
-                        }
-                    }
-
-
                     postFromDb.Name = vm.TutorialPost.Name;
                     postFromDb.Description = vm.TutorialPost.Description;
                     postFromDb.Body = vm.TutorialPost.Body;

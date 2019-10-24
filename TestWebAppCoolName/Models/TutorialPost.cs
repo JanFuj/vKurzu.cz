@@ -22,9 +22,10 @@ namespace TestWebAppCoolName.Models
         [Display(Name = "Tělo článku")]
         [AllowHtml]
         public string Body { get; set; }
-
-        [Display(Name = "Obrázek pro sdílení na sociálech")]
-        public ImageFile Thumbnail { get; set; }
+        [Display(Name = "Url obrazku v hlavnim lazoutu")]
+        public string HeaderImage { get; set; }
+        [Display(Name = "Url obrazku pro sdílení na socíalech")]
+        public string SocialSharingImage { get; set; }
         [Display(Name = "Url titulek")]
         [Required(ErrorMessage = "Zadejte url titulek")]
         public string UrlTitle { get; set; }

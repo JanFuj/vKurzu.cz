@@ -62,7 +62,7 @@ namespace TestWebAppCoolName.Controllers.Admin
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError("","Something Failed");
+                    ModelState.AddModelError("",$"Something Failed {e.Message}");
                 }
             }
             //failed    
