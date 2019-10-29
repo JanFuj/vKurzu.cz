@@ -9,18 +9,19 @@
 <main class="main">
     <section class="courses">
 
-        @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new {id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" })) {
+        @using (Html.BeginForm("Edit", "TutorialCategory", FormMethod.Post, new { id = "mySubmitForm", @class = "admin-form admin-form--blog", enctype = "multipart/form-data" }))
+        {
             @Html.AntiForgeryToken()
             <p>
                 <h1 class="main-heading courses__heading">Upravit post</h1>
 
-                @Html.TextAreaFor(m => m.TutorialPost.Name, new {placeholder = "Nadpis", @class = "h3 admin-form__textarea"})
+                @Html.TextAreaFor(m => m.TutorialPost.Name, new { placeholder = "Nadpis", @class = "h3 admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.TutorialPost.Name)
             </p>
 
             <p>
 
-                @Html.TextAreaFor(m => m.TutorialPost.Description, new {placeholder = "Popis", @class = "admin-form__textarea"})
+                @Html.TextAreaFor(m => m.TutorialPost.Description, new { placeholder = "Popis", @class = "admin-form__textarea" })
                 @Html.ValidationMessageFor(m => m.TutorialPost.Description)
             </p>
             <p>
@@ -31,7 +32,7 @@
                     <div id="editor"></div>
                 </div>
             </p>
-         
+
             <p class="form-item">
                 @Html.LabelFor(m => m.TutorialPost.RelatedCourseId)
                 @Html.DropDownListFor(m => m.TutorialPost.RelatedCourseId, new SelectList(new DataService().GetAllCourses(), "Id", "Name"))
@@ -43,23 +44,29 @@
                 @Html.ValidationMessageFor(m => m.TutorialPost.UrlTitle)
             </p>
             <p class="form-item">
-                @Html.LabelFor(m => m.Thumbnail)
-                @Html.TextBoxFor(m => m.Thumbnail, new {type = "file", id = "SocialThumbnailImage"})
-                @Html.ValidationMessageFor(m => m.Thumbnail)
+                @Html.LabelFor(m => m.TutorialPost.HeaderImage)
+                @Html.TextBoxFor(m => m.TutorialPost.HeaderImage, new { id = "HeaderImage" })
+            </p>
+            <p class="form-item">
+                <img id="HeaderImagePlaceHolder" src="@Model.TutorialPost.HeaderImage" />
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.TutorialPost.SocialSharingImage)
+                @Html.TextBoxFor(m => m.TutorialPost.SocialSharingImage, new { id = "SocialThumbnailImage" })
             </p>
             <p class="form-item">
                 @{
-                    var path = Model.TutorialPost.Thumbnail?.Path;
-                    <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
-
+                    <img id="SocialThumbnailImagePlaceHolder" src="@Model.TutorialPost.SocialSharingImage" />
                 }
             </p>
             <div>
 
                 <div class="subject-info-box-1">
                     <select multiple="multiple" id='lstBox1' class="form-control">
-                        @if (Model.TutorialPost?.Tags != null) {
-                            foreach (var tag in Model.TutorialPost.Tags) {
+                        @if (Model.TutorialPost?.Tags != null)
+                        {
+                            foreach (var tag in Model.TutorialPost.Tags)
+                            {
                                 <option value="@tag.Name">@tag.Name</option>
                             }
                         }
@@ -67,22 +74,25 @@
                 </div>
 
                 <div class="subject-info-arrows text-center">
-                    <input type='button' id='btnRight' value=&gt; class="btn btn-default"/>
-                    <br/>
-                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default"/>
-                    <br/>
+                    <input type='button' id='btnRight' value=&gt; class="btn btn-default" />
+                    <br />
+                    <input type='button' id='btnLeft' value=&lt; class="btn btn-default" />
+                    <br />
                 </div>
 
 
 
                 <div class="subject-info-box-2">
                     <select multiple="multiple" id='lstBox2' class="form-control">
-                        @foreach (var tag in new DataService().GetTags()) {
+                        @foreach (var tag in new DataService().GetTags())
+                        {
                             bool exist = false;
-                            if (Model.TutorialPost?.Tags != null) {
+                            if (Model.TutorialPost?.Tags != null)
+                            {
                                 exist = (Model.TutorialPost.Tags).Any(t => t.Id == tag.Id);
                             }
-                            if (!exist) {
+                            if (!exist)
+                            {
                                 <option value="@tag.Name">@tag.Name</option>
                             }
                         }
@@ -91,7 +101,7 @@
                 <p id="tags-output">
                     <label>tagy</label>
 
-                    @Html.TextBoxFor(m => m.Tagy, "...", new {id = "tags", name = "Tagy", @readonly = "readonly"})
+                    @Html.TextBoxFor(m => m.Tagy, "...", new { id = "tags", name = "Tagy", @readonly = "readonly" })
 
                 </p>
 
@@ -101,11 +111,12 @@
                 @Html.HiddenFor(m => m.TutorialPost.Id)
                 <button type="submit" id="save">Uložit</button>
                 <div id="pageloader" style="display: none;">
-                    <img src="/media/30.svg" alt="processing..."/>
+                    <img src="/media/30.svg" alt="processing..." />
                 </div>
             </p>
             <span>@ViewBag.Message</span>
-            if (ViewData["Saved"] != null) {
+            if (ViewData["Saved"] != null)
+            {
                 @Html.Label(ViewData["Saved"].ToString())
             }
         }

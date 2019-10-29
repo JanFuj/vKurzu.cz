@@ -491,6 +491,8 @@ namespace TestWebAppCoolName.Controllers
                 blo.UrlTitle = vm.Blog.UrlTitle;
                 blo.Tags = tags;
                 blo.RelatedCourseId = vm.Blog.RelatedCourseId;
+                blo.HeaderImage = vm.Blog.HeaderImage;
+                blo.SocialSharingImage = vm.Blog.SocialSharingImage;
                 blo.Changed = DateTime.Now;
                 _context.SaveChanges();
                 return RedirectToAction("Blog");
@@ -1046,6 +1048,8 @@ namespace TestWebAppCoolName.Controllers
                 tutor.Name = vm.TutorialCategory.Name;
                 tutor.Description = vm.TutorialCategory.Description;
                 tutor.UrlTitle = vm.TutorialCategory.UrlTitle;
+                tutor.SocialSharingImage = vm.TutorialCategory.SocialSharingImage;
+                tutor.HeaderImage = vm.TutorialCategory.HeaderImage;
                 tutor.Changed = DateTime.Now;
                 _context.SaveChanges();
                 return RedirectToAction("TutorialCategories");

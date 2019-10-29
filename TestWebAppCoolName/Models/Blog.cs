@@ -35,9 +35,9 @@ namespace TestWebAppCoolName.Models
         public bool Approved { get; set; }
         public string OwnerId { get; set; }
         public int Position { get; set; }
-        [Display(Name = "Url obrazku v hlavnim lazoutu")]
+        [Display(Name = "Url obrazku v hlavnim layoutu")]
         public string HeaderImage { get; set; }
-        [Display(Name = "Url obrazku pro sdílení na socíalech")]
+        [Display(Name = "Url obrazku pro sdílení na sociálech")]
         public string SocialSharingImage { get; set; }
         public List<Tag> Tags { get; set; } 
         public DateTime Created { get; set; }

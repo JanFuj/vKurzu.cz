@@ -207,6 +207,8 @@ namespace TestWebAppCoolName.Controllers.Admin
                     postFromDb.Body = vm.TutorialPost.Body;
                     postFromDb.RelatedCourseId = vm.TutorialPost.RelatedCourseId;
                     postFromDb.UrlTitle = vm.TutorialPost.UrlTitle;
+                    postFromDb.HeaderImage = vm.TutorialPost.HeaderImage;
+                    postFromDb.SocialSharingImage = vm.TutorialPost.SocialSharingImage;
                     postFromDb.Tags = tags;
                     postFromDb.Changed = DateTime.Now;
                     _repo.Save();

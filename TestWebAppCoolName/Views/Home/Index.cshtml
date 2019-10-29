@@ -63,7 +63,7 @@
                                     <article class="tutorial-preview">
                                         <a class="tutorial-preview__link" href="@Url.Action("TutorialCategoryPosts", "Tutorials", new {categoryTitle =category.UrlTitle})"></a>
                                         <div class="tutorial-preview__left">
-                                            <img class="tutorial-preview__image" src="/@category.Thumbnail.Path" alt="Popis, co je na obrázku">
+                                            <img class="tutorial-preview__image" src="@category.HeaderImage" alt="Popis, co je na obrázku">
                                         </div>
                                         <div class="tutorial-preview__right">
                                             <h1 class="tutorial-preview__title h3"><a class="link--gradient-inversed" href="@Url.Action("TutorialCategoryPosts", "Tutorials", new {categoryTitle =category.UrlTitle})">@category.Name</a></h1>

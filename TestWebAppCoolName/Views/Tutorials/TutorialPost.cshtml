@@ -83,8 +83,8 @@
                         <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item1.Category.UrlTitle, postTitle = articles.Item1.UrlTitle})"></a>
                         <div class="tutorial-preview__left">
                             <img class="tutorial-preview__image"
-                                 src="/@articles.Item1.Thumbnail.Path"
-                                 alt="@articles.Item1.Thumbnail.Description">
+                                 src="/@articles.Item1.HeaderImage"
+                                 alt="@articles.Item1.Description">
                         </div>
                         <div class="tutorial-preview__right">
                             <h1 class="tutorial-preview__title h3"><a class="link--gradient-inversed" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item1.Category.UrlTitle, postTitle = articles.Item1.UrlTitle})">@articles.Item1.Name</a></h1>
@@ -109,8 +109,8 @@
                         <a class="tutorial-preview__link" href="@Url.Action("TutorialPost", "Tutorials", new {categoryTitle = articles.Item2.Category.UrlTitle, postTitle = articles.Item2.UrlTitle})"></a>
                         <div class="tutorial-preview__left">
                             <img class="tutorial-preview__image"
-                                 src="/@articles.Item2.Thumbnail.Path"
-                                 alt="@articles.Item2.Thumbnail.Description">
+                                 src="/@articles.Item2.HeaderImage"
+                                 alt="@articles.Item2.Description">
                         </div>
                         <div class="tutorial-preview__right">
                             <h1 class="tutorial-preview__title h3">

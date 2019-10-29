@@ -31,15 +31,20 @@
                 @Html.ValidationMessageFor(model => model.TutorialCategory.UrlTitle)
             </p>
             <p class="form-item">
-                @Html.LabelFor(m => m.Thumbnail)
-                @Html.TextBoxFor(m => m.Thumbnail, new { type = "file", id = "SocialThumbnailImage" })
-                @Html.ValidationMessageFor(m => m.Thumbnail)
+                @Html.LabelFor(m => m.TutorialCategory.HeaderImage)
+                @Html.TextBoxFor(m => m.TutorialCategory.HeaderImage, new { id = "HeaderImage" })
+            </p>
+            <p class="form-item">
+                <img id="HeaderImagePlaceHolder" src="@Model.TutorialCategory.HeaderImage" />
+            </p>
+            <p class="form-item">
+                @Html.LabelFor(m => m.TutorialCategory.SocialSharingImage)
+                @Html.TextBoxFor(m => m.TutorialCategory.SocialSharingImage, new { id = "SocialThumbnailImage" })
             </p>
             <p class="form-item">
                 @{
-                    var path = Model.TutorialCategory.Thumbnail?.Path;
+                    <img id="SocialThumbnailImagePlaceHolder" src="@Model.TutorialCategory.SocialSharingImage" />
 
-                    <img id="SocialThumbnailImagePlaceHolder" src="/@path" />
                 }
             </p>
             <p>
